@@ -1,0 +1,18 @@
+<Solution>
+  <Folder Name="/01.Common/">
+    <Project Path="Ss.CmbXft.Common/Ss.CmbXft.Common.csproj" />
+  </Folder>
+  <Folder Name="/02.Domain/">
+    <Project Path="Ss.CmbXft.Domain/Ss.CmbXft.Domain.csproj" />
+  </Folder>
+  <Folder Name="/03.Application/">
+    <Project Path="Ss.CmbXft.Application/Ss.CmbXft.Application.csproj" />
+  </Folder>
+  <Folder Name="/04.Infrastructure/">
+    <Project Path="Ss.CmbXft.Infrastructure/Ss.CmbXft.Infrastructure.csproj" />
+    <Project Path="Ss.CmbXft.Sdk/Ss.CmbXft.Sdk.csproj" Id="d9089012-50b7-4bf3-8a21-3a3ab26c269b" />
+  </Folder>
+  <Folder Name="/05.Presentation/">
+    <Project Path="Ss.CmbXft.Api/Ss.CmbXft.Api.csproj" />
+  </Folder>
+</Solution>

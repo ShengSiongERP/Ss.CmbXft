@@ -1,0 +1,343 @@
+如何调用API开发前须知
+请各位开发者切记，应用的AuthoritySecret仅用于计算签名和加解密，请不要在api调用时传输AuthoritySecret，以防信息泄露。
+
+自2024年5月31日起创建的应用，需对输入输出报文进行加解密。
+
+序号	注意事项	参考文档
+1	在调用服务端API前，需要先创建应用，才能获取权限。	创建网页应用
+2	在调用服务端API前，确保已申请接口权限	申请接口权限
+3	通过事件订阅，薪福通会向应用推送订阅的事件	事件订阅概述
+API文档约定格式
+薪福通开放平台服务端API文档格式如下：
+
+接口调用地址  
+接口描述  
+调用方式  
+接口输入参数  
+接口输出参数  
+调用示例  
+请求示例  
+返回示例  
+错误码说明  
+1.接口调用地址
+调用地址分为沙盒环境地址和生产环境地址。
+沙盒环境地址：沙盒环境调用接口进行测试的地址
+生产环境地址：正式生产环境调用接口地址
+
+2.接口描述
+对接口的作用、背景、限制等进行的描述
+
+3.调用方式
+包含METHOD和CONTENT-TYPE两项内容。
+Method: 薪福通开放平台支持HTTPS和HTTP协议。方法包括POST和GET
+Content-Type: application/json 或者form/data等格式
+
+4.接口输入参数
+调用API详细的入参说明
+
+5.接口输出参数
+调用API响应体说明。一般为json格式
+
+6.调用示例
+调用API的入参和响应示例
+
+7.错误码说明
+调用该API可能返回的错误码解释以及排查建议
+
+接口调用流程
+API调用流程主要分为以下几个步骤：
+1）申请API权限
+2）生成凭证信息放入到header中
+3）调用API
+
+API调用方式
+说明：鉴权基于国密算法，使用SDK可以降低开发者鉴权计算调试的投入时间，如果开发者使用原生代码开发鉴权计算，为了方便开发者了解鉴权每一步的计算效果，我们提供了薪福通接口鉴权模拟器。
+
+1.query公共参数
+薪福通开放平台API请求时query中要带公共的参数。相关参数有：
+
+参数名称	参数说明	是否必填	备注说明
+CSCAPPUID	应用编号	是	可以在应用详情->基本信息中查看，与header中appid一致
+CSCPRJCOD	企业号	否	登录开放平台，点击右上角登录用户名称，可以查看到企业ID；如果不传，接口处理时默认取CSCAPPUID应用所属企业
+CSCREQTIM	当前时间戳（毫秒）	是	比如1657614229000
+CSCUSRNBR	薪福通企业用户号	否	在企业内唯一编号。如果是网页应用，建议从用户登录信息中取出；如果API不是用户操作行为(如定时拉取或推送等)允许为空，但部分接口可能会使用该字段，请在联调时注意，可输入A0001
+CSCUSRUID	薪福通平台用户号	否	在薪福通内用户的唯一编号。如果是网页应用，建议从用户登录信息中取出；如果API不是用户操作行为(如定时拉取或推送等)允许为空，但部分接口可能会使用该字段，请在联调时注意，可输入AUTO0001
+备注：查询企业号如下图所示：
+注意：沙盒环境的企业号与生产环境不同，请注意在不同环境中使用对应的企业号，以防调用失败。
+
+
+
+2.header中参数说明
+参数名称	参数说明	是否必填	备注说明
+appid	应用编号	是	可以在应用详情->开发管理中查看
+x-alb-digest	body签名信息	否	如果是get请求该字段可以不填写，如果是post请求，需要对body内容按照SM3算法进行摘要签名
+x-alb-timestamp	当前时间戳（到秒）	是	比如1657614229
+apisign	API请求的加签信息	是	采用SM2算法对请求类型+请求路径+请求体body+请求时间戳
+x-alb-verify	加签算法，固定填写sm3withsm2	是	暂只支持sm3withsm2签名算法
+x-alb-digest参数生成JAVA版本示例
+依赖的基础jar包
+<dependency>  
+  <groupId>org.bouncycastle</groupId>  
+  <artifactId>bcprov-jdk15on</artifactId>  
+  <version>1.63</version>  
+ </dependency>  
+生成签名方法
+1）若应用是加密应用（应用是否加密查看应用基本信息），对请求body进行SM4加密处理，否则进入下一步
+
+        String key = authoritySecret.substring(0, 32);  
+        //请求内容加密  
+        String secretMsg = Sm4Util.encryptEcb(key, body);  
+        Map<String, String> newRequestBodyMap = new HashMap<>();  
+        //secretMsg这个名称固定  
+        newRequestBodyMap.put("secretMsg", secretMsg);  
+         Gson gson = new Gson();  
+        body= gson.toJson(newRequestBodyMap);  
+Sm4Util算法实现如下
+
+   private static final String ENCODING = "UTF-8";  
+    public static final String ALGORITHM_NAME = "SM4";  
+    // 加密算法/分组加密模式/分组填充方式  
+    // PKCS5Padding-以8个字节为一组进行分组加密  
+    // 定义分组加密模式使用：PKCS5Padding  
+    public static final String ALGORITHM_NAME_ECB_PADDING = "SM4/ECB/PKCS5Padding";
+
+
+    /**  
+     * 生成ECB暗号  
+     *  
+     * @param algorithmName 算法名称  
+     * @param mode          模式  
+     * @param key  
+     * @return  
+     * @throws Exception  
+     * @explain ECB模式（电子密码本模式：Electronic codebook）  
+     */  
+    private static Cipher generateEcbCipher(String algorithmName, int mode, byte[] key) throws Exception {  
+        Cipher cipher = Cipher.getInstance(algorithmName, BouncyCastleProvider.PROVIDER_NAME);  
+        Key sm4Key = new SecretKeySpec(key, ALGORITHM_NAME);  
+        cipher.init(mode, sm4Key);  
+        return cipher;  
+    }
+
+    /**  
+     * sm4加密  
+     *  
+     * @param hexKey   16进制密钥（忽略大小写）  
+     * @param paramStr 待加密字符串  
+     * @return 返回16进制的加密字符串  
+     * @explain 加密模式：ECB  
+     * 密文长度不固定，会随着被加密字符串长度的变化而变化  
+     */  
+    public static String encryptEcb(String hexKey, String paramStr) throws Exception {
+
+        String cipherText = "";  
+        // 16进制字符串--&gt;byte[]  
+        byte[] keyData = ByteUtils.fromHexString(hexKey);  
+        // String--&gt;byte[]  
+        byte[] srcData = paramStr.getBytes(ENCODING);  
+        // 加密后的数组  
+        byte[] cipherArray = encrypt_Ecb_Padding(keyData, srcData);  
+        // byte[]--&gt;hexString  
+        cipherText = ByteUtils.toHexString(cipherArray);  
+        return cipherText;
+
+    }
+
+    /**  
+     * 加密模式之Ecb  
+     *  
+     * @param key  
+     * @param data  
+     * @return  
+     * @throws Exception  
+     * @explain  
+     */  
+    public static byte[] encrypt_Ecb_Padding(byte[] key, byte[] data) throws Exception {  
+        Cipher cipher = generateEcbCipher(ALGORITHM_NAME_ECB_PADDING, Cipher.ENCRYPT_MODE, key);  
+        return cipher.doFinal(data);  
+    }
+
+    /**  
+     * sm4解密  
+     *  
+     * @param hexKey     16进制密钥  
+     * @param cipherText 16进制的加密字符串（忽略大小写）  
+     * @return 解密后的字符串  
+     * @throws Exception  
+     * @explain 解密模式：采用ECB  
+     */  
+    public static String decryptEcb(String hexKey, String cipherText) throws Exception {  
+        // 用于接收解密后的字符串  
+        String decryptStr = "";  
+        // hexString--&gt;byte[]  
+        byte[] keyData = ByteUtils.fromHexString(hexKey);  
+        // hexString--&gt;byte[]  
+        byte[] cipherData = ByteUtils.fromHexString(cipherText);  
+        // 解密  
+        byte[] srcData = new byte[0];
+
+        srcData = decrypt_Ecb_Padding(keyData, cipherData);  
+        // byte[]--&gt;String  
+        decryptStr = new String(srcData, ENCODING);
+
+        return decryptStr;  
+    }
+
+    /**  
+     * 解密  
+     *  
+     * @param key  
+     * @param cipherText  
+     * @return  
+     * @throws Exception  
+     * @explain  
+     */  
+    public static byte[] decrypt_Ecb_Padding(byte[] key, byte[] cipherText) throws Exception {  
+        Cipher cipher = generateEcbCipher(ALGORITHM_NAME_ECB_PADDING, Cipher.DECRYPT_MODE, key);  
+        return cipher.doFinal(cipherText);  
+    }  
+2）采用SM3Digest是生成body字符串签名
+
+3）将签名内容转换为16进制字符串
+
+    public static String sm3Signature(String body) {  
+        try {  
+            SM3Digest sm3Digest = new SM3Digest();  
+            sm3Digest.update(body.getBytes("UTF-8"), 0, body.getBytes("UTF-8").length);  
+            byte[] ret = new byte[sm3Digest.getDigestSize()];  
+            sm3Digest.doFinal(ret, 0);  
+            return Hex.toHexString(ret);  
+        } catch (Exception e) {  
+            throw new RuntimeException("签名计算出现异常");  
+        }  
+    }  
+apisign参数生成方法
+post请求
+1.先生成签名字符串signStr，拼接规则为： "POST " + path + "\n" + "x-alb-digest: " + body字符串 + "\n" + "x-alb-timestamp: " + x-alb-timestamp对应的值。
+比如:
+请求接口URL为https://api.cmbchina.com/xft/apm/apm/EAIAGPAY
+body参数为"{"SYCOMOPAY":[{"SESTKN":"XXXX"}]}"。加密后的参数为"{"secretMsg":"secretMsgsecretMsgsecretMsgsecretMsg"}"
+
+则生成的签名字符串signStr为：
+
+POST /xft/apm/apm/EAIAGPAY?CSCAPPUID=XXX&CSCPRJCOD=XXX&CSCREQTIM=XXX&CSCUSRNBR=XXX&CSCUSRUID=XXXX\nx-alb-digest: {"secretMsg":"secretMsgsecretMsgsecretMsgsecretMsg"}"\nx-alb-timestamp: 1657614229
+
+2.对生成的signStr进行SM2加签。加签算法如下：
+
+  /**  
+     *  
+     * @param authoritySecret 在应用详情->开发管理中查看  
+     * @param signStr 需要加签的字符串  
+     * @return 返回签名信息  
+     * @throws Exception 签名异常  
+     */  
+    public static String sm3withsm2Signature(String authoritySecret, String signStr) throws Exception {
+
+        byte[] key = Hex.decode(authoritySecret);  
+        byte[] data = signStr.getBytes();
+
+        // 获得一条签名曲线  
+        ECParameterSpec spec = ECNamedCurveTable.getParameterSpec("sm2p256v1");  
+        // 构造domain函数  
+        ECDomainParameters domainParameters = new ECDomainParameters(spec.getCurve(), spec.getG(), spec.getN(), spec.getH(), spec.getSeed());
+
+        // 国密要求，ID默认值为1234567812345678  
+        ECPrivateKeyParameters privateKey = new ECPrivateKeyParameters(new BigInteger(1, key), domainParameters);  
+        ParametersWithID parameters = new ParametersWithID(privateKey, "1234567812345678".getBytes());  
+        // 初始化签名实例  
+        SM2Signer signer = new SM2Signer();  
+        signer.init(true, parameters);  
+        signer.update(data, 0, data.length);
+
+        return Hex.toHexString(decodeDERSignature(signer.generateSignature()));  
+    }  
+	  
+	private static byte[] decodeDERSignature(byte[] signature) throws Exception {  
+        ASN1InputStream stream = new ASN1InputStream(new ByteArrayInputStream(signature));  
+        ASN1Sequence primitive = (ASN1Sequence) stream.readObject();  
+        Enumeration enumeration = primitive.getObjects();  
+        BigInteger R = ((ASN1Integer) enumeration.nextElement()).getValue();  
+        BigInteger S = ((ASN1Integer) enumeration.nextElement()).getValue();  
+        byte[] bytes = new byte[64];  
+        byte[] r = format(R.toByteArray());  
+        byte[] s = format(S.toByteArray());  
+        System.arraycopy(r, 0, bytes, 0, 32);  
+        System.arraycopy(s, 0, bytes, 32, 32);  
+        return bytes;  
+    }
+
+    private static byte[] format(byte[] value) {  
+        if (value.length == 32) {  
+            return value;  
+        } else {  
+            byte[] bytes = new byte[32];  
+            if (value.length > 32) {  
+                System.arraycopy(value, value.length - 32, bytes, 0, 32);  
+            } else {  
+                System.arraycopy(value, 0, bytes, 32 - value.length, value.length);  
+            }  
+            return bytes;  
+        }  
+    }
+
+get请求
+1.先生成签名字符串signStr，拼接规则为： "GET " + path + "\n" + "x-alb-timestamp: " + x-alb-timestamp对应的值。
+比如:
+请求接口URL为https://api.cmbchina.com/xft/apm/apm/EAIAGPAY
+则生成的签名字符串signStr为：
+
+GET /xft/apm/apm/EAIAGPAY?CSCAPPUID=XXX&CSCPRJCOD=XXX&CSCREQTIM=XXX&CSCUSRNBR=XXX&CSCUSRUID=XXXX\nx-alb-timestamp: 1657614229
+
+2.对生成的signStr进行SM2加签。加签算法参考Post请求方式
+
+请求body处理，应用为加密应用需要对body进行解密处理
+
+        String responseBody = postReqResult.getBody();  
+        try {  
+            responseBody = Sm4Util.decryptEcb(key, responseBody);  
+            System.out.println("返回值body：" +responseBody);  
+        } catch (Exception e) {  
+            System.out.println("解密失败：" + responseBody);  
+        }  
+3.body加解密
+接口调用的入参报文与出参报文都需进行加解密处理（除文件上传入参及文件下载出参）。
+
+加密秘钥与加签秘钥并不一致！ 加密秘钥为：AuthoritySecret的前32位。
+
+对于输入报文body需要进行报文加密：
+
+        String requestBody;  
+        try {  
+            requestBody = Sm4Util.encryptEcb(key, requestBody);  
+            System.out.println("请求体body：" +requestBody);  
+        } catch (Exception e) {  
+            System.out.println("加密失败：" + requestBody);  
+        }  
+对于输出报文body需要进行解密：
+
+        String responseBody = postReqResult.getBody();  
+        try {  
+            responseBody = Sm4Util.decryptEcb(key, responseBody);  
+            System.out.println("返回值body：" +responseBody);  
+        } catch (Exception e) {  
+            System.out.println("解密失败：" + responseBody);  
+        }  
+4.完整接口请求方式
+Post请求示例
+curl -X POST https://api.cmbchina.com/xft/apm/apm/EAIAGPAY?CSCAPPUID=XXX&CSCPRJCOD=XXX&CSCREQTIM=XXX&CSCUSRNBR=XXX&CSCUSRUID=XXXX  
+  -H 'appid:xxxxxx'   
+  -H 'x-alb-digest:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'  
+  -H 'x-alb-timestamp:1657614229'  
+  -H 'apisign:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'  
+  -H 'x-alb-verify:sm3withsm2'  
+  -H 'Content-Type:application/json'  
+  -d '{  
+       "content":"123456"  
+      }'  
+Get请求示例
+curl -X GET https://api.cmbchina.com/xft/apm/apm/EAIAGPAY?CSCAPPUID=XXX&CSCPRJCOD=XXX&CSCREQTIM=XXX&CSCUSRNBR=XXX&CSCUSRUID=XXXX&test=XXX  
+  -H 'appid:xxxxxx'  
+  -H 'x-alb-timestamp:1657614229'  
+  -H 'apisign:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'  
+  -H 'x-alb-verify:sm3withsm2'  
+  -H 'Content-Type:application/json'  

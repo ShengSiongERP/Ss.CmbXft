@@ -1,0 +1,31 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <Version>1.0.0</Version>
+    <Authors>Shengsiong</Authors>
+    <Company>Shengsiong</Company>
+    <Product>Ss.CmbXft.Sdk</Product>
+    <Description>招商银行薪福通API SDK for .NET</Description>
+    <Copyright>Copyright © Shengsiong 2024</Copyright>
+    <PackageProjectUrl>https://github.com/shengsiong/Ss.CmbXft.Sdk</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/shengsiong/Ss.CmbXft.Sdk</RepositoryUrl>
+    <PackageTags>cmb;xft;薪福通;sdk;api</PackageTags>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+	<NoWarn>$(NoWarn);1591</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BouncyCastle.Cryptography" Version="2.4.0" />
+    <PackageReference Include="Microsoft.Extensions.Http" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Options" Version="8.0.2" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="System.Text.Encoding.CodePages" Version="8.0.0" />
+  </ItemGroup>
+
+</Project>

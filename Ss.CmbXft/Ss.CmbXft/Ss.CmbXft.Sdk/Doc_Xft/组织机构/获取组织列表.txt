@@ -1,0 +1,254 @@
+获取组织列表
+更新时间: 2025-11-07 19:00:01
+接口调用地址
+生产环境地址：https://api.cmbchina.com/ORG/orgqry/xft-service-organization/org/v1/get/page
+测试环境地址：https://api.cmburl.cn:8065/ORG/orgqry/xft-service-organization/org/v1/get/page
+接口描述
+组织分页查询的通用接口，用于关键词模糊查询，组织id列表，父组织id，组织编码列表，组织状态等条件的查询
+调用方式
+METHOD: POST
+CONTENT-TYPE: application/json
+接口输入参数
+
+请求体
+仅必填全部展开
+参数	必填	类型	最大长度	名称	示例值	字段说明
+					
+	否	ARRAY	-	组织编码集合	[ "00000151" ]	组织编码最大查询个数为2000
+codes
+	否	ARRAY	-	组织id集合	[ "0001" ]	组织id最大查询个数为2000
+ids
+	否	STRING	-	搜索关键词	-	-
+keyword
+	否	STRING	-	父组织id	0000	-
+parentId
+	否	ARRAY	-	生效状态集合	[ "active" ]	active-正常，delete-删除，stopped-停用
+status						不填时默认查询所有状态，包括已删除
+	否	LONG	-	当前页	1	当前页，起始页为1；默认值为1，可不传值但不能传空
+currentPage
+	否	LONG	-	页大小	10	页大小，最大2000
+pageSize
+	否	ARRAY	-	扩展查询选项	["leader", "approver", "extData"]	leader-组织负责人、approver-审批主管、extData-自定义字段、namePath-组织名称全路径、allDisplayOrderNumber-填充所有顺序号、leaf-查询组织是否为叶节点。
+extOptions						不传值时默认查询组织负责人,审批主管,组织名称全路径，传值时按传值进行选项查询
+
+接口输出参数
+
+响应体
+仅必填全部展开
+参数	必存在	类型	最大长度	名称	示例值	字段说明
+					
+	否	STRING	-	返回码	200	-
+returnCode
+	否	STRING	-	错误信息	-	-
+errorMsg
+	否	OBJECT	-	body	-	-
+body
+	否	LONG	-	当前页	1	当前页，起始页为1
+currentPage
+	否	LONG	-	每页大小	10	每页大小，最大2000
+pageSize
+	否	LONG	-	总条数	1	-
+totalSize
+	否	ARRAY	-	records	-	-
+records
+	否	STRING	-	组织ID	0001	-
+id
+	否	STRING	-	组织编码	00000151	-
+code
+	否	DATE	-	生效日期	2022-01-01	日期格式：yyyy-MM-dd
+effectiveDate
+	否	STRING	-	组织id全路径	0000/0001	-
+idPath
+	否	STRING	-	组织名称	开发一组	-
+name
+	否	STRING	-	组织名称全路径	-	-
+namePath
+	否	STRING	-	机构号	001	-
+number
+	否	INTEGER	-	同级排序序号，小的排在前面	1	-
+orderNumber
+	否	STRING	-	上级组织code	00000151	-
+parentCode
+	否	STRING	-	上级组织ID	0000	-
+parentId
+	否	STRING	-	备注	-	-
+remark
+	否	STRING	-	生效状态	active	active-正常，delete-删除，stopped-停用
+status
+	否	STRING	-	组织类型	G	组织类型 G-集团、B-分公司、SP-门店、S-子公司、BD-事业部、D-部门、PT-项目组
+type
+	否	ARRAY	-	组织负责人	-	-
+leaders
+	否	STRING	-	企业用户id	-	-
+enterpriseUserId
+	否	STRING	-	姓名	-	-
+name
+	否	STRING	-	员工id	-	-
+staffId
+	否	STRING	-	员工号	-	-
+staffNum
+	否	ARRAY	-	审批主管	-	-
+approvers
+	否	STRING	-	企业用户id	-	-
+enterpriseUserId
+	否	STRING	-	姓名	-	-
+name
+	否	STRING	-	员工id	-	-
+staffId
+	否	STRING	-	员工号	-	-
+staffNum
+	否	ARRAY	-	组织自定义数据	-	-
+extData
+	否	STRING	-	自定义字段编码	org_ext_000000000001	-
+code
+	否	STRING	-	自定义字段名称	-	-
+name
+	否	STRING	-	扩展字段类型	SELECT	NUMBER-数字 DATE-日期 TEXT-文本 SELECT-单选 CHECKBOX-多选 USER_SELECT-选择用户
+fieldType
+	否	OBJECT	1	自定义字段值	-	自定义字段值 类型不固定，可能为数字，日期，字符串，对象，数组。接入方根据扩展字段类型fieldType做转换
+value
+	否	BOOLEAN	-	组织是否为叶节点	true	-
+isLeaf
+接口调用示例
+请求示例：
+
+{  
+    "codes": [  
+        "00000151"  
+    ],  
+    "ids": [  
+        "0001"  
+    ],  
+    "keyword": "",  
+    "parentId": "0000",  
+    "status": [  
+        "active"  
+    ],  
+    "extOptions": [  
+        "leader",  
+        "approver",  
+        "extData",  
+        "leaf",  
+        "namePath"  
+    ],  
+    "currentPage": 1,  
+    "pageSize": 10  
+}  
+
+响应示例：
+正确返回：
+{  
+"returnCode": "SUC0000",  
+"errorMsg": null,  
+"body": {  
+"currentPage": 1,  
+"pageSize": 10,  
+"totalSize": 1,  
+"records": [  
+{  
+"id": "0001",  
+"code": "00000151",  
+"effectiveDate": "2022-01-01",  
+"idPath": "0000/0001",  
+"name": "开发一组",  
+"namePath": "广州公司/开发一组",  
+"number": "001",  
+"orderNumber": 1,  
+"parentCode": "00000151",  
+"parentId": "0000",  
+"remark": "",  
+"status": "active",  
+"type": "G",  
+"leaders": [  
+{  
+"enterpriseUserId": "",  
+"name": "",  
+"staffId": "",  
+"staffNum": ""  
+}  
+],  
+"approvers": [  
+{  
+"enterpriseUserId": "",  
+"name": "",  
+"staffId": "",  
+"staffNum": ""  
+}  
+],  
+"extData": [  
+{  
+"code": "org_ext_000000000057",  
+"name": "1127新单选",  
+"fieldType": "SELECT",  
+"value": [  
+{  
+"code": "0001",  
+"name": "11啊啊"  
+}  
+]  
+},  
+{  
+"code": "org_ext_000000000058",  
+"name": "1127新多选",  
+"fieldType": "CHECKBOX",  
+"value": [  
+{  
+"code": "0001",  
+"name": "11啊啊"  
+}  
+]  
+},  
+{  
+"code": "org_ext_000000000059",  
+"name": "1127新选人",  
+"fieldType": "USER_SELECT",  
+"value": [  
+{  
+"enterpriseUserId": "V0004",  
+"name": "张三",  
+"staffId": "0000101004",  
+"staffNum": "0001"  
+}  
+]  
+},  
+{  
+"code": "org_ext_000000000059",  
+"name": "1127新文本",  
+"fieldType": "TEXT",  
+"value": "哈哈哈"  
+},  
+{  
+"code": "org_ext_000000000059",  
+"name": "1127新数字",  
+"fieldType": "NUMBER",  
+"value": 1  
+},  
+{  
+"code": "org_ext_000000000059",  
+"name": "1127新日期",  
+"fieldType": "DATE",  
+"value": "2022-01-01 00:00:00"  
+}  
+],  
+"isLeaf": true  
+}  
+]  
+}  
+}  
+
+错误返回：
+
+{  
+    "returnCode": "XFT0003",  
+    "errorMsg": "分页参数错误",  
+    "body": null  
+}  
+
+错误码说明
+除HTTP返回码外，具体的业务异常错误码通常指的是返回报文中错误码字段的内容，常见通用错误码及解决方案请参考通用错误码。
+returnCode	errorMsg
+XFT0003	分页参数错误
+XFT0004	分页过大
+XFT0005	分页过小
+
+来自 <https://xft.cmbchina.com/open/#/doc/open-document?id=10692&mid=13264> 

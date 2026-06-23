@@ -1,0 +1,95 @@
+删除企业员工
+更新时间: 2025-04-01 14:10:01
+接口调用地址
+生产环境地址：https://api.cmbchina.com/hrm/hrm2/xft-employeeprofile/openapi/employee/staff-general-api/remove-staff
+测试环境地址：https://api.cmburl.cn:8065/xfthrm/hrm2uat/xft-employeeprofile/openapi/employee/staff-general-api/remove-staff
+接口描述
+使用该接口可以直接删除员工管理-花名册中存在且未被删除的员工。
+慎用，员工信息一旦删除，不可恢复。
+调用方式
+METHOD: POST
+CONTENT-TYPE: application/json
+接口输入参数
+
+请求体
+仅必填全部展开
+参数	必填	类型	最大长度	名称	示例值	字段说明
+					
+	是	ARRAY	-	员工序号集合	["0000000001","0000000002"]	员工序号集合，一次调用删除员工数量不能超过1000人
+stfSeqList
+
+接口输出参数
+
+响应体
+仅必填全部展开
+参数	必存在	类型	最大长度	名称	示例值	字段说明
+					
+	否	STRING	-	返回状态码	SUC0000	-
+returnCode
+	否	STRING	-	错误信息	null	-
+errorMsg
+	否	ARRAY	-	删除结果	-	-
+body
+	否	STRING	10	员工序号	0000000487	-
+stfSeq
+	否	ARRAY	-	删除结果	-	当员工正常删除时，errorList是[]；当员工删除被校验拦截时，errorList会返回校验信息
+errorList
+	否	STRING	50	删除校验所属业务	假勤	花名册员工删除会校验很多业务，若某个业务不通过导致校验失败，verifyType就会返回该业务对应的业务名称。例如因为员工有假期方案导致删除失败，则verifyType会返回假勤。
+verifyType						目前，删除会校验下以下业务。
+						        1. 员工管理
+						        2. 假勤
+						        3. 任职管理
+						        4. 资产管理
+						        5. 社保公积金台账
+						        6. OA
+						        7. 税前工资算税
+						        8. 智能算薪
+						        9. 管理后台
+						        10. 员工合同
+	否	STRING	10000	删除校验原因	当前员工已存在假期方案，请在【假勤管理】-【假期管理】-【假期方案】中删除该员工所属的假期方案;	-
+errorMessage
+接口调用示例
+
+请求报文
+
+{  
+    "stfSeqList": [  
+        "0000000487",  
+        "0000000488"  
+    ]  
+}  
+
+
+响应报文
+{
+    "returnCode": "SUC0000",
+    "errorMsg": null,
+    "body": [
+        {
+            "stfSeq": "0000000487",
+            "errorList": []
+        },
+        {
+            "stfSeq": "0000000487",
+            "errorList": [
+                {
+                    "verifyType": "资产管理",
+                    "errorMessage": "存在该员工作为部门管理员的资产，请前往【资产管理-资产清单】应用修改资产的部门管理员;"
+                },
+                {
+                    "verifyType": "假勤",
+                    "errorMessage": "当前员工已存在假期方案，请在【假勤管理】-【假期管理】-【假期方案】中删除该员工所属的假期方案;当前员工已存在假期额度，请在【假勤管理】-【假期管理】-【假期额度明细】中删除该员工所属的所有额度明细;"
+                }
+            ]
+        }
+    ]
+}  
+
+
+错误码说明
+除HTTP返回码外，具体的业务异常错误码通常指的是返回报文中错误码字段的内容，常见通用错误码及解决方案请参考通用错误码。
+错误码	错误信息
+XTFSYS9999	抱歉，此功能遇到了一些问题
+XFTBIZ0001	提交数据有误，请检查：传入员工序号数量不可超过1000，请检查!
+
+来自 <https://xft.cmbchina.com/open/#/doc/open-document?id=10692&mid=13033> 

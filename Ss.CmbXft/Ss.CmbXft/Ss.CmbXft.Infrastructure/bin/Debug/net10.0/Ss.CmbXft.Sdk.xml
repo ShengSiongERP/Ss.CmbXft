@@ -1,0 +1,5374 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Ss.CmbXft.Sdk</name>
+    </assembly>
+    <members>
+        <member name="T:Ss.CmbXft.Sdk.Client.IXftClient">
+            <summary>
+            薪福通API客户端接口
+            </summary>
+        </member>
+        <member name="M:Ss.CmbXft.Sdk.Client.IXftClient.PostAsync``2(System.String,``0,System.Collections.Generic.Dictionary{System.String,System.String},System.Threading.CancellationToken)">
+            <summary>
+            发送POST请求
+            </summary>
+            <typeparam name="TRequest">请求类型</typeparam>
+            <typeparam name="TResponse">响应类型</typeparam>
+            <param name="apiPath">API路径</param>
+            <param name="request">请求数据</param>
+            <param name="queryParams">查询参数</param>
+            <param name="cancellationToken">取消令牌</param>
+            <returns>API响应</returns>
+        </member>
+        <member name="M:Ss.CmbXft.Sdk.Client.IXftClient.GetAsync``1(System.String,System.Collections.Generic.Dictionary{System.String,System.String},System.Threading.CancellationToken)">
+            <summary>
+            发送GET请求
+            </summary>
+            <typeparam name="TResponse">响应类型</typeparam>
+            <param name="apiPath">API路径</param>
+            <param name="queryParams">查询参数</param>
+            <param name="cancellationToken">取消令牌</param>
+            <returns>API响应</returns>
+        </member>
+        <member name="M:Ss.CmbXft.Sdk.Client.IXftClient.PostEncryptedAsync``2(System.String,``0,System.Collections.Generic.Dictionary{System.String,System.String},System.Threading.CancellationToken)">
+            <summary>
+            发送加密POST请求（SM4ECB加密）
+            </summary>
+            <typeparam name="TRequest">请求类型</typeparam>
+            <typeparam name="TResponse">响应类型</typeparam>
+            <param name="apiPath">API路径</param>
+            <param name="request">请求数据</param>
+            <param name="queryParams">查询参数</param>
+            <param name="cancellationToken">取消令牌</param>
+            <returns>API响应</returns>
+        </member>
+        <member name="M:Ss.CmbXft.Sdk.Client.IXftClient.PostEncryptedWithDecryptionAsync``1(System.String,``0,System.Collections.Generic.Dictionary{System.String,System.String},System.Threading.CancellationToken)">
+            <summary>
+            发送加密POST请求（SM4ECB加密，返回解密后的响应）
+            </summary>
+            <typeparam name="TRequest">请求类型</typeparam>
+            <param name="apiPath">API路径</param>
+            <param name="request">请求数据</param>
+            <param name="queryParams">查询参数</param>
+            <param name="cancellationToken">取消令牌</param>
+            <returns>解密后的响应字符串</returns>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Client.XftClient">
+            <summary>
+            薪福通API客户端实现
+            </summary>
+        </member>
+        <member name="M:Ss.CmbXft.Sdk.Client.XftClient.#ctor(Ss.CmbXft.Sdk.Configuration.XftOptions,System.Net.Http.HttpClient,Microsoft.Extensions.Logging.ILogger{Ss.CmbXft.Sdk.Client.XftClient})">
+            <summary>
+            初始化 <see cref="T:Ss.CmbXft.Sdk.Client.XftClient"/> 类的新实例
+            </summary>
+            <param name="options">配置选项</param>
+            <param name="httpClient">HTTP客户端（可选）</param>
+            <param name="logger">日志记录器（可选）</param>
+        </member>
+        <member name="M:Ss.CmbXft.Sdk.Client.XftClient.PostAsync``2(System.String,``0,System.Collections.Generic.Dictionary{System.String,System.String},System.Threading.CancellationToken)">
+            <summary>
+            发送POST请求
+            </summary>
+        </member>
+        <member name="M:Ss.CmbXft.Sdk.Client.XftClient.GetAsync``1(System.String,System.Collections.Generic.Dictionary{System.String,System.String},System.Threading.CancellationToken)">
+            <summary>
+            发送GET请求
+            </summary>
+        </member>
+        <member name="M:Ss.CmbXft.Sdk.Client.XftClient.PostEncryptedAsync``2(System.String,``0,System.Collections.Generic.Dictionary{System.String,System.String},System.Threading.CancellationToken)">
+            <summary>
+            发送加密POST请求（SM4ECB加密）
+            </summary>
+        </member>
+        <member name="M:Ss.CmbXft.Sdk.Client.XftClient.PostEncryptedWithDecryptionAsync``1(System.String,``0,System.Collections.Generic.Dictionary{System.String,System.String},System.Threading.CancellationToken)">
+            <summary>
+            发送加密POST请求（SM4ECB加密，返回解密后的响应）
+            </summary>
+        </member>
+        <member name="M:Ss.CmbXft.Sdk.Client.XftClient.SendRawRequestAsync(System.Net.Http.HttpRequestMessage,System.Threading.CancellationToken)">
+            <summary>
+            发送HTTP请求并返回原始响应字符串
+            </summary>
+        </member>
+        <member name="M:Ss.CmbXft.Sdk.Client.XftClient.SendRequestAsync``1(System.Net.Http.HttpRequestMessage,System.Threading.CancellationToken)">
+            <summary>
+            发送HTTP请求并处理响应
+            </summary>
+        </member>
+        <member name="M:Ss.CmbXft.Sdk.Client.XftClient.LogDebug(System.String,System.Object[])">
+            <summary>
+            记录调试日志
+            </summary>
+        </member>
+        <member name="M:Ss.CmbXft.Sdk.Client.XftClient.LogWarning(System.String,System.Object[])">
+            <summary>
+            记录警告日志
+            </summary>
+        </member>
+        <member name="M:Ss.CmbXft.Sdk.Client.XftClient.LogError(System.Exception,System.String,System.Object[])">
+            <summary>
+            记录错误日志
+            </summary>
+        </member>
+        <member name="M:Ss.CmbXft.Sdk.Client.XftClient.CheckBusinessError(System.String)">
+            <summary>
+            检查业务错误
+            </summary>
+        </member>
+        <member name="M:Ss.CmbXft.Sdk.Client.XftClient.Dispose">
+            <summary>
+            释放资源
+            </summary>
+        </member>
+        <member name="M:Ss.CmbXft.Sdk.Client.XftClient.Dispose(System.Boolean)">
+            <summary>
+            释放资源
+            </summary>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Configuration.ApiUrl">
+            <summary>
+            API URL信息
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Configuration.ApiUrl.TestPath">
+            <summary>
+            测试环境URL路径
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Configuration.ApiUrl.ProductionPath">
+            <summary>
+            生产环境URL路径
+            </summary>
+        </member>
+        <member name="M:Ss.CmbXft.Sdk.Configuration.ApiUrl.#ctor(System.String,System.String)">
+            <summary>
+            初始化 <see cref="T:Ss.CmbXft.Sdk.Configuration.ApiUrl"/> 类的新实例
+            </summary>
+            <param name="testPath">测试环境URL路径</param>
+            <param name="productionPath">生产环境URL路径</param>
+        </member>
+        <member name="M:Ss.CmbXft.Sdk.Configuration.ApiUrl.Path(Ss.CmbXft.Sdk.Configuration.XftEnvironment)">
+            <summary>
+            根据环境获取URL路径
+            </summary>
+            <param name="environment">环境类型</param>
+            <returns>URL路径</returns>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Configuration.XftApiUrls">
+            <summary>
+            薪福通接口地址
+            </summary>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Configuration.XftApiUrls.Common">
+            <summary>
+            公共服务
+            </summary>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Configuration.XftApiUrls.Organization">
+            <summary>
+            组织管理
+            </summary>
+        </member>
+        <member name="F:Ss.CmbXft.Sdk.Configuration.XftApiUrls.Organization.GetOrganizationList">
+            <summary>
+            获取组织列表
+            </summary>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Configuration.XftApiUrls.Auth">
+            <summary>
+            权限管理
+            </summary>
+        </member>
+        <member name="F:Ss.CmbXft.Sdk.Configuration.XftApiUrls.Auth.RoleList">
+            <summary>
+            角色列表
+            </summary>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Configuration.XftApiUrls.Staff">
+            <summary>
+            员工管理接口
+            </summary>
+        </member>
+        <member name="F:Ss.CmbXft.Sdk.Configuration.XftApiUrls.Staff.Query">
+            <summary>
+            员工信息查询
+            </summary>
+        </member>
+        <member name="F:Ss.CmbXft.Sdk.Configuration.XftApiUrls.Staff.Create">
+            <summary>
+            员工信息新增
+            </summary>
+        </member>
+        <member name="F:Ss.CmbXft.Sdk.Configuration.XftApiUrls.Staff.Update">
+            <summary>
+            员工信息修改
+            </summary>
+        </member>
+        <member name="F:Ss.CmbXft.Sdk.Configuration.XftApiUrls.Staff.Delete">
+            <summary>
+            员工信息删除
+            </summary>
+        </member>
+        <member name="F:Ss.CmbXft.Sdk.Configuration.XftApiUrls.Staff.DataDictionary">
+            <summary>
+            员工数据字典通用查询
+            </summary>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Configuration.XftApiUrls.Attendance">
+            <summary>
+            考勤管理接口
+            </summary>
+        </member>
+        <member name="F:Ss.CmbXft.Sdk.Configuration.XftApiUrls.Attendance.DayQuery">
+            <summary>
+            查询日考勤统计
+            </summary>
+        </member>
+        <member name="F:Ss.CmbXft.Sdk.Configuration.XftApiUrls.Attendance.MonthQuery">
+            <summary>
+            查询月考勤统计
+            </summary>
+        </member>
+        <member name="F:Ss.CmbXft.Sdk.Configuration.XftApiUrls.Attendance.ItemQuery">
+            <summary>
+            查询考勤统计项
+            </summary>
+        </member>
+        <member name="F:Ss.CmbXft.Sdk.Configuration.XftApiUrls.Attendance.RealTimeQuery">
+            <summary>
+            获取实时考勤
+            </summary>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Configuration.XftApiUrls.Position">
+            <summary>
+            职位管理接口
+            </summary>
+        </member>
+        <member name="F:Ss.CmbXft.Sdk.Configuration.XftApiUrls.Position.QueryPage">
+            <summary>
+            分页查询职位
+            </summary>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Configuration.XftApiUrls.Post">
+            <summary>
+            岗位管理接口
+            </summary>
+        </member>
+        <member name="F:Ss.CmbXft.Sdk.Configuration.XftApiUrls.Post.QueryPage">
+            <summary>
+            分页查询岗位
+            </summary>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Configuration.XftOptions">
+            <summary>
+            薪福通API配置选项
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Configuration.XftOptions.CompanyId">
+            <summary>
+            企业号/租户号
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Configuration.XftOptions.AppId">
+            <summary>
+            开放平台AppId
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Configuration.XftOptions.AuthoritySecret">
+            <summary>
+            授权密钥（至少32位）
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Configuration.XftOptions.BaseUrl">
+            <summary>
+            基础URL（例如：https://api.cmbchina.com 或 https://api.cmburl.cn:8065）
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Configuration.XftOptions.Environment">
+            <summary>
+            环境类型（0=测试环境，1=生产环境）
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Configuration.XftOptions.TimeoutSeconds">
+            <summary>
+            请求超时时间（秒），默认30秒
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Configuration.XftOptions.EnableLogging">
+            <summary>
+            是否启用日志记录，默认true
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Configuration.XftOptions.UsrUid">
+            <summary>
+            用户号（可选，默认AUTO0001）
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Configuration.XftOptions.UsrNbr">
+            <summary>
+            平台用户号（可选，默认A0001）
+            </summary>
+        </member>
+        <member name="M:Ss.CmbXft.Sdk.Configuration.XftOptions.Validate(System.Collections.Generic.List{System.String}@)">
+            <summary>
+            验证配置是否有效
+            </summary>
+            <param name="errors">输出错误信息列表</param>
+            <returns>配置是否有效</returns>
+        </member>
+        <member name="M:Ss.CmbXft.Sdk.Configuration.XftOptions.GetEncryptionKey">
+            <summary>
+            获取加密密钥（AuthoritySecret的前32位）
+            </summary>
+            <returns>加密密钥</returns>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Configuration.XftEnvironment">
+            <summary>
+            环境枚举
+            </summary>
+        </member>
+        <member name="F:Ss.CmbXft.Sdk.Configuration.XftEnvironment.Test">
+            <summary>
+            测试环境
+            </summary>
+        </member>
+        <member name="F:Ss.CmbXft.Sdk.Configuration.XftEnvironment.Production">
+            <summary>
+            生产环境
+            </summary>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Exceptions.XftBusinessException">
+            <summary>
+            薪福通业务异常
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Exceptions.XftBusinessException.ErrorCode">
+            <summary>
+            错误码
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Exceptions.XftBusinessException.ErrorMessage">
+            <summary>
+            错误信息
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Exceptions.XftBusinessException.RawResponse">
+            <summary>
+            原始响应内容
+            </summary>
+        </member>
+        <member name="M:Ss.CmbXft.Sdk.Exceptions.XftBusinessException.#ctor">
+            <summary>
+            初始化 <see cref="T:Ss.CmbXft.Sdk.Exceptions.XftBusinessException"/> 类的新实例
+            </summary>
+        </member>
+        <member name="M:Ss.CmbXft.Sdk.Exceptions.XftBusinessException.#ctor(System.String)">
+            <summary>
+            初始化 <see cref="T:Ss.CmbXft.Sdk.Exceptions.XftBusinessException"/> 类的新实例
+            </summary>
+            <param name="message">错误消息</param>
+        </member>
+        <member name="M:Ss.CmbXft.Sdk.Exceptions.XftBusinessException.#ctor(System.String,System.Exception)">
+            <summary>
+            初始化 <see cref="T:Ss.CmbXft.Sdk.Exceptions.XftBusinessException"/> 类的新实例
+            </summary>
+            <param name="message">错误消息</param>
+            <param name="innerException">内部异常</param>
+        </member>
+        <member name="M:Ss.CmbXft.Sdk.Exceptions.XftBusinessException.#ctor(System.String,System.String,System.String)">
+            <summary>
+            初始化 <see cref="T:Ss.CmbXft.Sdk.Exceptions.XftBusinessException"/> 类的新实例
+            </summary>
+            <param name="errorCode">错误码</param>
+            <param name="errorMessage">错误信息</param>
+            <param name="rawResponse">原始响应内容</param>
+        </member>
+        <member name="M:Ss.CmbXft.Sdk.Exceptions.XftBusinessException.ToString">
+            <summary>
+            返回异常的字符串表示形式
+            </summary>
+            <returns>异常的字符串表示</returns>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Extensions.ServiceCollectionExtensions">
+            <summary>
+            服务集合扩展
+            </summary>
+        </member>
+        <member name="M:Ss.CmbXft.Sdk.Extensions.ServiceCollectionExtensions.AddXftSdk(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Action{Ss.CmbXft.Sdk.Configuration.XftOptions})">
+            <summary>
+            添加薪福通SDK服务
+            </summary>
+            <param name="services">服务集合</param>
+            <param name="setupAction">配置选项设置</param>
+            <returns>服务集合</returns>
+        </member>
+        <member name="M:Ss.CmbXft.Sdk.Extensions.ServiceCollectionExtensions.AddXftSdk(Microsoft.Extensions.DependencyInjection.IServiceCollection,Ss.CmbXft.Sdk.Configuration.XftOptions)">
+            <summary>
+            添加薪福通SDK服务（使用预配置的选项）
+            </summary>
+            <param name="services">服务集合</param>
+            <param name="options">配置选项</param>
+            <returns>服务集合</returns>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Models.ApiResponse`1">
+            <summary>
+            API响应基类
+            </summary>
+            <typeparam name="T">响应数据类型</typeparam>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.ApiResponse`1.ReturnCode">
+            <summary>
+            返回业务码，SUC0000表示接口正常返回
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.ApiResponse`1.ErrorMsg">
+            <summary>
+            错误信息，null表示无错误信息
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.ApiResponse`1.Body">
+            <summary>
+            响应数据
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.ApiResponse`1.ErrorInfo">
+            <summary>
+            错误详情信息
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.ApiResponse`1.IsSuccess">
+            <summary>
+            判断请求是否成功
+            </summary>
+        </member>
+        <member name="M:Ss.CmbXft.Sdk.Models.ApiResponse`1.GetErrorMessage">
+            <summary>
+            获取错误信息（如果失败）
+            </summary>
+            <returns>错误信息字符串</returns>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Models.ApiResponse">
+            <summary>
+            无数据的API响应
+            </summary>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Models.Events.StaffDeleteEvent">
+            <summary>
+            删除员工事件模型
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffDeleteEvent.PrjCod">
+            <summary>
+            企业号
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffDeleteEvent.StfSeq">
+            <summary>
+            员工序号
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffDeleteEvent.OprtSp">
+            <summary>
+            操作时间
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffDeleteEvent.OprUsr">
+            <summary>
+            操作用户
+            </summary>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Models.Events.StaffEvent">
+            <summary>
+            员工事件模型（新增/修改员工事件）
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEvent.TelNbr">
+            <summary>
+            座机号
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEvent.OcrTyp">
+            <summary>
+            其他证件类型
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEvent.MarSts">
+            <summary>
+            是否已婚
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEvent.HomAre">
+            <summary>
+            户籍所在地区/县
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEvent.WrkDdt">
+            <summary>
+            工龄扣减期
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEvent.OthCerType">
+            <summary>
+            其他证件类型(用户版本)
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEvent.UslCty">
+            <summary>
+            现住址市
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEvent.OprUsr">
+            <summary>
+            操作用户
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEvent.StfTyp">
+            <summary>
+            员工类型
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEvent.BnkCty">
+            <summary>
+            开户地市
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEvent.CcsDdt">
+            <summary>
+            司龄扣减期
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEvent.SecAct">
+            <summary>
+            个人社保账号
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEvent.EmpCrp">
+            <summary>
+            工作所属公司
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEvent.JobSeq">
+            <summary>
+            职位编码
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEvent.LnkCty">
+            <summary>
+            联系地城市
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEvent.StfSex">
+            <summary>
+            性别
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEvent.PosNam">
+            <summary>
+            岗位名称
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEvent.RepSup">
+            <summary>
+            汇报上级
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEvent.Update">
+            <summary>
+            更新时间
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEvent.Remark">
+            <summary>
+            备注
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEvent.NatnLt">
+            <summary>
+            国籍/地区
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEvent.MtyNbr">
+            <summary>
+            烈属证号
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEvent.BirDat">
+            <summary>
+            出生日期
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEvent.UsdNam">
+            <summary>
+            曾用名
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEvent.JobRnk">
+            <summary>
+            职级
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEvent.MtySts">
+            <summary>
+            是否烈属
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEvent.BirLad">
+            <summary>
+            出生地
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEvent.SalCar">
+            <summary>
+            工资卡号
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEvent.CerIsL">
+            <summary>
+            证件长期是否有效
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEvent.CorpLd">
+            <summary>
+            计划转正日期
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEvent.HomCty">
+            <summary>
+            户籍所在地城市
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEvent.StfSeq">
+            <summary>
+            员工序号
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEvent.CorpLp">
+            <summary>
+            计划试用期
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEvent.CerTyp">
+            <summary>
+            证件类型
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEvent.WkpSeq">
+            <summary>
+            工作地
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEvent.PosUid">
+            <summary>
+            岗位id
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEvent.BgnDat">
+            <summary>
+            首次工作日期
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEvent.BnkTyp">
+            <summary>
+            开户行
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEvent.JobNam">
+            <summary>
+            职位名称
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEvent.CorRep">
+            <summary>
+            转正述职内容
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEvent.CorDat">
+            <summary>
+            实际转正日期
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEvent.OrgSeq">
+            <summary>
+            部门
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEvent.PosSeq">
+            <summary>
+            岗位code
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEvent.GrpSeq">
+            <summary>
+            业务分组
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEvent.DigWet">
+            <summary>
+            数币钱包ID
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEvent.HomDtl">
+            <summary>
+            户籍所在地详细地址
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEvent.DibNbr">
+            <summary>
+            残疾证号
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEvent.StfSts">
+            <summary>
+            员工状态
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEvent.CcsDat">
+            <summary>
+            司龄开始日期
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEvent.EtrDat">
+            <summary>
+            首次入境日期
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEvent.Nation">
+            <summary>
+            民族
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEvent.Addres">
+            <summary>
+            现住址详细地址
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEvent.CerVal">
+            <summary>
+            证件到期日期
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEvent.LoeSts">
+            <summary>
+            是否残疾
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEvent.StfNbr">
+            <summary>
+            员工号
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEvent.QutFlg">
+            <summary>
+            离职类型
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEvent.UslPrv">
+            <summary>
+            现住址省
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEvent.CerNbr">
+            <summary>
+            证件号码
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEvent.CstRat">
+            <summary>
+            成本分摊比例
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEvent.AfeSts">
+            <summary>
+            是否已育
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEvent.UslDst">
+            <summary>
+            现住址区/县
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEvent.CerLoc">
+            <summary>
+            身份证地址
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEvent.StfNam">
+            <summary>
+            姓名
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEvent.DptDat">
+            <summary>
+            预计离境日期
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEvent.SelEml">
+            <summary>
+            个人邮箱
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEvent.DibSts">
+            <summary>
+            是否残疾
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEvent.BnkPrv">
+            <summary>
+            开户地省份
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEvent.QutCom">
+            <summary>
+            离职备注
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEvent.ChnNam">
+            <summary>
+            中文名
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEvent.CorMak">
+            <summary>
+            转正备注
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEvent.OcrNbr">
+            <summary>
+            其他证件号
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEvent.OrgNam">
+            <summary>
+            部门名称
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEvent.WrkEml">
+            <summary>
+            工作邮箱
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEvent.JobUid">
+            <summary>
+            职位id
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEvent.CorFlg">
+            <summary>
+            转正类型
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEvent.HigSch">
+            <summary>
+            个税最高学历
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEvent.Gender">
+            <summary>
+            性别(用户版本)
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEvent.OprtSp">
+            <summary>
+            事件生成时间
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEvent.QutRes">
+            <summary>
+            离职原因
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEvent.HomTyp">
+            <summary>
+            户口性质
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEvent.PltSts">
+            <summary>
+            政治面貌
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEvent.LnkDst">
+            <summary>
+            联系地址区/县
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEvent.MobNbr">
+            <summary>
+            手机号
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEvent.OprAgn">
+            <summary>
+            运营机构
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEvent.PbtPrd">
+            <summary>
+            实际试用期
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEvent.CertType">
+            <summary>
+            证件类型(用户版本)
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEvent.CorMsg">
+            <summary>
+            转正评价
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEvent.CpsAmt">
+            <summary>
+            赔偿方案
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEvent.HomPrv">
+            <summary>
+            户籍所在地省
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEvent.LnkPrv">
+            <summary>
+            联系地省
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEvent.FunAct">
+            <summary>
+            个人公积金账号
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEvent.LnkAdr">
+            <summary>
+            联系地详细地址
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEvent.PrjCod">
+            <summary>
+            企业号
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEvent.EntDat">
+            <summary>
+            入职日期
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEvent.Cus">
+            <summary>
+            自定义字段信息
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEvent.Con">
+            <summary>
+            合同信息
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEvent.Atp">
+            <summary>
+            兼任信息
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEvent.Edu">
+            <summary>
+            教育经历
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEvent.Certificate">
+            <summary>
+            专业证书
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEvent.Title">
+            <summary>
+            职称
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEvent.Award">
+            <summary>
+            奖惩记录
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEvent.Wrk">
+            <summary>
+            工作经历
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEvent.Family">
+            <summary>
+            家庭成员
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEvent.TaxDetail">
+            <summary>
+            个税申报信息
+            </summary>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Models.Events.StaffEventCustomField">
+            <summary>
+            员工事件-自定义字段信息
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEventCustomField.FldVal">
+            <summary>
+            自定义字段值
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEventCustomField.FldKey">
+            <summary>
+            自定义字段id
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEventCustomField.TrdSeq">
+            <summary>
+            自定义字段流水号
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEventCustomField.ClsKey">
+            <summary>
+            自定义字段所在分组
+            </summary>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Models.Events.StaffEventContract">
+            <summary>
+            员工事件-合同信息
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEventContract.Consts">
+            <summary>
+            合同状态
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEventContract.TraSeq">
+            <summary>
+            合同流水号
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEventContract.EsnSts">
+            <summary>
+            电子签进度
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEventContract.TimLim">
+            <summary>
+            合同期限
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEventContract.NowBgn">
+            <summary>
+            合同起始日
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEventContract.ConTyp">
+            <summary>
+            合同类型
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEventContract.ConNbr">
+            <summary>
+            合同编号
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEventContract.CmpSeq">
+            <summary>
+            合同公司
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEventContract.NowEnd">
+            <summary>
+            合同到期日
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEventContract.SgnTyp">
+            <summary>
+            签署方式
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEventContract.RenTim">
+            <summary>
+            续签次数
+            </summary>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Models.Events.StaffEventAdjunct">
+            <summary>
+            员工事件-兼任信息
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEventAdjunct.AtpSeq">
+            <summary>
+            兼任流水号
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEventAdjunct.AtpPst">
+            <summary>
+            兼任岗位id
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEventAdjunct.AtpPos">
+            <summary>
+            兼任岗位code
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEventAdjunct.AtpOrg">
+            <summary>
+            兼任部门
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEventAdjunct.StfSeq">
+            <summary>
+            员工序号
+            </summary>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Models.Events.StaffEventEducation">
+            <summary>
+            员工事件-教育经历
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEventEducation.GraSch">
+            <summary>
+            毕业院校
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEventEducation.GraDat">
+            <summary>
+            毕业时间
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEventEducation.Majori">
+            <summary>
+            专业
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEventEducation.EduNbr">
+            <summary>
+            教育经历流水号
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEventEducation.BckGrd">
+            <summary>
+            学历
+            </summary>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Models.Events.StaffEventCertificate">
+            <summary>
+            员工事件-专业证书
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEventCertificate.CetNam">
+            <summary>
+            证书名称
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEventCertificate.ValEnd">
+            <summary>
+            有效期到期日
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEventCertificate.IssDat">
+            <summary>
+            发证日期
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEventCertificate.CetSeq">
+            <summary>
+            专业证书流水号
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEventCertificate.CetAut">
+            <summary>
+            证书机构
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEventCertificate.ValSta">
+            <summary>
+            有效期起始日
+            </summary>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Models.Events.StaffEventTitle">
+            <summary>
+            员工事件-职称
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEventTitle.TtlSeq">
+            <summary>
+            职称流水号
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEventTitle.TtlNam">
+            <summary>
+            职称名称
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEventTitle.TtlVel">
+            <summary>
+            职称级别
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEventTitle.RatAgc">
+            <summary>
+            职称评定机构
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEventTitle.GetDat">
+            <summary>
+            职称获得日期
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEventTitle.TtlNbr">
+            <summary>
+            职称证书编号
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEventTitle.HighSt">
+            <summary>
+            是否最高职称
+            </summary>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Models.Events.StaffEventAward">
+            <summary>
+            员工事件-奖惩记录
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEventAward.RprSeq">
+            <summary>
+            奖惩记录流水号
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEventAward.RewPns">
+            <summary>
+            奖惩事项
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEventAward.RecDat">
+            <summary>
+            奖惩时间
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEventAward.CurUnt">
+            <summary>
+            奖惩单位
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEventAward.Detail">
+            <summary>
+            奖惩详情
+            </summary>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Models.Events.StaffEventWork">
+            <summary>
+            员工事件-工作经历
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEventWork.RetMnr">
+            <summary>
+            证明人联系电话
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEventWork.WenDat">
+            <summary>
+            工作结束日期
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEventWork.WrkNbr">
+            <summary>
+            工作经历流水号
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEventWork.WbgDat">
+            <summary>
+            工作开始日期
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEventWork.RetEre">
+            <summary>
+            证明人
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEventWork.LeaSal">
+            <summary>
+            离职薪资
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEventWork.LstPst">
+            <summary>
+            曾任岗位
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEventWork.LeaRea">
+            <summary>
+            过往离职原因
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEventWork.LstCom">
+            <summary>
+            工作单位
+            </summary>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Models.Events.StaffEventFamily">
+            <summary>
+            员工事件-家庭成员
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEventFamily.WrkJob">
+            <summary>
+            职位/岗位
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEventFamily.RltShp">
+            <summary>
+            家庭成员关系
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEventFamily.MbeSeq">
+            <summary>
+            家庭成员流水号
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEventFamily.ConTel">
+            <summary>
+            家庭成员电话
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEventFamily.BirDay">
+            <summary>
+            家庭成员生日
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEventFamily.WrkCom">
+            <summary>
+            现工作单位
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEventFamily.MbeNam">
+            <summary>
+            家庭成员姓名
+            </summary>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Models.Events.StaffEventTaxDetail">
+            <summary>
+            员工事件-个税申报信息
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEventTaxDetail.EmpDat">
+            <summary>
+            任职受雇从业日期
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEventTaxDetail.EmpTyp">
+            <summary>
+            任职受雇从业类型
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEventTaxDetail.InvAmt">
+            <summary>
+            个人投资总额
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEventTaxDetail.InvPrp">
+            <summary>
+            个人投资比例
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEventTaxDetail.KcjCfy">
+            <summary>
+            是否扣除减除费用
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEventTaxDetail.NrmSts">
+            <summary>
+            个税人员状态
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEventTaxDetail.RecSts">
+            <summary>
+            个税状态
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEventTaxDetail.RegSeq">
+            <summary>
+            企业/税局
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEventTaxDetail.RelTyp">
+            <summary>
+            涉税事由
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEventTaxDetail.StfTtl">
+            <summary>
+            职务
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEventTaxDetail.TaxMob">
+            <summary>
+            个税通知手机号
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEventTaxDetail.TaxQdt">
+            <summary>
+            税局离职日期
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEventTaxDetail.TaxRmk">
+            <summary>
+            个税备注
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffEventTaxDetail.WrkFst">
+            <summary>
+            入职年度就业情形
+            </summary>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Models.Events.StaffQuitEvent">
+            <summary>
+            离职管理事件模型
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffQuitEvent.ActionType">
+            <summary>
+            操作类型
+            LAUNCH 办理
+            APPROVE_END 审批结束
+            COF 确认离职
+            EFFECTIVE 生效
+            CANCEL 取消
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffQuitEvent.ApproveStatus">
+            <summary>
+            审批状态
+            WAT 未发起
+            ING 审核中
+            PAS 审核通过
+            RVK 审核撤销
+            REJ 审核否决
+            NPM 没有审批
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffQuitEvent.StaffSeq">
+            <summary>
+            员工序号
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.StaffQuitEvent.TrsSeq">
+            <summary>
+            单据号
+            </summary>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Models.Events.StaffQuitActionType">
+            <summary>
+            离职管理事件操作类型枚举
+            </summary>
+        </member>
+        <member name="F:Ss.CmbXft.Sdk.Models.Events.StaffQuitActionType.Launch">
+            <summary>
+            办理
+            </summary>
+        </member>
+        <member name="F:Ss.CmbXft.Sdk.Models.Events.StaffQuitActionType.ApproveEnd">
+            <summary>
+            审批结束
+            </summary>
+        </member>
+        <member name="F:Ss.CmbXft.Sdk.Models.Events.StaffQuitActionType.Confirm">
+            <summary>
+            确认离职
+            </summary>
+        </member>
+        <member name="F:Ss.CmbXft.Sdk.Models.Events.StaffQuitActionType.Effective">
+            <summary>
+            生效
+            </summary>
+        </member>
+        <member name="F:Ss.CmbXft.Sdk.Models.Events.StaffQuitActionType.Cancel">
+            <summary>
+            取消
+            </summary>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Models.Events.StaffQuitApproveStatus">
+            <summary>
+            离职管理事件审批状态枚举
+            </summary>
+        </member>
+        <member name="F:Ss.CmbXft.Sdk.Models.Events.StaffQuitApproveStatus.NotInitiated">
+            <summary>
+            未发起
+            </summary>
+        </member>
+        <member name="F:Ss.CmbXft.Sdk.Models.Events.StaffQuitApproveStatus.InProgress">
+            <summary>
+            审核中
+            </summary>
+        </member>
+        <member name="F:Ss.CmbXft.Sdk.Models.Events.StaffQuitApproveStatus.Approved">
+            <summary>
+            审核通过
+            </summary>
+        </member>
+        <member name="F:Ss.CmbXft.Sdk.Models.Events.StaffQuitApproveStatus.Revoked">
+            <summary>
+            审核撤销
+            </summary>
+        </member>
+        <member name="F:Ss.CmbXft.Sdk.Models.Events.StaffQuitApproveStatus.Rejected">
+            <summary>
+            审核否决
+            </summary>
+        </member>
+        <member name="F:Ss.CmbXft.Sdk.Models.Events.StaffQuitApproveStatus.NoApproval">
+            <summary>
+            没有审批
+            </summary>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Models.Events.XftEventPushRequest">
+            <summary>
+            薪福通事件推送请求模型
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.XftEventPushRequest.EventId">
+            <summary>
+            事件ID
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.XftEventPushRequest.EventRcdInf">
+            <summary>
+            事件变更信息（JSON字符串）
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.XftEventPushRequest.PrjCod">
+            <summary>
+            企业号（平台类事件没有企业号）
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.XftEventPushRequest.EventTime">
+            <summary>
+            变更时间
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.XftEventPushRequest.EventCd">
+            <summary>
+            事件唯一记录码
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.XftEventPushRequest.BusinessKey">
+            <summary>
+            事件业务码
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.XftEventPushRequest.AppId">
+            <summary>
+            应用ID
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.XftEventPushRequest.Signature">
+            <summary>
+            签名字段
+            </summary>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Models.Events.XftEventResponse">
+            <summary>
+            薪福通事件响应模型
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.XftEventResponse.RtnCod">
+            <summary>
+            返回码：200表示成功
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Events.XftEventResponse.ErrMsg">
+            <summary>
+            错误消息
+            </summary>
+        </member>
+        <member name="M:Ss.CmbXft.Sdk.Models.Events.XftEventResponse.Success">
+            <summary>
+            创建成功响应
+            </summary>
+        </member>
+        <member name="M:Ss.CmbXft.Sdk.Models.Events.XftEventResponse.Fail(System.String)">
+            <summary>
+            创建失败响应
+            </summary>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Models.Organization.OrganizationListRequest">
+            <summary>
+            获取组织列表请求
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Organization.OrganizationListRequest.Codes">
+            <summary>
+            组织编码集合，最大查询个数为2000
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Organization.OrganizationListRequest.Ids">
+            <summary>
+            组织id集合，最大查询个数为2000
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Organization.OrganizationListRequest.Keyword">
+            <summary>
+            搜索关键词
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Organization.OrganizationListRequest.ParentId">
+            <summary>
+            父组织id
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Organization.OrganizationListRequest.Status">
+            <summary>
+            生效状态集合，active-正常，delete-删除，stopped-停用
+            不填时默认查询所有状态，包括已删除
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Organization.OrganizationListRequest.CurrentPage">
+            <summary>
+            当前页，起始页为1；默认值为1，可不传值但不能传空
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Organization.OrganizationListRequest.PageSize">
+            <summary>
+            页大小，最大2000
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Organization.OrganizationListRequest.ExtOptions">
+            <summary>
+            扩展查询选项
+            leader-组织负责人、approver-审批主管、extData-自定义字段、namePath-组织名称全路径、allDisplayOrderNumber-填充所有顺序号、leaf-查询组织是否为叶节点
+            不传值时默认查询组织负责人,审批主管,组织名称全路径，传值时按传值进行选项查询
+            </summary>
+        </member>
+        <member name="M:Ss.CmbXft.Sdk.Models.Organization.OrganizationListRequest.Validate(System.Collections.Generic.List{System.String}@)">
+            <summary>
+            验证请求参数
+            </summary>
+            <param name="errors">错误信息列表</param>
+            <returns>验证是否通过</returns>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Models.Organization.OrganizationListResponseBody">
+            <summary>
+            获取组织列表响应Body
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Organization.OrganizationListResponseBody.CurrentPage">
+            <summary>
+            当前页
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Organization.OrganizationListResponseBody.PageSize">
+            <summary>
+            每页大小
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Organization.OrganizationListResponseBody.TotalSize">
+            <summary>
+            总条数
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Organization.OrganizationListResponseBody.Records">
+            <summary>
+            数据记录
+            </summary>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Models.Organization.OrganizationInfo">
+            <summary>
+            组织信息
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Organization.OrganizationInfo.Id">
+            <summary>
+            组织ID
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Organization.OrganizationInfo.Code">
+            <summary>
+            组织编码
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Organization.OrganizationInfo.EffectiveDate">
+            <summary>
+            生效日期，日期格式：yyyy-MM-dd
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Organization.OrganizationInfo.IdPath">
+            <summary>
+            组织id全路径
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Organization.OrganizationInfo.Name">
+            <summary>
+            组织名称
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Organization.OrganizationInfo.NamePath">
+            <summary>
+            组织名称全路径
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Organization.OrganizationInfo.Number">
+            <summary>
+            机构号
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Organization.OrganizationInfo.OrderNumber">
+            <summary>
+            同级排序序号，小的排在前面
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Organization.OrganizationInfo.ParentCode">
+            <summary>
+            上级组织code
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Organization.OrganizationInfo.ParentId">
+            <summary>
+            上级组织ID
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Organization.OrganizationInfo.Remark">
+            <summary>
+            备注
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Organization.OrganizationInfo.Status">
+            <summary>
+            生效状态，active-正常，delete-删除，stopped-停用
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Organization.OrganizationInfo.Type">
+            <summary>
+            组织类型，G-集团、B-分公司、SP-门店、S-子公司、BD-事业部、D-部门、PT-项目组
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Organization.OrganizationInfo.Leaders">
+            <summary>
+            组织负责人
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Organization.OrganizationInfo.Approvers">
+            <summary>
+            审批主管
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Organization.OrganizationInfo.ExtData">
+            <summary>
+            组织自定义数据
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Organization.OrganizationInfo.IsLeaf">
+            <summary>
+            组织是否为叶节点
+            </summary>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Models.Organization.OrganizationLeader">
+            <summary>
+            组织负责人
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Organization.OrganizationLeader.EnterpriseUserId">
+            <summary>
+            企业用户id
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Organization.OrganizationLeader.Name">
+            <summary>
+            姓名
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Organization.OrganizationLeader.StaffId">
+            <summary>
+            员工id
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Organization.OrganizationLeader.StaffNum">
+            <summary>
+            员工号
+            </summary>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Models.Organization.OrganizationApprover">
+            <summary>
+            审批主管
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Organization.OrganizationApprover.EnterpriseUserId">
+            <summary>
+            企业用户id
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Organization.OrganizationApprover.Name">
+            <summary>
+            姓名
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Organization.OrganizationApprover.StaffId">
+            <summary>
+            员工id
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Organization.OrganizationApprover.StaffNum">
+            <summary>
+            员工号
+            </summary>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Models.Organization.OrganizationExtData">
+            <summary>
+            组织自定义数据
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Organization.OrganizationExtData.Code">
+            <summary>
+            自定义字段编码
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Organization.OrganizationExtData.Name">
+            <summary>
+            自定义字段名称
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Organization.OrganizationExtData.FieldType">
+            <summary>
+            扩展字段类型，NUMBER-数字 DATE-日期 TEXT-文本 SELECT-单选 CHECKBOX-多选 USER_SELECT-选择用户
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Organization.OrganizationExtData.Value">
+            <summary>
+            自定义字段值，类型不固定，可能为数字，日期，字符串，对象，数组
+            </summary>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Models.Position.PositionQueryRequest">
+            <summary>
+            分页查询职位请求
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Position.PositionQueryRequest.SequenceNumbers">
+            <summary>
+            流水号列表，每项最大长度为10，最大1000个
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Position.PositionQueryRequest.JobName">
+            <summary>
+            职位名称，最大长度150，支持模糊查询
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Position.PositionQueryRequest.CodeNumber">
+            <summary>
+            职位编号，最大长度8，支持模糊查询
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Position.PositionQueryRequest.CurrentPage">
+            <summary>
+            当前页数，起始值1，必填
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Position.PositionQueryRequest.PageSize">
+            <summary>
+            每页大小，默认值10，最大支持1000，必填
+            </summary>
+        </member>
+        <member name="M:Ss.CmbXft.Sdk.Models.Position.PositionQueryRequest.Validate(System.Collections.Generic.List{System.String}@)">
+            <summary>
+            验证请求参数
+            </summary>
+            <param name="errors">错误信息列表</param>
+            <returns>验证是否通过</returns>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Models.Position.PositionQueryResponseBody">
+            <summary>
+            分页查询职位响应Body
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Position.PositionQueryResponseBody.CurrentPage">
+            <summary>
+            当前页数，起始值1
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Position.PositionQueryResponseBody.PageSize">
+            <summary>
+            每页大小
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Position.PositionQueryResponseBody.TotalSize">
+            <summary>
+            数据总条数
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Position.PositionQueryResponseBody.Records">
+            <summary>
+            查询数据列表
+            </summary>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Models.Position.PositionInfo">
+            <summary>
+            职位信息
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Position.PositionInfo.SequenceNumber">
+            <summary>
+            职位流水号，最大长度10
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Position.PositionInfo.CodeNumber">
+            <summary>
+            职位编号，最大长度8
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Position.PositionInfo.JobName">
+            <summary>
+            职位名称，最大长度150
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Position.PositionInfo.Remark">
+            <summary>
+            备注，最大长度600
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Position.PositionInfo.OrderNumber">
+            <summary>
+            顺序号
+            </summary>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Models.Post.PostQueryRequest">
+            <summary>
+            分页查询岗位请求
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Post.PostQueryRequest.SequenceNumbers">
+            <summary>
+            流水号列表，每项最大长度为10，最大1000个
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Post.PostQueryRequest.PositionName">
+            <summary>
+            岗位名称，最大长度150，支持模糊查询
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Post.PostQueryRequest.OrganizationIds">
+            <summary>
+            所属组织机构ID，每项最大长度为4，最大1000个
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Post.PostQueryRequest.CodeNumber">
+            <summary>
+            岗位编号，最大长度8，支持模糊查询
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Post.PostQueryRequest.CurrentPage">
+            <summary>
+            当前页数，起始值1，必填
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Post.PostQueryRequest.PageSize">
+            <summary>
+            每页大小，默认值10，最大支持1000，必填
+            </summary>
+        </member>
+        <member name="M:Ss.CmbXft.Sdk.Models.Post.PostQueryRequest.Validate(System.Collections.Generic.List{System.String}@)">
+            <summary>
+            验证请求参数
+            </summary>
+            <param name="errors">错误信息列表</param>
+            <returns>验证是否通过</returns>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Models.Post.PostQueryResponseBody">
+            <summary>
+            分页查询岗位响应Body
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Post.PostQueryResponseBody.CurrentPage">
+            <summary>
+            当前页数，起始值1
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Post.PostQueryResponseBody.PageSize">
+            <summary>
+            每页大小
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Post.PostQueryResponseBody.TotalSize">
+            <summary>
+            数据总条数
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Post.PostQueryResponseBody.Records">
+            <summary>
+            查询数据列表
+            </summary>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Models.Post.PostInfo">
+            <summary>
+            岗位信息
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Post.PostInfo.SequenceNumber">
+            <summary>
+            岗位流水号，最大长度10
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Post.PostInfo.CodeNumber">
+            <summary>
+            岗位编号，最大长度8
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Post.PostInfo.PositionName">
+            <summary>
+            岗位名称，最大长度150
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Post.PostInfo.Organizations">
+            <summary>
+            所属组织机构列表
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Post.PostInfo.Remark">
+            <summary>
+            备注，最大长度600
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Post.PostInfo.OrderNumber">
+            <summary>
+            顺序号，页面查询展示的优先级权重参数，数值越小，排序优先级越高，默认为9999
+            </summary>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Models.Post.PostOrganization">
+            <summary>
+            岗位所属组织机构
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Post.PostOrganization.OrganizationId">
+            <summary>
+            组织ID，最大长度4
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Post.PostOrganization.OrganizationName">
+            <summary>
+            组织名称，最大长度100
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Post.PostOrganization.OrganizationNamePath">
+            <summary>
+            组织名称路径
+            </summary>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Models.Role.RoleListRequest">
+            <summary>
+            获取企业下所有角色请求
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Role.RoleListRequest.CurrentPage">
+            <summary>
+            当前页
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Role.RoleListRequest.PageSize">
+            <summary>
+            每页大小
+            </summary>
+        </member>
+        <member name="M:Ss.CmbXft.Sdk.Models.Role.RoleListRequest.Validate(System.Collections.Generic.List{System.String}@)">
+            <summary>
+            验证请求参数
+            </summary>
+            <param name="errors">错误信息列表</param>
+            <returns>验证是否通过</returns>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Models.Role.RoleListResponseBody">
+            <summary>
+            获取企业下所有角色响应Body
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Role.RoleListResponseBody.CurrentPage">
+            <summary>
+            当前页
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Role.RoleListResponseBody.PageSize">
+            <summary>
+            每页大小
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Role.RoleListResponseBody.TotalSize">
+            <summary>
+            总条数
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Role.RoleListResponseBody.Records">
+            <summary>
+            数据记录
+            </summary>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Models.Role.RoleInfo">
+            <summary>
+            角色信息
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Role.RoleInfo.Code">
+            <summary>
+            角色编号
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Role.RoleInfo.Name">
+            <summary>
+            角色名称
+            </summary>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Models.Staff.CustomFieldInfo">
+            <summary>
+            自定义字段信息
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CustomFieldInfo.ClassKey">
+            <summary>
+            分组key
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CustomFieldInfo.FieldKey">
+            <summary>
+            字段id
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CustomFieldInfo.FieldValue">
+            <summary>
+            字段值
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CustomFieldInfo.BusinessSeq">
+            <summary>
+            业务流水号
+            </summary>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Models.Staff.CreateStaffBasicInfo">
+            <summary>
+            员工基本信息
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffBasicInfo.StfType">
+            <summary>
+            员工类型
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffBasicInfo.StfStatus">
+            <summary>
+            员工状态
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffBasicInfo.StfName">
+            <summary>
+            员工姓名
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffBasicInfo.MobileNumber">
+            <summary>
+            手机号
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffBasicInfo.CertificateType">
+            <summary>
+            证件类型
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffBasicInfo.CertificateNumber">
+            <summary>
+            证件号码
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffBasicInfo.Sex">
+            <summary>
+            性别
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffBasicInfo.Nationality">
+            <summary>
+            国籍/地区
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffBasicInfo.OrgSeq">
+            <summary>
+            部门
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffBasicInfo.PosCode">
+            <summary>
+            岗位编码
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffBasicInfo.JobCode">
+            <summary>
+            职位编码
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffBasicInfo.JobRankSeq">
+            <summary>
+            职级
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffBasicInfo.StfNumber">
+            <summary>
+            员工号
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffBasicInfo.TelephoneNumber">
+            <summary>
+            座机
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffBasicInfo.WorkEmail">
+            <summary>
+            工作邮箱
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffBasicInfo.Remark">
+            <summary>
+            备注
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffBasicInfo.Birthday">
+            <summary>
+            出生日期
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffBasicInfo.HasMarried">
+            <summary>
+            是否已婚
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffBasicInfo.HasNurtured">
+            <summary>
+            是否已育
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffBasicInfo.Nation">
+            <summary>
+            民族
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffBasicInfo.PoliticalAppearance">
+            <summary>
+            政治面貌
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffBasicInfo.PresentAddressProvince">
+            <summary>
+            现住址省
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffBasicInfo.PresentAddressCity">
+            <summary>
+            现住址城市
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffBasicInfo.PresentAddressDistrict">
+            <summary>
+            现住址区/县
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffBasicInfo.PresentAddressDetail">
+            <summary>
+            现住址详细地址
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffBasicInfo.HouseholdAddressProvince">
+            <summary>
+            户籍省
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffBasicInfo.HouseholdAddressCity">
+            <summary>
+            户籍城市
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffBasicInfo.HouseholdAddressDistrict">
+            <summary>
+            户籍区/县
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffBasicInfo.HouseholdAddressDetail">
+            <summary>
+            户籍详细地址
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffBasicInfo.HouseholdType">
+            <summary>
+            户口性质
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffBasicInfo.CertificateAddress">
+            <summary>
+            身份证地址
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffBasicInfo.IsCertificateLongTermEffective">
+            <summary>
+            证件是否长期有效
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffBasicInfo.CertificateValidBeginDate">
+            <summary>
+            证件签发日期
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffBasicInfo.CertificateValidEndDate">
+            <summary>
+            证件到期日期
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffBasicInfo.IndividualEmail">
+            <summary>
+            个人邮箱
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffBasicInfo.FirstWorkDate">
+            <summary>
+            首次工作日期
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffBasicInfo.WorkplaceLocationSeq">
+            <summary>
+            工作地
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffBasicInfo.ContactAddressProvince">
+            <summary>
+            联系地址省
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffBasicInfo.ContactAddressCity">
+            <summary>
+            联系地址城市
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffBasicInfo.ContactAddressDistrict">
+            <summary>
+            联系地址区/县
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffBasicInfo.ContactAddressDetail">
+            <summary>
+            联系地址详细地址
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffBasicInfo.BusinessGroupSeq">
+            <summary>
+            业务分组
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffBasicInfo.FormerName">
+            <summary>
+            曾用名
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffBasicInfo.ReportSuperiorStfSeq">
+            <summary>
+            汇报上级
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffBasicInfo.CustomerFieldInfoList">
+            <summary>
+            自定义字段信息
+            </summary>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Models.Staff.CreateStaffHrmInfo">
+            <summary>
+            员工人事信息
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffHrmInfo.EntryDate">
+            <summary>
+            入职日期
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffHrmInfo.ActutalProbationPeriod">
+            <summary>
+            实际试用期
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffHrmInfo.ActualPositiveDate">
+            <summary>
+            实际转正日期
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffHrmInfo.ActualQuitDate">
+            <summary>
+            实际离职日期
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffHrmInfo.QuitType">
+            <summary>
+            离职类型
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffHrmInfo.QuitReason">
+            <summary>
+            离职原因
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffHrmInfo.ApplyQuitDate">
+            <summary>
+            离职申请日期
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffHrmInfo.PlanQuitDate">
+            <summary>
+            计划离职日期
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffHrmInfo.SalarySettleDate">
+            <summary>
+            薪资结算日期
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffHrmInfo.QuitRemark">
+            <summary>
+            离职备注
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffHrmInfo.InBlackList">
+            <summary>
+            是否加入黑名单
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffHrmInfo.ReasonForBlackList">
+            <summary>
+            加入黑名单备注
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffHrmInfo.ApplyPositiveDate">
+            <summary>
+            申请转正日期
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffHrmInfo.PlanPositiveDate">
+            <summary>
+            计划转正日期
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffHrmInfo.PlanProbationPeriod">
+            <summary>
+            计划试用期
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffHrmInfo.SeniorityBeginDate">
+            <summary>
+            司龄开始日期
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffHrmInfo.CustomerFieldInfoList">
+            <summary>
+            自定义字段信息
+            </summary>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Models.Staff.CreateStaffWagesAndSocialSecurityInfo">
+            <summary>
+            员工薪资社保信息
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffWagesAndSocialSecurityInfo.BankCardAccount">
+            <summary>
+            工资卡号
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffWagesAndSocialSecurityInfo.BankName">
+            <summary>
+            开户行
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffWagesAndSocialSecurityInfo.BankOfProvince">
+            <summary>
+            开户行省
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffWagesAndSocialSecurityInfo.BankOfCity">
+            <summary>
+            开户行市
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffWagesAndSocialSecurityInfo.DigitalWallet">
+            <summary>
+            数币钱包
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffWagesAndSocialSecurityInfo.DigitalBank">
+            <summary>
+            数币银行
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffWagesAndSocialSecurityInfo.SocialSecurityAccount">
+            <summary>
+            个人社保账号
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffWagesAndSocialSecurityInfo.AccumulationFundAccount">
+            <summary>
+            个人公积金账号
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffWagesAndSocialSecurityInfo.CustomerFieldInfoList">
+            <summary>
+            自定义字段信息
+            </summary>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Models.Staff.CreateStaffEmergencyContact">
+            <summary>
+            员工紧急联系人
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffEmergencyContact.ContactName">
+            <summary>
+            紧急联系人
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffEmergencyContact.ContactTelephoneNumber">
+            <summary>
+            紧急联系人电话
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffEmergencyContact.CustomerFieldInfoList">
+            <summary>
+            自定义字段信息
+            </summary>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Models.Staff.CreateStaffAwardInfo">
+            <summary>
+            员工奖惩信息
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffAwardInfo.RewardAndPunishmentMatters">
+            <summary>
+            奖惩事项
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffAwardInfo.RewardAndPunishmentDate">
+            <summary>
+            奖惩时间
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffAwardInfo.RewardAndPunishmentCompany">
+            <summary>
+            奖惩单位
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffAwardInfo.RewardAndPunishmentDetail">
+            <summary>
+            奖惩详情
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffAwardInfo.CustomerFieldInfoList">
+            <summary>
+            自定义字段信息
+            </summary>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Models.Staff.CreateStaffWorkInfo">
+            <summary>
+            员工工作经历
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffWorkInfo.LastCompanyName">
+            <summary>
+            工作单位
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffWorkInfo.LastPositionName">
+            <summary>
+            曾任岗位
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffWorkInfo.WorkBeginDate">
+            <summary>
+            工作开始日期
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffWorkInfo.WorkEndDate">
+            <summary>
+            工作结束日期
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffWorkInfo.ProverName">
+            <summary>
+            证明人
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffWorkInfo.ProverTelephoneNumber">
+            <summary>
+            证明人联系电话
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffWorkInfo.LeaveReason">
+            <summary>
+            过往离职原因
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffWorkInfo.LeaveSalary">
+            <summary>
+            离职薪资
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffWorkInfo.CustomerFieldInfoList">
+            <summary>
+            自定义字段信息
+            </summary>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Models.Staff.CreateStaffEducationInfo">
+            <summary>
+            员工教育经历
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffEducationInfo.GraduateSchool">
+            <summary>
+            毕业院校
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffEducationInfo.Degree">
+            <summary>
+            学历
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffEducationInfo.Specialty">
+            <summary>
+            专业
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffEducationInfo.GraduateDate">
+            <summary>
+            毕业日期
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffEducationInfo.CustomerFieldInfoList">
+            <summary>
+            自定义字段信息
+            </summary>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Models.Staff.CreateStaffCertificateInfo">
+            <summary>
+            员工专业证书
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffCertificateInfo.CertificateName">
+            <summary>
+            证书名称
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffCertificateInfo.IssuingAuthority">
+            <summary>
+            证书机构
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffCertificateInfo.IssuingDate">
+            <summary>
+            发证日期
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffCertificateInfo.ValidBeginDate">
+            <summary>
+            有效期起始日
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffCertificateInfo.ValidEndDate">
+            <summary>
+            有效期到期日
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffCertificateInfo.CustomerFieldInfoList">
+            <summary>
+            自定义字段信息
+            </summary>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Models.Staff.CreateStaffJobTitleInfo">
+            <summary>
+            员工职称信息
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffJobTitleInfo.TitleName">
+            <summary>
+            职称名称
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffJobTitleInfo.TitleLevel">
+            <summary>
+            职称级别
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffJobTitleInfo.AssessmentAuthority">
+            <summary>
+            职称评定机构
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffJobTitleInfo.ObtainDate">
+            <summary>
+            职称获得日期
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffJobTitleInfo.TitleCertificateNumber">
+            <summary>
+            职称证书编号
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffJobTitleInfo.IsHighestTitle">
+            <summary>
+            是否最高职称
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffJobTitleInfo.CustomerFieldInfoList">
+            <summary>
+            自定义字段信息
+            </summary>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Models.Staff.CreateStaffFamilyMemberInfo">
+            <summary>
+            员工家庭成员
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffFamilyMemberInfo.Relation">
+            <summary>
+            家庭成员关系
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffFamilyMemberInfo.Name">
+            <summary>
+            家庭成员姓名
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffFamilyMemberInfo.BirthDate">
+            <summary>
+            家庭成员生日
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffFamilyMemberInfo.CurrentWorkCompany">
+            <summary>
+            现工作单位
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffFamilyMemberInfo.Position">
+            <summary>
+            职位/岗位
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffFamilyMemberInfo.ContactNumber">
+            <summary>
+            家庭成员电话
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffFamilyMemberInfo.CustomerFieldInfoList">
+            <summary>
+            自定义字段信息
+            </summary>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Models.Staff.CreateStaffAdjunctInfo">
+            <summary>
+            员工兼任信息
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffAdjunctInfo.AdjunctOrgSeq">
+            <summary>
+            兼任部门
+            </summary>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Models.Staff.AttachmentInfo">
+            <summary>
+            附件信息
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.AttachmentInfo.AttachmentFieldKey">
+            <summary>
+            附件字段key
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.AttachmentInfo.InnerSeq">
+            <summary>
+            内部序号
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.AttachmentInfo.AttachmentId">
+            <summary>
+            附件文件id
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.AttachmentInfo.AttachmentName">
+            <summary>
+            附件文件名称
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.AttachmentInfo.BusinessNumber">
+            <summary>
+            业务流水号
+            </summary>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Models.Staff.CreateStaffContractInfo">
+            <summary>
+            员工合同信息
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffContractInfo.ContractCompany">
+            <summary>
+            合同公司
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffContractInfo.ContractNumber">
+            <summary>
+            合同编号
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffContractInfo.ContractType">
+            <summary>
+            合同类型
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffContractInfo.ContractDuration">
+            <summary>
+            合同期限
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffContractInfo.ContractBeginDate">
+            <summary>
+            合同起始日
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffContractInfo.ContractEndDate">
+            <summary>
+            合同到期日
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffContractInfo.CustomerFieldInfoList">
+            <summary>
+            自定义字段信息
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffContractInfo.AttachmentInfoList">
+            <summary>
+            附件信息
+            </summary>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Models.Staff.CreateStaffRequestItem">
+            <summary>
+            创建员工请求项
+            </summary>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Models.Staff.CreateStaffRequest">
+            <summary>
+            创建员工请求
+            </summary>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Models.Staff.CreateStaffResultItem">
+            <summary>
+            创建员工结果项
+            </summary>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Models.Staff.CreateStaffResponseBody">
+            <summary>
+            创建员工响应体
+            </summary>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Models.Staff.DataDictionaryQueryItem">
+            <summary>
+            员工数据字典查询请求项
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.DataDictionaryQueryItem.QueryType">
+            <summary>
+            查询类型
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.DataDictionaryQueryItem.OpenStatus">
+            <summary>
+            开启状态（可选）
+            </summary>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Models.Staff.DataDictionaryQueryRequest">
+            <summary>
+            员工数据字典查询请求
+            </summary>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Models.Staff.DataDictionaryItem">
+            <summary>
+            数据字典项
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.DataDictionaryItem.Id">
+            <summary>
+            ID
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.DataDictionaryItem.BelongingId">
+            <summary>
+            归属ID
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.DataDictionaryItem.Code">
+            <summary>
+            编码
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.DataDictionaryItem.Name">
+            <summary>
+            名称
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.DataDictionaryItem.OrderNumber">
+            <summary>
+            排序号
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.DataDictionaryItem.UpperId">
+            <summary>
+            上级ID
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.DataDictionaryItem.OpenStatus">
+            <summary>
+            开启状态
+            </summary>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Models.Staff.DataDictionaryQueryResultItem">
+            <summary>
+            数据字典查询结果项
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.DataDictionaryQueryResultItem.QueryType">
+            <summary>
+            查询类型
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.DataDictionaryQueryResultItem.DataList">
+            <summary>
+            数据列表
+            </summary>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Models.Staff.DataDictionaryQueryResponseBody">
+            <summary>
+            员工数据字典查询响应体
+            </summary>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Models.Staff.DeleteStaffRequest">
+            <summary>
+            删除员工请求
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.DeleteStaffRequest.StfSeqList">
+            <summary>
+            员工序号集合
+            </summary>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Models.Staff.DeleteStaffError">
+            <summary>
+            删除员工错误信息
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.DeleteStaffError.VerifyType">
+            <summary>
+            校验类型
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.DeleteStaffError.ErrorMessage">
+            <summary>
+            错误信息
+            </summary>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Models.Staff.DeleteStaffResultItem">
+            <summary>
+            删除员工结果项
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.DeleteStaffResultItem.StfSeq">
+            <summary>
+            员工序号
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.DeleteStaffResultItem.ErrorList">
+            <summary>
+            错误列表
+            </summary>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Models.Staff.DeleteStaffResponseBody">
+            <summary>
+            删除员工响应体
+            </summary>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Models.Staff.EditStaffBasicInfo">
+            <summary>
+            编辑员工基本信息
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.EditStaffBasicInfo.StfSeq">
+            <summary>
+            员工序号（必填）
+            </summary>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Models.Staff.EditStaffRequestItem">
+            <summary>
+            编辑员工请求项
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.EditStaffRequestItem.StaffBasicInfo">
+            <summary>
+            员工基本信息、员工个人信息
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.EditStaffRequestItem.StaffHrmInfo">
+            <summary>
+            员工在职信息、离职信息
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.EditStaffRequestItem.StaffWagesAndSocialSecurityInfo">
+            <summary>
+            员工工资社保
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.EditStaffRequestItem.StaffEmergencyContact">
+            <summary>
+            员工紧急联系人信息
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.EditStaffRequestItem.StaffTaxBasicInfo">
+            <summary>
+            员工个税基础信息
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.EditStaffRequestItem.StaffAwardInfoList">
+            <summary>
+            员工奖惩记录信息
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.EditStaffRequestItem.StaffWorkInfoList">
+            <summary>
+            员工工作经历信息
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.EditStaffRequestItem.StaffEducationInfoList">
+            <summary>
+            员工教育经历信息
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.EditStaffRequestItem.StaffCertificateInfoList">
+            <summary>
+            员工专业证书信息
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.EditStaffRequestItem.StaffJobTitleInfoList">
+            <summary>
+            员工职称信息
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.EditStaffRequestItem.StaffFamilyMemberInfoList">
+            <summary>
+            员工家庭成员信息
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.EditStaffRequestItem.StaffTaxDeclarationInfoList">
+            <summary>
+            员工个税申报信息
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.EditStaffRequestItem.StaffAdjunctInfoList">
+            <summary>
+            员工兼任信息
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.EditStaffRequestItem.CustomerFieldInfoList">
+            <summary>
+            员工自定义分组信息
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.EditStaffRequestItem.StaffContractInfoList">
+            <summary>
+            员工合同信息
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.EditStaffRequestItem.StaffAttachmentInfoList">
+            <summary>
+            员工个人材料附件信息
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.EditStaffRequestItem.StaffTrainRecordInfoList">
+            <summary>
+            培训记录
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.EditStaffRequestItem.StaffPerformanceInfoList">
+            <summary>
+            绩效考核
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.EditStaffRequestItem.MultiGroupUpdateFlag">
+            <summary>
+            多记录分组更新方式标志
+            </summary>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Models.Staff.EditStaffRequest">
+            <summary>
+            编辑员工请求
+            </summary>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Models.Staff.EditStaffAwardInfo">
+            <summary>
+            编辑员工奖惩记录信息
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.EditStaffAwardInfo.TradeSeq">
+            <summary>
+            奖惩记录流水号
+            </summary>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Models.Staff.EditStaffWorkInfo">
+            <summary>
+            编辑员工工作经历信息
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.EditStaffWorkInfo.TradeSeq">
+            <summary>
+            工作经历流水号
+            </summary>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Models.Staff.EditStaffEducationInfo">
+            <summary>
+            编辑员工教育经历信息
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.EditStaffEducationInfo.TradeSeq">
+            <summary>
+            教育经历流水号
+            </summary>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Models.Staff.EditStaffCertificateInfo">
+            <summary>
+            编辑员工专业证书信息
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.EditStaffCertificateInfo.TradeSeq">
+            <summary>
+            专业证书流水号
+            </summary>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Models.Staff.EditStaffJobTitleInfo">
+            <summary>
+            编辑员工职称信息
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.EditStaffJobTitleInfo.TradeSeq">
+            <summary>
+            职称流水号
+            </summary>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Models.Staff.EditStaffFamilyMemberInfo">
+            <summary>
+            编辑员工家庭成员信息
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.EditStaffFamilyMemberInfo.TradeSeq">
+            <summary>
+            家庭成员流水号
+            </summary>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Models.Staff.EditStaffTaxDeclarationInfo">
+            <summary>
+            编辑员工个税申报信息
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.EditStaffTaxDeclarationInfo.RegisterSequence">
+            <summary>
+            税局登记序号
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.EditStaffTaxDeclarationInfo.EmployedType">
+            <summary>
+            任职受雇类型
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.EditStaffTaxDeclarationInfo.EmployedDate">
+            <summary>
+            受雇日期
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.EditStaffTaxDeclarationInfo.EmploymentSituation">
+            <summary>
+            入职年度就业情形
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.EditStaffTaxDeclarationInfo.PersonnelState">
+            <summary>
+            人员状态
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.EditStaffTaxDeclarationInfo.Duty">
+            <summary>
+            职务
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.EditStaffTaxDeclarationInfo.TaxRemark">
+            <summary>
+            税局员工备注
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.EditStaffTaxDeclarationInfo.TaxOfficeQuitDate">
+            <summary>
+            税局离职日期
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.EditStaffTaxDeclarationInfo.TaxRelatedReason">
+            <summary>
+            涉税事由
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.EditStaffTaxDeclarationInfo.TotalPersonalInvestment">
+            <summary>
+            个人投资总额
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.EditStaffTaxDeclarationInfo.IndividualInvestmentPercentage">
+            <summary>
+            个人投资比例
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.EditStaffTaxDeclarationInfo.IsDeductionsDeducted">
+            <summary>
+            是否扣除减除费用
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.EditStaffTaxDeclarationInfo.TaxMobileNumber">
+            <summary>
+            个税通知手机号
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.EditStaffTaxDeclarationInfo.OtherEmployeeTypeNote">
+            <summary>
+            其他情况说明
+            </summary>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Models.Staff.EditStaffAdjunctInfo">
+            <summary>
+            编辑员工兼任信息
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.EditStaffAdjunctInfo.TradeSeq">
+            <summary>
+            兼任信息流水号
+            </summary>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Models.Staff.EditCustomFieldInfo">
+            <summary>
+            编辑员工自定义分组信息
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.EditCustomFieldInfo.AttachmentFieldInnerSeq">
+            <summary>
+            自定义分组自定义附件序号
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.EditCustomFieldInfo.AttachmentFieldName">
+            <summary>
+            自定义分组自定义附件文件名
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.EditCustomFieldInfo.BusinessSeq">
+            <summary>
+            自定义分组业务流水号
+            </summary>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Models.Staff.EditStaffContractInfo">
+            <summary>
+            编辑员工合同信息
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.EditStaffContractInfo.TradeSeq">
+            <summary>
+            合同流水号
+            </summary>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Models.Staff.EditStaffTrainRecordInfo">
+            <summary>
+            编辑员工培训记录
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.EditStaffTrainRecordInfo.CourseName">
+            <summary>
+            课程名称
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.EditStaffTrainRecordInfo.CourseNumber">
+            <summary>
+            课程编号
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.EditStaffTrainRecordInfo.TrainType">
+            <summary>
+            培训类型
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.EditStaffTrainRecordInfo.TrainWay">
+            <summary>
+            培训方式
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.EditStaffTrainRecordInfo.TrainInstitution">
+            <summary>
+            培训机构
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.EditStaffTrainRecordInfo.Lecturer">
+            <summary>
+            讲师
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.EditStaffTrainRecordInfo.TrainBegin">
+            <summary>
+            培训开始日期
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.EditStaffTrainRecordInfo.TrainEnd">
+            <summary>
+            培训结束日期
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.EditStaffTrainRecordInfo.TrainLocation">
+            <summary>
+            培训地点
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.EditStaffTrainRecordInfo.ExamDate">
+            <summary>
+            考试时间
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.EditStaffTrainRecordInfo.ExamResult">
+            <summary>
+            考试结果
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.EditStaffTrainRecordInfo.TradeSeq">
+            <summary>
+            培训记录流水号
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.EditStaffTrainRecordInfo.CustomerFieldInfoList">
+            <summary>
+            自定义字段信息
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.EditStaffTrainRecordInfo.AttachmentInfoList">
+            <summary>
+            培训记录附件
+            </summary>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Models.Staff.EditStaffPerformanceInfo">
+            <summary>
+            编辑员工绩效考核
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.EditStaffPerformanceInfo.PerformanceCycle">
+            <summary>
+            绩效考核周期
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.EditStaffPerformanceInfo.PerformanceEvaluator">
+            <summary>
+            绩效考核人
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.EditStaffPerformanceInfo.PerformanceScore">
+            <summary>
+            绩效考核评分
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.EditStaffPerformanceInfo.PerformanceLevel">
+            <summary>
+            绩效考核等级
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.EditStaffPerformanceInfo.PerformanceComments">
+            <summary>
+            绩效考核评语
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.EditStaffPerformanceInfo.TradeSeq">
+            <summary>
+            绩效考核流水号
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.EditStaffPerformanceInfo.CustomerFieldInfoList">
+            <summary>
+            自定义字段信息
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.EditStaffPerformanceInfo.AttachmentInfoList">
+            <summary>
+            绩效考核附件
+            </summary>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Models.Staff.CreateStaffTaxBasicInfo">
+            <summary>
+            创建员工个税基础信息
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffTaxBasicInfo.OtherCertificateType">
+            <summary>
+            其他证件类型
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffTaxBasicInfo.OtherCertificateNumber">
+            <summary>
+            其他证件号码
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffTaxBasicInfo.BirthLand">
+            <summary>
+            出生地
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffTaxBasicInfo.ChineseName">
+            <summary>
+            中文名
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffTaxBasicInfo.FirstInboundDate">
+            <summary>
+            首次入境日期
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffTaxBasicInfo.PlanOutboundDate">
+            <summary>
+            预计离境日期
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffTaxBasicInfo.HighestDegree">
+            <summary>
+            最高学历
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffTaxBasicInfo.IsDisabled">
+            <summary>
+            是否残疾
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffTaxBasicInfo.IsMartyr">
+            <summary>
+            是否烈属
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffTaxBasicInfo.IsLonelyAndOld">
+            <summary>
+            是否孤老
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffTaxBasicInfo.DisabilityCertificateType">
+            <summary>
+            残疾证类型
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffTaxBasicInfo.DisabilityCertificateNumber">
+            <summary>
+            残疾证号
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CreateStaffTaxBasicInfo.MartyrCertificateNumber">
+            <summary>
+            烈属证号
+            </summary>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Models.Staff.EditStaffResultItem">
+            <summary>
+            编辑员工结果项
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.EditStaffResultItem.StfSeq">
+            <summary>
+            员工序号
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.EditStaffResultItem.CertificateType">
+            <summary>
+            证件类型
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.EditStaffResultItem.CertificateNumber">
+            <summary>
+            证件号
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.EditStaffResultItem.ErrorMessage">
+            <summary>
+            校验信息
+            </summary>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Models.Staff.EditStaffResponseBody">
+            <summary>
+            编辑员工响应体
+            </summary>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Models.Staff.QueryMethod">
+            <summary>
+            查询方式枚举
+            </summary>
+        </member>
+        <member name="F:Ss.CmbXft.Sdk.Models.Staff.QueryMethod.Equal">
+            <summary>
+            等值查询
+            </summary>
+        </member>
+        <member name="F:Ss.CmbXft.Sdk.Models.Staff.QueryMethod.Fuzzy">
+            <summary>
+            模糊查询
+            </summary>
+        </member>
+        <member name="F:Ss.CmbXft.Sdk.Models.Staff.QueryMethod.Range">
+            <summary>
+            范围查询
+            </summary>
+        </member>
+        <member name="F:Ss.CmbXft.Sdk.Models.Staff.QueryMethod.Date">
+            <summary>
+            日期查询
+            </summary>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Models.Staff.QueryFilter">
+            <summary>
+            查询条件
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.QueryFilter.FieldKey">
+            <summary>
+            查询条件的字段id，例如根据员工序号查询，则传stfSeq即可
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.QueryFilter.FieldQueryMethod">
+            <summary>
+            查询方式
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.QueryFilter.FieldValue">
+            <summary>
+            查询条件字段值
+            </summary>
+        </member>
+        <member name="M:Ss.CmbXft.Sdk.Models.Staff.QueryFilter.#ctor">
+            <summary>
+            初始化 <see cref="T:Ss.CmbXft.Sdk.Models.Staff.QueryFilter"/> 类的新实例
+            </summary>
+        </member>
+        <member name="M:Ss.CmbXft.Sdk.Models.Staff.QueryFilter.#ctor(System.String,Ss.CmbXft.Sdk.Models.Staff.QueryMethod,System.String)">
+            <summary>
+            初始化 <see cref="T:Ss.CmbXft.Sdk.Models.Staff.QueryFilter"/> 类的新实例
+            </summary>
+            <param name="fieldKey">字段键</param>
+            <param name="method">查询方式</param>
+            <param name="fieldValue">字段值</param>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Models.Staff.QueryResultType">
+            <summary>
+            查询结果类型
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.QueryResultType.QueryType">
+            <summary>
+            查询类型：FIELD-按字段查询；GROUP-按分组查询
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.QueryResultType.QueryClassKeyList">
+            <summary>
+            当查询类型为GROUP时，请在该参数内传入要查询的分组key
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.QueryResultType.QueryFieldList">
+            <summary>
+            当查询类型为FIELD时，请在该参数内传入要查询的字段id
+            </summary>
+        </member>
+        <member name="M:Ss.CmbXft.Sdk.Models.Staff.QueryResultType.#ctor">
+            <summary>
+            初始化 <see cref="T:Ss.CmbXft.Sdk.Models.Staff.QueryResultType"/> 类的新实例
+            </summary>
+        </member>
+        <member name="M:Ss.CmbXft.Sdk.Models.Staff.QueryResultType.CreateGroupQuery(System.String[])">
+            <summary>
+            创建分组查询
+            </summary>
+            <param name="classKeys">分组键列表</param>
+            <returns>查询结果类型</returns>
+        </member>
+        <member name="M:Ss.CmbXft.Sdk.Models.Staff.QueryResultType.CreateFieldQuery(System.String[])">
+            <summary>
+            创建字段查询
+            </summary>
+            <param name="fieldKeys">字段键列表</param>
+            <returns>查询结果类型</returns>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Models.Staff.StaffQueryRequest">
+            <summary>
+            员工信息查询请求
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffQueryRequest.QueryFilterList">
+            <summary>
+            查询条件对象，最多支持10个条件的与查询
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffQueryRequest.QueryResultType">
+            <summary>
+            查询类型
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffQueryRequest.CurrentPage">
+            <summary>
+            当前页，起始从1开始
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffQueryRequest.PageSize">
+            <summary>
+            每页查询数量，最大支持1000笔数据
+            </summary>
+        </member>
+        <member name="M:Ss.CmbXft.Sdk.Models.Staff.StaffQueryRequest.Validate(System.Collections.Generic.List{System.String}@)">
+            <summary>
+            验证请求参数
+            </summary>
+            <param name="errors">输出错误信息列表</param>
+            <returns>请求参数是否有效</returns>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Models.Staff.StaffQueryResponseBody">
+            <summary>
+            员工信息查询响应Body
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffQueryResponseBody.CurrentPage">
+            <summary>
+            当前页
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffQueryResponseBody.PageSize">
+            <summary>
+            每页查询数量
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffQueryResponseBody.TotalSize">
+            <summary>
+            数据总量
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffQueryResponseBody.Records">
+            <summary>
+            查询结果
+            </summary>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Models.Staff.StaffInfo">
+            <summary>
+            员工信息
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffInfo.StaffSeq">
+            <summary>
+            员工序号
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffInfo.StaffBasicInfo">
+            <summary>
+            基本信息、个人信息
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffInfo.StaffHrmInfo">
+            <summary>
+            在职分组、离职分组
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffInfo.StaffWagesAndSocialSecurityInfo">
+            <summary>
+            工资社保
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffInfo.StaffEmergencyContact">
+            <summary>
+            紧急联系人
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffInfo.StaffGroupServiceInfo">
+            <summary>
+            集团服务信息
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffInfo.StaffTaxBasicInfo">
+            <summary>
+            个税基础信息
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffInfo.StaffAwardInfoList">
+            <summary>
+            奖惩记录
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffInfo.StaffWorkInfoList">
+            <summary>
+            工作经历
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffInfo.StaffEducationInfoList">
+            <summary>
+            教育经历
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffInfo.StaffCertificateInfoList">
+            <summary>
+            专业证书
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffInfo.StaffJobTitleInfoList">
+            <summary>
+            职称
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffInfo.StaffFamilyMemberInfoList">
+            <summary>
+            家庭成员
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffInfo.StaffAdjunctInfoList">
+            <summary>
+            兼任信息
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffInfo.StaffAttachmentInfoList">
+            <summary>
+            个人材料
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffInfo.StaffContractInfoList">
+            <summary>
+            合同信息
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffInfo.StaffTaxDeclarationInfoList">
+            <summary>
+            个税申报信息
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffInfo.StaffTrainRecordInfoList">
+            <summary>
+            培训记录
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffInfo.StaffPerformanceInfoList">
+            <summary>
+            绩效考核
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffInfo.CustomerFieldInfoList">
+            <summary>
+            自定义字段信息
+            </summary>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Models.Staff.StaffBasicInfo">
+            <summary>
+            基本信息、个人信息
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffBasicInfo.EnterpriseId">
+            <summary>
+            企业号
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffBasicInfo.StfSeq">
+            <summary>
+            员工序号
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffBasicInfo.StfType">
+            <summary>
+            员工类型
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffBasicInfo.StfStatus">
+            <summary>
+            员工状态
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffBasicInfo.StfName">
+            <summary>
+            员工姓名
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffBasicInfo.MobileNumber">
+            <summary>
+            手机号
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffBasicInfo.CertificateType">
+            <summary>
+            证件类型
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffBasicInfo.CertificateNumber">
+            <summary>
+            证件号码
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffBasicInfo.Sex">
+            <summary>
+            性别
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffBasicInfo.Nationality">
+            <summary>
+            国籍/地区
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffBasicInfo.OrgSeq">
+            <summary>
+            部门
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffBasicInfo.PosCode">
+            <summary>
+            岗位编号
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffBasicInfo.JobCode">
+            <summary>
+            职位编号
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffBasicInfo.JobRankSeq">
+            <summary>
+            职级
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffBasicInfo.StfNumber">
+            <summary>
+            员工号
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffBasicInfo.TelephoneNumber">
+            <summary>
+            座机
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffBasicInfo.WorkEmail">
+            <summary>
+            工作邮箱
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffBasicInfo.Remark">
+            <summary>
+            备注
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffBasicInfo.Birthday">
+            <summary>
+            出生日期
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffBasicInfo.HasMarried">
+            <summary>
+            婚姻状态
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffBasicInfo.HasNurtured">
+            <summary>
+            是否已育
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffBasicInfo.Nation">
+            <summary>
+            民族
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffBasicInfo.PoliticalAppearance">
+            <summary>
+            政治面貌
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffBasicInfo.PresentAddressProvince">
+            <summary>
+            现住址省
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffBasicInfo.PresentAddressCity">
+            <summary>
+            现住址城市
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffBasicInfo.PresentAddressDistrict">
+            <summary>
+            现住址区/县
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffBasicInfo.PresentAddressDetail">
+            <summary>
+            现住址详细地址
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffBasicInfo.HouseholdAddressProvince">
+            <summary>
+            户籍省
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffBasicInfo.HouseholdAddressCity">
+            <summary>
+            户籍城市
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffBasicInfo.HouseholdAddressDistrict">
+            <summary>
+            户籍区/县
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffBasicInfo.HouseholdAddressDetail">
+            <summary>
+            户籍详细地址
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffBasicInfo.HouseholdType">
+            <summary>
+            户口性质
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffBasicInfo.CertificateAddress">
+            <summary>
+            身份证地址
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffBasicInfo.IsCertificateLongTermEffective">
+            <summary>
+            证件是否长期有效
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffBasicInfo.CertificateValidBeginDate">
+            <summary>
+            证件签发日期
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffBasicInfo.CertificateValidEndDate">
+            <summary>
+            证件到期日期
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffBasicInfo.IndividualEmail">
+            <summary>
+            个人邮箱
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffBasicInfo.FirstWorkDate">
+            <summary>
+            首次工作日期
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffBasicInfo.WorkYearDeduction">
+            <summary>
+            工龄扣减期
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffBasicInfo.WorkplaceLocationSeq">
+            <summary>
+            工作地
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffBasicInfo.ContactAddressProvince">
+            <summary>
+            联系地址省
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffBasicInfo.ContactAddressCity">
+            <summary>
+            联系地址城市
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffBasicInfo.ContactAddressDistrict">
+            <summary>
+            联系地址区/县
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffBasicInfo.ContactAddressDetail">
+            <summary>
+            联系地址详细地址
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffBasicInfo.BusinessGroupSeq">
+            <summary>
+            业务分组
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffBasicInfo.FormerName">
+            <summary>
+            曾用名
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffBasicInfo.ReportSuperiorStfSeq">
+            <summary>
+            汇报上级
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffBasicInfo.PosId">
+            <summary>
+            岗位id
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffBasicInfo.JobId">
+            <summary>
+            职位id
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffBasicInfo.CostCenter">
+            <summary>
+            成本中心
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffBasicInfo.CostAllocationRatio">
+            <summary>
+            成本分摊比例
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffBasicInfo.EmployerCorporation">
+            <summary>
+            工作所属公司
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffBasicInfo.CustomerFieldInfoList">
+            <summary>
+            自定义字段信息
+            </summary>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Models.Staff.StaffHrmInfo">
+            <summary>
+            在职分组、离职分组
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffHrmInfo.EntryDate">
+            <summary>
+            入职日期
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffHrmInfo.ProbationPeriod">
+            <summary>
+            实际试用期
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffHrmInfo.PlanPositiveDate">
+            <summary>
+            计划转正日期
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffHrmInfo.OnJobGroupSeq">
+            <summary>
+            在职分组
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffHrmInfo.LeaveJobGroupSeq">
+            <summary>
+            离职分组
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffHrmInfo.ActutalProbationPeriod">
+            <summary>
+            实际试用期
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffHrmInfo.ActualPositiveDate">
+            <summary>
+            实际转正日期
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffHrmInfo.ActualQuitDate">
+            <summary>
+            实际离职日期
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffHrmInfo.QuitType">
+            <summary>
+            离职类型
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffHrmInfo.QuitReason">
+            <summary>
+            离职原因
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffHrmInfo.ApplyQuitDate">
+            <summary>
+            离职申请日期
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffHrmInfo.PlanQuitDate">
+            <summary>
+            计划离职日期
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffHrmInfo.SalarySettleDate">
+            <summary>
+            薪资结算日期
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffHrmInfo.QuitRemark">
+            <summary>
+            离职备注
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffHrmInfo.InBlackList">
+            <summary>
+            是否加入黑名单
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffHrmInfo.ReasonForBlackList">
+            <summary>
+            加入黑名单备注
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffHrmInfo.ApplyPositiveDate">
+            <summary>
+            申请转正日期
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffHrmInfo.PlanProbationPeriod">
+            <summary>
+            计划试用期
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffHrmInfo.SeniorityBeginDate">
+            <summary>
+            司龄开始日期
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffHrmInfo.SeniorityDeduction">
+            <summary>
+            司龄扣减期
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffHrmInfo.ReEntry">
+            <summary>
+            是否重入职
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffHrmInfo.StaffRecordOrder">
+            <summary>
+            员工记录序号
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffHrmInfo.CustomerFieldInfoList">
+            <summary>
+            自定义字段信息
+            </summary>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Models.Staff.StaffWagesAndSocialSecurityInfo">
+            <summary>
+            工资社保
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffWagesAndSocialSecurityInfo.BankCardAccount">
+            <summary>
+            工资卡号
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffWagesAndSocialSecurityInfo.BankName">
+            <summary>
+            开户行
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffWagesAndSocialSecurityInfo.BankOfProvince">
+            <summary>
+            开户行省
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffWagesAndSocialSecurityInfo.BankOfCity">
+            <summary>
+            开户行市
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffWagesAndSocialSecurityInfo.StfSeq">
+            <summary>
+            员工序号
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffWagesAndSocialSecurityInfo.EnterpriseId">
+            <summary>
+            企业号
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffWagesAndSocialSecurityInfo.DigitalWallet">
+            <summary>
+            数币钱包ID
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffWagesAndSocialSecurityInfo.DigitalBank">
+            <summary>
+            运营机构
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffWagesAndSocialSecurityInfo.SocialSecurityAccount">
+            <summary>
+            个人社保账号
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffWagesAndSocialSecurityInfo.AccumulationFundAccount">
+            <summary>
+            个人公积金账号
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffWagesAndSocialSecurityInfo.TradeSeq">
+            <summary>
+            工资卡流水号
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffWagesAndSocialSecurityInfo.DigitalTradeSeq">
+            <summary>
+            数币id流水号
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffWagesAndSocialSecurityInfo.CustomerFieldInfoList">
+            <summary>
+            自定义字段信息
+            </summary>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Models.Staff.StaffEmergencyContact">
+            <summary>
+            紧急联系人
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffEmergencyContact.ContactName">
+            <summary>
+            紧急联系人
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffEmergencyContact.ContactTelephoneNumber">
+            <summary>
+            紧急联系人电话
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffEmergencyContact.CustomerFieldInfoList">
+            <summary>
+            自定义字段信息
+            </summary>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Models.Staff.StaffGroupServiceInfo">
+            <summary>
+            集团服务信息
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffGroupServiceInfo.EnterpriseId">
+            <summary>
+            企业号
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffGroupServiceInfo.StfSeq">
+            <summary>
+            员工序号
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffGroupServiceInfo.GroupJoinDate">
+            <summary>
+            集团入职日期
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffGroupServiceInfo.GroupServiceTimeDeduction">
+            <summary>
+            集团司龄扣减期
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffGroupServiceInfo.CustomerFieldInfoList">
+            <summary>
+            自定义字段信息
+            </summary>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Models.Staff.StaffTaxBasicInfo">
+            <summary>
+            个税基础信息
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffTaxBasicInfo.OtherCertificateType">
+            <summary>
+            其他证件类型
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffTaxBasicInfo.OtherCertificateNumber">
+            <summary>
+            其他证件号
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffTaxBasicInfo.BirthLand">
+            <summary>
+            出生地
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffTaxBasicInfo.ChineseName">
+            <summary>
+            中文名
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffTaxBasicInfo.FirstInboundDate">
+            <summary>
+            首次入境日期
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffTaxBasicInfo.PlanOutboundDate">
+            <summary>
+            预计离境日期
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffTaxBasicInfo.HighestDegree">
+            <summary>
+            最高学历
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffTaxBasicInfo.IsDisabled">
+            <summary>
+            是否残疾
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffTaxBasicInfo.IsMartyr">
+            <summary>
+            是否烈属
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffTaxBasicInfo.IsLonelyAndOld">
+            <summary>
+            是否孤老
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffTaxBasicInfo.DisabilityCertificateNumber">
+            <summary>
+            残疾证号
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffTaxBasicInfo.MartyrCertificateNumber">
+            <summary>
+            烈属郑号
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffTaxBasicInfo.StfSeq">
+            <summary>
+            员工序号
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffTaxBasicInfo.EnterpriseId">
+            <summary>
+            企业号
+            </summary>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Models.Staff.CustomerFieldInfo">
+            <summary>
+            自定义字段信息
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CustomerFieldInfo.EnterpriseId">
+            <summary>
+            企业号
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CustomerFieldInfo.StfSeq">
+            <summary>
+            员工序号
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CustomerFieldInfo.ClassKey">
+            <summary>
+            所属分组
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CustomerFieldInfo.FieldKey">
+            <summary>
+            自定义字段id
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.CustomerFieldInfo.FieldValue">
+            <summary>
+            字段值
+            </summary>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Models.Staff.StaffAwardInfo">
+            <summary>
+            奖惩记录
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffAwardInfo.TradeSeq">
+            <summary>
+            流水号
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffAwardInfo.RewardAndPunishmentMatters">
+            <summary>
+            奖惩事项
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffAwardInfo.RewardAndPunishmentDate">
+            <summary>
+            奖惩时间
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffAwardInfo.RewardAndPunishmentCompany">
+            <summary>
+            奖惩单位
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffAwardInfo.RewardAndPunishmentDetail">
+            <summary>
+            奖惩详情
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffAwardInfo.EnterpriseId">
+            <summary>
+            企业号
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffAwardInfo.StfSeq">
+            <summary>
+            员工序号
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffAwardInfo.CustomerFieldInfoList">
+            <summary>
+            自定义字段
+            </summary>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Models.Staff.StaffWorkInfo">
+            <summary>
+            工作经历
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffWorkInfo.EnterpriseId">
+            <summary>
+            企业号
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffWorkInfo.StfSeq">
+            <summary>
+            员工序号
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffWorkInfo.TradeSeq">
+            <summary>
+            流水号
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffWorkInfo.LastCompanyName">
+            <summary>
+            工作单位
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffWorkInfo.LastPositionName">
+            <summary>
+            曾任岗位
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffWorkInfo.WorkBeginDate">
+            <summary>
+            工作开始日期
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffWorkInfo.WorkEndDate">
+            <summary>
+            工作结束日期
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffWorkInfo.ProverName">
+            <summary>
+            证明人
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffWorkInfo.ProverTelephoneNumber">
+            <summary>
+            证明人联系电话
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffWorkInfo.LeaveReason">
+            <summary>
+            过往离职原因
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffWorkInfo.LeaveSalary">
+            <summary>
+            离职薪资
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffWorkInfo.CurrentFlag">
+            <summary>
+            上家工作经历标志
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffWorkInfo.CustomerFieldInfoList">
+            <summary>
+            自定义字段信息
+            </summary>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Models.Staff.StaffEducationInfo">
+            <summary>
+            教育经历
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffEducationInfo.EnterpriseId">
+            <summary>
+            企业号
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffEducationInfo.StfSeq">
+            <summary>
+            员工序号
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffEducationInfo.TradeSeq">
+            <summary>
+            流水号
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffEducationInfo.GraduateSchool">
+            <summary>
+            毕业院校
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffEducationInfo.Degree">
+            <summary>
+            学历
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffEducationInfo.Specialty">
+            <summary>
+            专业
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffEducationInfo.GraduateDate">
+            <summary>
+            毕业日期
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffEducationInfo.CustomerFieldInfoList">
+            <summary>
+            自定义字段信息
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffEducationInfo.CurrentFlag">
+            <summary>
+            最高学历标志
+            </summary>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Models.Staff.StaffCertificateInfo">
+            <summary>
+            专业证书
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffCertificateInfo.EnterpriseId">
+            <summary>
+            企业号
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffCertificateInfo.StfSeq">
+            <summary>
+            员工序号
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffCertificateInfo.TradeSeq">
+            <summary>
+            流水号
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffCertificateInfo.CertificateName">
+            <summary>
+            证书名称
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffCertificateInfo.IssuingAuthority">
+            <summary>
+            证书机构
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffCertificateInfo.IssuingDate">
+            <summary>
+            发证日期
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffCertificateInfo.ValidBeginDate">
+            <summary>
+            有效期起始日
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffCertificateInfo.ValidEndDate">
+            <summary>
+            有效期到期日
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffCertificateInfo.CustomerFieldInfoList">
+            <summary>
+            自定义字段信息
+            </summary>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Models.Staff.StaffJobTitleInfo">
+            <summary>
+            职称
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffJobTitleInfo.TradeSeq">
+            <summary>
+            流水号
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffJobTitleInfo.TitleName">
+            <summary>
+            职称名称
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffJobTitleInfo.TitleLevel">
+            <summary>
+            职称级别
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffJobTitleInfo.AssessmentAuthority">
+            <summary>
+            职称评定机构
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffJobTitleInfo.ObtainDate">
+            <summary>
+            职称获得日期
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffJobTitleInfo.TitleCertificateNumber">
+            <summary>
+            职称证书编号
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffJobTitleInfo.IsHighestTitle">
+            <summary>
+            是否最高职称
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffJobTitleInfo.EnterpriseId">
+            <summary>
+            企业号
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffJobTitleInfo.StfSeq">
+            <summary>
+            员工序号
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffJobTitleInfo.CustomerFieldInfoList">
+            <summary>
+            自定义字段信息
+            </summary>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Models.Staff.StaffFamilyMemberInfo">
+            <summary>
+            家庭成员
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffFamilyMemberInfo.EnterpriseId">
+            <summary>
+            企业号
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffFamilyMemberInfo.StfSeq">
+            <summary>
+            员工序号
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffFamilyMemberInfo.TradeSeq">
+            <summary>
+            流水号
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffFamilyMemberInfo.Relation">
+            <summary>
+            家庭成员关系
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffFamilyMemberInfo.Name">
+            <summary>
+            家庭成员姓名
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffFamilyMemberInfo.BirthDate">
+            <summary>
+            家庭成员生日
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffFamilyMemberInfo.CurrentWorkCompany">
+            <summary>
+            现工作单位
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffFamilyMemberInfo.Position">
+            <summary>
+            职位/岗位
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffFamilyMemberInfo.ContactNumber">
+            <summary>
+            家庭成员电话
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffFamilyMemberInfo.CustomerFieldInfoList">
+            <summary>
+            自定义字段信息
+            </summary>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Models.Staff.StaffAdjunctInfo">
+            <summary>
+            兼任信息
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffAdjunctInfo.TradeSeq">
+            <summary>
+            流水号
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffAdjunctInfo.AdjunctOrgSeq">
+            <summary>
+            兼任部门
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffAdjunctInfo.AdjunctPosCode">
+            <summary>
+            兼任岗位code
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffAdjunctInfo.AdjunctPosId">
+            <summary>
+            兼任岗位id
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffAdjunctInfo.StfSeq">
+            <summary>
+            员工序号
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffAdjunctInfo.EnterpriseId">
+            <summary>
+            企业号
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffAdjunctInfo.CustomerFieldInfoList">
+            <summary>
+            自定义分组字段信息
+            </summary>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Models.Staff.StaffAttachmentInfo">
+            <summary>
+            个人材料
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffAttachmentInfo.AttachmentFieldKey">
+            <summary>
+            个人材料字段key
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffAttachmentInfo.InnerSeq">
+            <summary>
+            内部序号
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffAttachmentInfo.AttachmentId">
+            <summary>
+            个人材料文件id
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffAttachmentInfo.AttachmentName">
+            <summary>
+            个人材料文件名称
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffAttachmentInfo.BusinessNumber">
+            <summary>
+            业务流水号
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffAttachmentInfo.StfSeq">
+            <summary>
+            员工序号
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffAttachmentInfo.EnterpriseId">
+            <summary>
+            企业号
+            </summary>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Models.Staff.StaffContractInfo">
+            <summary>
+            合同信息
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffContractInfo.StfSeq">
+            <summary>
+            员工序号
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffContractInfo.EnterpriseId">
+            <summary>
+            企业号
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffContractInfo.TradeSeq">
+            <summary>
+            流水号
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffContractInfo.ContractCompany">
+            <summary>
+            合同公司
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffContractInfo.ContractNumber">
+            <summary>
+            合同编号
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffContractInfo.ContractType">
+            <summary>
+            合同类型
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffContractInfo.ContractDuration">
+            <summary>
+            合同期限
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffContractInfo.ContractBeginDate">
+            <summary>
+            合同起始日
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffContractInfo.ContractEndDate">
+            <summary>
+            合同到期日
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffContractInfo.ContractState">
+            <summary>
+            合同状态
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffContractInfo.CurrentFlag">
+            <summary>
+            当前合同标志
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffContractInfo.CustomerFieldInfoList">
+            <summary>
+            自定义字段信息
+            </summary>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Models.Staff.StaffTaxDeclarationInfo">
+            <summary>
+            个税申报信息
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffTaxDeclarationInfo.RegisterSequence">
+            <summary>
+            税局登记序号
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffTaxDeclarationInfo.EmployedType">
+            <summary>
+            任职受雇从业类型
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffTaxDeclarationInfo.EmployedDate">
+            <summary>
+            任职受雇从业日期
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffTaxDeclarationInfo.EmploymentSituation">
+            <summary>
+            入职年度就业情形
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffTaxDeclarationInfo.TaxOfficeQuitDate">
+            <summary>
+            税局离职日期
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffTaxDeclarationInfo.Duty">
+            <summary>
+            职务
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffTaxDeclarationInfo.TaxRelatedReason">
+            <summary>
+            涉税事由
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffTaxDeclarationInfo.TotalPersonalInvestment">
+            <summary>
+            个人投资总额
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffTaxDeclarationInfo.IndividualInvestmentPercentage">
+            <summary>
+            个人投资比例
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffTaxDeclarationInfo.IsDeductionsDeducted">
+            <summary>
+            是否扣除减除费用
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffTaxDeclarationInfo.TaxRemark">
+            <summary>
+            个税备注
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffTaxDeclarationInfo.TaxMobileNumber">
+            <summary>
+            个税通知手机号
+            </summary>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Models.Staff.StaffTrainRecordInfo">
+            <summary>
+            培训记录
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffTrainRecordInfo.CourseName">
+            <summary>
+            课程名称
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffTrainRecordInfo.CourseNumber">
+            <summary>
+            课程编号
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffTrainRecordInfo.TrainType">
+            <summary>
+            培训类型
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffTrainRecordInfo.TrainWay">
+            <summary>
+            培训方式
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffTrainRecordInfo.TrainInstitution">
+            <summary>
+            培训机构
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffTrainRecordInfo.Lecturer">
+            <summary>
+            讲师
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffTrainRecordInfo.TrainBegin">
+            <summary>
+            培训开始日期
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffTrainRecordInfo.TrainEnd">
+            <summary>
+            培训结束日期
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffTrainRecordInfo.TrainLocation">
+            <summary>
+            培训地点
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffTrainRecordInfo.ExamDate">
+            <summary>
+            考试时间
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffTrainRecordInfo.ExamResult">
+            <summary>
+            考试结果
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffTrainRecordInfo.TradeSeq">
+            <summary>
+            流水号
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffTrainRecordInfo.CustomerFieldInfoList">
+            <summary>
+            自定义字段信息
+            </summary>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Models.Staff.StaffPerformanceInfo">
+            <summary>
+            绩效考核
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffPerformanceInfo.PerformanceCycle">
+            <summary>
+            绩效考核周期
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffPerformanceInfo.PerformanceEvaluator">
+            <summary>
+            绩效考核人
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffPerformanceInfo.PerformanceScore">
+            <summary>
+            绩效考核评分
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffPerformanceInfo.PerformanceLevel">
+            <summary>
+            绩效考核等级
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffPerformanceInfo.PerformanceComments">
+            <summary>
+            绩效考核评语
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffPerformanceInfo.TradeSeq">
+            <summary>
+            流水号
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Models.Staff.StaffPerformanceInfo.CustomerFieldInfoList">
+            <summary>
+            自定义字段信息
+            </summary>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Services.IOrganizationService">
+            <summary>
+            组织服务接口
+            </summary>
+        </member>
+        <member name="M:Ss.CmbXft.Sdk.Services.IOrganizationService.GetOrganizationListAsync(Ss.CmbXft.Sdk.Models.Organization.OrganizationListRequest,System.Threading.CancellationToken)">
+            <summary>
+            分页获取组织列表
+            </summary>
+            <param name="request">查询请求</param>
+            <param name="cancellationToken">取消令牌</param>
+            <returns>组织列表响应</returns>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Services.IPositionService">
+            <summary>
+            职位服务接口
+            </summary>
+        </member>
+        <member name="M:Ss.CmbXft.Sdk.Services.IPositionService.QueryPositionAsync(Ss.CmbXft.Sdk.Models.Position.PositionQueryRequest,System.Threading.CancellationToken)">
+            <summary>
+            分页查询职位
+            </summary>
+            <param name="request">查询请求</param>
+            <param name="cancellationToken">取消令牌</param>
+            <returns>职位列表响应</returns>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Services.IPostService">
+            <summary>
+            岗位服务接口
+            </summary>
+        </member>
+        <member name="M:Ss.CmbXft.Sdk.Services.IPostService.QueryPostAsync(Ss.CmbXft.Sdk.Models.Post.PostQueryRequest,System.Threading.CancellationToken)">
+            <summary>
+            分页查询岗位
+            </summary>
+            <param name="request">查询请求</param>
+            <param name="cancellationToken">取消令牌</param>
+            <returns>岗位列表响应</returns>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Services.IRoleService">
+            <summary>
+            角色服务接口
+            </summary>
+        </member>
+        <member name="M:Ss.CmbXft.Sdk.Services.IRoleService.GetRoleListAsync(Ss.CmbXft.Sdk.Models.Role.RoleListRequest,System.Threading.CancellationToken)">
+            <summary>
+            分页获取企业下所有角色
+            </summary>
+            <param name="request">角色列表请求</param>
+            <param name="cancellationToken">取消令牌</param>
+            <returns>角色列表响应</returns>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Services.IStaffService">
+            <summary>
+            员工服务接口
+            </summary>
+        </member>
+        <member name="M:Ss.CmbXft.Sdk.Services.IStaffService.QueryStaffAsync(Ss.CmbXft.Sdk.Models.Staff.StaffQueryRequest,System.Threading.CancellationToken)">
+            <summary>
+            分页查询员工信息
+            </summary>
+            <param name="request">查询请求</param>
+            <param name="cancellationToken">取消令牌</param>
+            <returns>员工信息查询响应</returns>
+        </member>
+        <member name="M:Ss.CmbXft.Sdk.Services.IStaffService.CreateStaffAsync(Ss.CmbXft.Sdk.Models.Staff.CreateStaffRequest,System.Threading.CancellationToken)">
+            <summary>
+            创建企业员工
+            </summary>
+            <param name="request">创建员工请求</param>
+            <param name="cancellationToken">取消令牌</param>
+            <returns>创建员工响应</returns>
+        </member>
+        <member name="M:Ss.CmbXft.Sdk.Services.IStaffService.DeleteStaffAsync(Ss.CmbXft.Sdk.Models.Staff.DeleteStaffRequest,System.Threading.CancellationToken)">
+            <summary>
+            删除企业员工
+            </summary>
+            <param name="request">删除员工请求</param>
+            <param name="cancellationToken">取消令牌</param>
+            <returns>删除员工响应</returns>
+        </member>
+        <member name="M:Ss.CmbXft.Sdk.Services.IStaffService.QueryDataDictionaryAsync(Ss.CmbXft.Sdk.Models.Staff.DataDictionaryQueryRequest,System.Threading.CancellationToken)">
+            <summary>
+            查询员工数据字典
+            </summary>
+            <param name="request">数据字典查询请求</param>
+            <param name="cancellationToken">取消令牌</param>
+            <returns>数据字典查询响应</returns>
+        </member>
+        <member name="M:Ss.CmbXft.Sdk.Services.IStaffService.EditStaffAsync(Ss.CmbXft.Sdk.Models.Staff.EditStaffRequest,System.Threading.CancellationToken)">
+            <summary>
+            编辑企业员工
+            </summary>
+            <param name="request">编辑员工请求</param>
+            <param name="cancellationToken">取消令牌</param>
+            <returns>编辑员工响应</returns>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Services.OrganizationService">
+            <summary>
+            组织服务实现
+            </summary>
+        </member>
+        <member name="M:Ss.CmbXft.Sdk.Services.OrganizationService.#ctor(Ss.CmbXft.Sdk.Client.IXftClient,Ss.CmbXft.Sdk.Configuration.XftOptions,Microsoft.Extensions.Logging.ILogger{Ss.CmbXft.Sdk.Services.OrganizationService})">
+            <summary>
+            初始化 <see cref="T:Ss.CmbXft.Sdk.Services.OrganizationService"/> 类的新实例
+            </summary>
+            <param name="client">XFT客户端</param>
+            <param name="options">配置选项</param>
+            <param name="logger">日志记录器</param>
+        </member>
+        <member name="M:Ss.CmbXft.Sdk.Services.OrganizationService.GetOrganizationListApiPath">
+            <summary>
+            获取组织列表API路径
+            </summary>
+        </member>
+        <member name="M:Ss.CmbXft.Sdk.Services.OrganizationService.GetOrganizationListAsync(Ss.CmbXft.Sdk.Models.Organization.OrganizationListRequest,System.Threading.CancellationToken)">
+            <summary>
+            分页获取组织列表
+            </summary>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Services.PositionService">
+            <summary>
+            职位服务实现
+            </summary>
+        </member>
+        <member name="M:Ss.CmbXft.Sdk.Services.PositionService.#ctor(Ss.CmbXft.Sdk.Client.IXftClient,Ss.CmbXft.Sdk.Configuration.XftOptions,Microsoft.Extensions.Logging.ILogger{Ss.CmbXft.Sdk.Services.PositionService})">
+            <summary>
+            初始化 <see cref="T:Ss.CmbXft.Sdk.Services.PositionService"/> 类的新实例
+            </summary>
+            <param name="client">XFT客户端</param>
+            <param name="options">配置选项</param>
+            <param name="logger">日志记录器</param>
+        </member>
+        <member name="M:Ss.CmbXft.Sdk.Services.PositionService.GetPositionQueryApiPath">
+            <summary>
+            获取职位查询API路径
+            </summary>
+        </member>
+        <member name="M:Ss.CmbXft.Sdk.Services.PositionService.QueryPositionAsync(Ss.CmbXft.Sdk.Models.Position.PositionQueryRequest,System.Threading.CancellationToken)">
+            <summary>
+            分页查询职位
+            </summary>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Services.PostService">
+            <summary>
+            岗位服务实现
+            </summary>
+        </member>
+        <member name="M:Ss.CmbXft.Sdk.Services.PostService.#ctor(Ss.CmbXft.Sdk.Client.IXftClient,Ss.CmbXft.Sdk.Configuration.XftOptions,Microsoft.Extensions.Logging.ILogger{Ss.CmbXft.Sdk.Services.PostService})">
+            <summary>
+            初始化 <see cref="T:Ss.CmbXft.Sdk.Services.PostService"/> 类的新实例
+            </summary>
+            <param name="client">XFT客户端</param>
+            <param name="options">配置选项</param>
+            <param name="logger">日志记录器</param>
+        </member>
+        <member name="M:Ss.CmbXft.Sdk.Services.PostService.GetPostQueryApiPath">
+            <summary>
+            获取岗位查询API路径
+            </summary>
+        </member>
+        <member name="M:Ss.CmbXft.Sdk.Services.PostService.QueryPostAsync(Ss.CmbXft.Sdk.Models.Post.PostQueryRequest,System.Threading.CancellationToken)">
+            <summary>
+            分页查询岗位
+            </summary>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Services.RoleService">
+            <summary>
+            角色服务实现
+            </summary>
+        </member>
+        <member name="M:Ss.CmbXft.Sdk.Services.RoleService.#ctor(Ss.CmbXft.Sdk.Client.IXftClient,Ss.CmbXft.Sdk.Configuration.XftOptions,Microsoft.Extensions.Logging.ILogger{Ss.CmbXft.Sdk.Services.RoleService})">
+            <summary>
+            初始化 <see cref="T:Ss.CmbXft.Sdk.Services.RoleService"/> 类的新实例
+            </summary>
+            <param name="client">XFT客户端</param>
+            <param name="options">配置选项</param>
+            <param name="logger">日志记录器</param>
+        </member>
+        <member name="M:Ss.CmbXft.Sdk.Services.RoleService.GetRoleListApiPath">
+            <summary>
+            获取角色列表API路径
+            </summary>
+        </member>
+        <member name="M:Ss.CmbXft.Sdk.Services.RoleService.GetRoleListAsync(Ss.CmbXft.Sdk.Models.Role.RoleListRequest,System.Threading.CancellationToken)">
+            <summary>
+            分页获取企业下所有角色
+            </summary>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Services.StaffService">
+            <summary>
+            员工服务实现
+            </summary>
+        </member>
+        <member name="M:Ss.CmbXft.Sdk.Services.StaffService.#ctor(Ss.CmbXft.Sdk.Client.IXftClient,Ss.CmbXft.Sdk.Configuration.XftOptions,Microsoft.Extensions.Logging.ILogger{Ss.CmbXft.Sdk.Services.StaffService})">
+            <summary>
+            初始化 <see cref="T:Ss.CmbXft.Sdk.Services.StaffService"/> 类的新实例
+            </summary>
+            <param name="client">XFT客户端</param>
+            <param name="options">配置选项</param>
+            <param name="logger">日志记录器</param>
+        </member>
+        <member name="M:Ss.CmbXft.Sdk.Services.StaffService.GetStaffQueryApiPath">
+            <summary>
+            获取员工查询API路径
+            </summary>
+        </member>
+        <member name="M:Ss.CmbXft.Sdk.Services.StaffService.GetCreateStaffApiPath">
+            <summary>
+            获取创建员工API路径
+            </summary>
+        </member>
+        <member name="M:Ss.CmbXft.Sdk.Services.StaffService.GetDeleteStaffApiPath">
+            <summary>
+            获取删除员工API路径
+            </summary>
+        </member>
+        <member name="M:Ss.CmbXft.Sdk.Services.StaffService.GetDataDictionaryApiPath">
+            <summary>
+            获取数据字典查询API路径
+            </summary>
+        </member>
+        <member name="M:Ss.CmbXft.Sdk.Services.StaffService.GetEditStaffApiPath">
+            <summary>
+            获取编辑员工API路径
+            </summary>
+        </member>
+        <member name="M:Ss.CmbXft.Sdk.Services.StaffService.QueryStaffAsync(Ss.CmbXft.Sdk.Models.Staff.StaffQueryRequest,System.Threading.CancellationToken)">
+            <summary>
+            分页查询员工信息
+            </summary>
+        </member>
+        <member name="M:Ss.CmbXft.Sdk.Services.StaffService.CreateStaffAsync(Ss.CmbXft.Sdk.Models.Staff.CreateStaffRequest,System.Threading.CancellationToken)">
+            <summary>
+            创建企业员工
+            </summary>
+        </member>
+        <member name="M:Ss.CmbXft.Sdk.Services.StaffService.DeleteStaffAsync(Ss.CmbXft.Sdk.Models.Staff.DeleteStaffRequest,System.Threading.CancellationToken)">
+            <summary>
+            删除企业员工
+            </summary>
+        </member>
+        <member name="M:Ss.CmbXft.Sdk.Services.StaffService.QueryDataDictionaryAsync(Ss.CmbXft.Sdk.Models.Staff.DataDictionaryQueryRequest,System.Threading.CancellationToken)">
+            <summary>
+            查询员工数据字典
+            </summary>
+        </member>
+        <member name="M:Ss.CmbXft.Sdk.Services.StaffService.EditStaffAsync(Ss.CmbXft.Sdk.Models.Staff.EditStaffRequest,System.Threading.CancellationToken)">
+            <summary>
+            编辑企业员工
+            </summary>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Utils.CryptographyUtils">
+            <summary>
+            加密解密工具类（SM4）
+            </summary>
+        </member>
+        <member name="M:Ss.CmbXft.Sdk.Utils.CryptographyUtils.ComputeSm3Hash(System.String)">
+            <summary>
+            计算 SM3 哈希
+            </summary>
+        </member>
+        <member name="M:Ss.CmbXft.Sdk.Utils.CryptographyUtils.EncryptWithSm4Ecb(System.String,System.String)">
+            <summary>
+            SM4 ECB 加密
+            明文 string + 十六进制密钥 → 十六进制密文
+            </summary>
+        </member>
+        <member name="M:Ss.CmbXft.Sdk.Utils.CryptographyUtils.DecryptWithSm4Ecb(System.String,System.String)">
+            <summary>
+            SM4 ECB 解密
+            十六进制密文 + 十六进制密钥 → 明文
+            </summary>
+        </member>
+        <member name="M:Ss.CmbXft.Sdk.Utils.CryptographyUtils.ByteArrayToHexString(System.Byte[])">
+            <summary>
+            字节数组转换为十六进制字符串
+            </summary>
+        </member>
+        <member name="M:Ss.CmbXft.Sdk.Utils.GmUtil.SignSm3WithSm2Asn1Rs(System.Byte[],System.Byte[],Org.BouncyCastle.Crypto.AsymmetricKeyParameter)">
+            
+             @param msg
+             @param userId
+             @param privateKey
+             @return sign result in asn1 format
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Utils.SignInfo">
+            <summary>
+            签名信息
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Utils.SignInfo.Timestamp">
+            <summary>
+            时间戳（秒）
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Utils.SignInfo.Url">
+            <summary>
+            完整URL
+            </summary>
+        </member>
+        <member name="P:Ss.CmbXft.Sdk.Utils.SignInfo.Path">
+            <summary>
+            路径
+            </summary>
+        </member>
+        <member name="M:Ss.CmbXft.Sdk.Utils.SignInfo.#ctor">
+            <summary>
+            初始化 <see cref="T:Ss.CmbXft.Sdk.Utils.SignInfo"/> 类的新实例
+            </summary>
+        </member>
+        <member name="M:Ss.CmbXft.Sdk.Utils.SignInfo.#ctor(System.String,System.String,System.String)">
+            <summary>
+            初始化 <see cref="T:Ss.CmbXft.Sdk.Utils.SignInfo"/> 类的新实例
+            </summary>
+            <param name="timestamp">时间戳</param>
+            <param name="url">完整URL</param>
+            <param name="path">路径</param>
+        </member>
+        <member name="T:Ss.CmbXft.Sdk.Utils.SignUtils">
+            <summary>
+            签名工具类
+            </summary>
+        </member>
+        <member name="M:Ss.CmbXft.Sdk.Utils.SignUtils.BuildSignInfo(System.String,System.String,System.String,System.String,System.String,System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>
+            构建签名信息
+            </summary>
+            <param name="appId">应用ID</param>
+            <param name="companyId">企业ID</param>
+            <param name="usrUid">用户号</param>
+            <param name="usrNbr">平台用户号</param>
+            <param name="apiPath">API路径</param>
+            <param name="queryParams">查询参数</param>
+            <returns>签名信息</returns>
+        </member>
+        <member name="M:Ss.CmbXft.Sdk.Utils.SignUtils.BuildPostSignString(System.String,System.String,System.String)">
+            <summary>
+            构建POST请求的签名字符串
+            </summary>
+            <param name="path">请求路径</param>
+            <param name="requestBody">请求体</param>
+            <param name="timestamp">时间戳</param>
+            <returns>签名字符串</returns>
+        </member>
+        <member name="M:Ss.CmbXft.Sdk.Utils.SignUtils.BuildGetSignString(System.String,System.String)">
+            <summary>
+            构建GET请求的签名字符串
+            </summary>
+            <param name="path">请求路径</param>
+            <param name="timestamp">时间戳</param>
+            <returns>签名字符串</returns>
+        </member>
+        <member name="M:Ss.CmbXft.Sdk.Utils.SignUtils.Sm3Digest(System.String)">
+            <summary>
+            计算SM3摘要
+            </summary>
+            <param name="data">待计算的数据</param>
+            <returns>十六进制摘要值</returns>
+        </member>
+    </members>
+</doc>

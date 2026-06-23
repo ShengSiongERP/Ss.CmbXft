@@ -1,0 +1,34 @@
+离职管理事件
+更新时间: 2025-09-22 23:00:00
+基本信息
+事件名称: 离职管理事件
+事件编号: XFTQUTTRADECHG
+事件描述
+办理员工离职，审批结束，确认离职，取消离职，离职生效时进行发送事件消息
+触发情况
+办理员工离职，审批结束，确认离职，取消离职，离职生效时进行发送事件消息
+事件报文说明
+此报文描述了【事件订阅概述】文中推送内容 eventRcdInf 的结构。
+仅必填全部展开
+参数	必存在	类型	最大长度	名称	示例值	字段说明
+					
+	否	STRING	-	操作类型	CANCEL	LAUNCH 办理，
+actionType						APPROVE_END 审批结束，
+						COF 确认离职，
+						EFFECTIVE 生效，
+						CANCEL 取消
+	否	STRING	-	审批状态	CNC	WAT未发起，ING审核中，PAS审核通过，RVK审核撤销，REJ审核否决 NPM 没有审批
+approveStatus
+	否	STRING	-	员工序号	0000000292	-
+staffSeq
+	否	STRING	-	单据号	2024102800000722	-
+trsSeq
+事件报文示例
+{
+    "actionType": "CANCEL",
+    "approveStatus": "CNC",
+    "staffSeq": "0000000292",
+    "trsSeq": "2024102800000722"
+}
+
+来自 <https://xft.cmbchina.com/open/#/doc/open-document?id=10692&mid=14401> 

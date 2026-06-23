@@ -1,0 +1,613 @@
+修改员工事件
+更新时间: 2024-11-06 14:10:00
+基本信息
+事件名称: 修改员工事件
+事件编号: XFTSTFUPT
+事件描述
+修改员工事件
+1.事件报文信息内的属性以文档为主。
+2.如果某项属性在事件报文内未取到或者值为""，说明该事件对应的员工没有该数据。
+3 事件的报文内可能会有文档中不存在的属性，一般都是已废弃、记录类的属性，没有业务含义，不影响事件消费，可以忽略。
+触发情况
+修改薪福通-花名册中的员工信息，会触发该事件
+事件报文说明
+此报文描述了【事件订阅概述】文中推送内容 eventRcdInf 的结构。
+仅必填全部展开
+参数	必存在	类型	最大长度	名称	示例值	字段说明
+					
+	否	STRING	20	座机号	010-098765	-
+TELNBR
+	否	STRING	1	其他证件类型	A	参考数据字典证件类型
+OCRTYP
+	否	STRING	1	是否已婚	1	参考数据字典是否已婚
+MARSTS
+	否	STRING	30	户籍所在地区/县	南山区	-
+HOMARE
+	否	STRING	6	工龄扣减期	0	工龄扣减期返回值，最大值为6位，最小值是1位。
+WRKDDT						以6位为例，每两位表示年、月、天。
+						111015就表示11年10个月15天
+						以5位为例，从高位到低位，第一位表示年，后四位每两位表示月、天。
+						10911就表示1年9个月11天。
+						以4位为例，从高位到低位，每两位表示月、天。
+						1011就表示10个月11天。
+						以3位为例，从高位到低位，第一位表示月，后两位表示天。
+						811就表示8个月11天。
+						以2位为例，从高位到低位，两位表示天。
+						11就表示11天。
+						以1位为例，从高位到低位，表示天。
+						1就表示1天。
+						支持的最大扣减期为501130，即50年11个月30天。
+						支持的最小扣减期为0，即0天。
+	否	STRING	3	其他证件类型(用户版本)	P01	-
+OTHCERTYPE
+	否	STRING	30	现住址市	深圳市	-
+USLCTY
+	否	STRING	5	操作用户	U0000	生成本次事件的操作人用户号
+OPRUSR
+	否	STRING	3	员工类型	0	参考数据字典员工类型
+STFTYP
+	否	STRING	30	开户地市	深圳市	-
+BNKCTY
+	否	STRING	6	司龄扣减期	0	司龄扣减期返回值，最大值为6位，最小值是1位。
+CCSDDT						以6位为例，每两位表示年、月、天。
+						111015就表示11年10个月15天
+						以5位为例，从高位到低位，第一位表示年，后四位每两位表示月、天。
+						10911就表示1年9个月11天。
+						以4位为例，从高位到低位，每两位表示月、天。
+						1011就表示10个月11天。
+						以3位为例，从高位到低位，第一位表示月，后两位表示天。
+						811就表示8个月11天。
+						以2位为例，从高位到低位，两位表示天。
+						11就表示11天。
+						以1位为例，从高位到低位，表示天。
+						1就表示1天。
+						支持的最大扣减期为501130，即50年11个月30天。
+						支持的最小扣减期为0，即0天。
+	否	STRING	20	个人社保账号	213123	-
+SECACT
+	否	STRING	10	工作所属公司	COR000001	数据源为薪福通-管理后台-组织-法人公司
+EMPCRP
+	否	STRING	15	职位编码	J0001	-
+JOBSEQ
+	否	ARRAY	-	自定义字段信息	-	-
+cus
+	否	STRING	500	自定义字段值	字段1	-
+FLDVAL
+	否	STRING	15	自定义字段id	FLD1100056	-
+FLDKEY
+	否	STRING	10	自定义字段流水号	0000000213	-
+TRDSEQ
+	否	STRING	10	自定义字段所在分组	CLS1100053	-
+CLSKEY
+	否	STRING	30	联系地城市	深圳市	-
+LNKCTY
+	否	STRING	1	性别	0	参考数据字典性别
+STFSEX
+	否	STRING	150	岗位名称	开发	-
+POSNAM
+	否	STRING	10	汇报上级	0000043970	汇报上级在花名册中的员工序号
+REPSUP
+	否	DATETIME	-	更新时间	2024-11-05 11:40:27	员工信息的更新时间
+UPDATE
+	否	STRING	500	备注	备注备注备注	-
+REMARK
+	否	STRING	2	国籍/地区	CN	参考数据字典国籍/地区
+NATNLT
+	否	STRING	50	烈属证号	-	-
+MTYNBR
+	否	DATE	-	出生日期	1994-11-05	格式 yyyy-MM-dd
+BIRDAT
+	否	STRING	100	曾用名	姓名456	-
+USDNAM
+	否	STRING	10	职级	RNK0000006	-
+JOBRNK
+	否	STRING	1	是否烈属	-	Y-是
+MTYSTS						N-否
+	否	STRING	2	出生地	-	-
+BIRLAD
+	否	STRING	29	工资卡号	6325111000	-
+SALCAR
+	否	STRING	1	证件长期是否有效	0	0-否
+CERISL						1-是
+	否	DATE	-	计划转正日期	2025-01-24	格式 yyyy-MM-dd
+CORPLD
+	否	STRING	30	户籍所在地城市	深圳市	-
+HOMCTY
+	否	STRING	10	员工序号	-	-
+STFSEQ
+	否	STRING	3	计划试用期	B	参考数据字典试用期
+CORPLP
+	否	STRING	1	证件类型	A	参考数据字典证件类型
+CERTYP
+	否	STRING	10	工作地	0000000001	-
+WKPSEQ
+	否	STRING	10	岗位id	00001	-
+POSUID
+	否	DATE	-	首次工作日期	2018-08-01	格式 yyyy-MM-dd
+BGNDAT
+	否	STRING	30	开户行	招商银行	-
+BNKTYP
+	否	STRING	150	职位名称	组长	-
+JOBNAM
+	否	STRING	500	转正述职内容	-	-
+CORREP
+	否	ARRAY	-	合同信息	-	-
+con
+	否	STRING	3	合同状态	ZXZ	UND:-
+CONSTS						WZX:未执行
+						YDQ:已到期
+						YJC:已解除
+						ZXZ:执行中
+	否	STRING	10	合同流水号	0000051666	-
+TRASEQ
+	否	STRING	1	电子签进度	-	1-未发起，2-待员工签署，3-待企业签署，4-已签署，5-待员工填，6-待企业填，7-拒签，8-拒填，9-撤销，10-用印审批中，11-签署失败
+ESNSTS
+	否	STRING	3	合同期限	G	参考数据字典合同期限
+TIMLIM
+	否	DATE	-	合同起始日	2024-11-05	格式 yyyy-MM-dd
+NOWBGN
+	否	STRING	3	合同类型	0	参考数据字典合同类型
+CONTYP
+	否	STRING	30	合同编号	CON8765123	-
+CONNBR
+	否	STRING	10	合同公司	COR000001	数据源为薪福通-管理后台-组织-法人公司
+CMPSEQ
+	否	DATE	-	合同到期日	2027-11-04	格式 yyyy-MM-dd
+NOWEND
+	否	STRING	-	签署方式	0	0-纸质合同，1-电子合同
+SGNTYP
+	否	INTEGER	-	续签次数	-	-
+RENTIM
+	否	DATE	-	实际转正日期	2025-01-24	格式 yyyy-MM-dd
+CORDAT
+	否	STRING	4	部门	0000	-
+ORGSEQ
+	否	STRING	15	岗位code	P0001	-
+POSSEQ
+	否	STRING	10	业务分组	0000000001	-
+GRPSEQ
+	否	STRING	29	数币钱包ID	1478541	-
+DIGWET
+	否	STRING	300	户籍所在地详细地址	xxx街道xxx小区	-
+HOMDTL
+	否	STRING	50	残疾证号	-	-
+DIBNBR
+	否	STRING	1	员工状态	1	参考数据字典员工状态
+STFSTS						当消息报文中取不到STFSTS的值或者值是“”，说明该员工的状态是未填写
+	否	DATE	-	司龄开始日期	2024-11-05	格式 yyyy-MM-dd
+CCSDAT
+	否	DATE	-	首次入境日期	-	格式 yyyy-MM-dd
+ETRDAT
+	否	STRING	2	民族	20	参考数据字典民族
+NATION
+	否	STRING	300	现住址详细地址	xxx街道xxx小区	-
+ADDRES
+	否	DATE	-	证件到期日期	2030-11-12	格式 yyyy-MM-dd
+CERVAL
+	否	STRING	1	是否残疾	-	Y-是
+LOESTS						N-否
+	否	STRING	20	员工号	STF78654	-
+STFNBR
+	否	STRING	3	离职类型	-	参考数据字典离职类型
+QUTFLG
+	否	ARRAY	-	兼任信息	-	-
+atp
+	否	STRING	10	兼任流水号	0000041620	-
+ATPSEQ
+	否	STRING	10	兼任岗位id	00001	-
+ATPPST
+	否	STRING	15	兼任岗位code	P0001	-
+ATPPOS
+	否	STRING	4	兼任部门	0001	-
+ATPORG
+	否	STRING	30	现住址省	广东省	-
+USLPRV
+	否	STRING	30	证件号码	51142319941105001X	-
+CERNBR
+	否	DOUBLE	-	成本分摊比例	15	-
+CSTRAT
+	否	STRING	-	是否已育	1	参考数据字典是否已育
+AFESTS
+	否	STRING	30	现住址区/县	南山区	-
+USLDST
+	否	STRING	100	身份证地址	身份证地址	-
+CERLOC
+	否	STRING	100	姓名	姓名123	-
+STFNAM
+	否	DATE	-	预计离境日期	-	格式 yyyy-MM-dd
+DPTDAT
+	否	ARRAY	-	教育经历	-	-
+edu
+	否	STRING	50	毕业院校	毕业院校	-
+GRASCH
+	否	DATE	-	毕业时间	2018-07-03	格式 yyyy-MM-dd
+GRADAT
+	否	STRING	50	专业	专业	-
+MAJORI
+	否	STRING	10	教育经历流水号	0000041742	-
+EDUNBR
+	否	STRING	3	学历	H	参考数据字典学历
+BCKGRD
+	否	STRING	64	个人邮箱	111@yy.com	-
+SELEML
+	否	STRING	1	是否残疾	-	Y-是
+DIBSTS						N-否
+	否	STRING	30	开户地省份	广东省	-
+BNKPRV
+	否	STRING	300	离职备注	-	-
+QUTCOM
+	否	STRING	30	中文名	-	-
+CHNNAM
+	否	OBJECT	-	成本中心	-	-
+CSTCET
+	否	STRING	-	成本中心名称	成本中心3	-
+name
+	否	STRING	15	成本中心id	118364614696960	-
+id
+	否	STRING	300	转正备注	-	-
+CORMAK
+	否	STRING	30	其他证件号	-	-
+OCRNBR
+	否	STRING	100	部门名称	xx企业	-
+ORGNAM
+	否	STRING	64	工作邮箱	111@XX.com	-
+WRKEML
+	否	ARRAY	-	专业证书	-	-
+certificate
+	否	STRING	50	证书名称	证书名称	-
+CETNAM
+	否	DATE	-	有效期到期日	2028-12-01	格式 yyyy-MM-dd
+VALEND
+	否	DATE	-	发证日期	2024-09-12	格式 yyyy-MM-dd
+ISSDAT
+	否	STRING	10	专业证书流水号	0000041783	-
+CETSEQ
+	否	STRING	50	证书机构	证书机构	-
+CETAUT
+	否	DATE	-	有效期起始日	2024-09-12	格式 yyyy-MM-dd
+VALSTA
+	否	STRING	10	职位id	00002	-
+JOBUID
+	否	ARRAY	-	职称	-	-
+title
+	否	STRING	10	职称流水号	0000041731	-
+TTLSEQ
+	否	STRING	50	职称名称	-	-
+TTLNAM
+	否	STRING	3	职称级别	-	参考数据字典职称级别
+TTLVEL
+	否	STRING	50	职称评定机构	-	-
+RATAGC
+	否	DATE	-	职称获得日期	-	格式 yyyy-MM-dd
+GETDAT
+	否	STRING	30	职称证书编号	-	-
+TTLNBR
+	否	STRING	1	是否最高职称	-	0-是
+HIGHST						1-否
+	否	STRING	1	转正类型	-	A -提前，N - 正常 ，D- 其他转正
+CORFLG
+	否	STRING	1	个税最高学历	1	0-大学本科以下，1-大学本科，2-研究生
+HIGSCH
+	否	ARRAY	-	奖惩记录	-	-
+award
+	否	STRING	10	奖惩记录流水号	0000041740	-
+RPRSEQ
+	否	STRING	50	奖惩事项	-	-
+REWPNS
+	否	DATE	-	奖惩时间	-	格式 yyyy-MM-dd
+RECDAT
+	否	STRING	50	奖惩单位	-	-
+CURUNT
+	否	STRING	200	奖惩详情	-	-
+DETAIL
+	否	STRING	1	性别(用户版本)	M	F-女
+GENDER						M-男
+	否	DATETIME	-	事件生成时间	2024-11-05 11:40:28	-
+OPRTSP
+	否	STRING	3	离职原因	-	参考数据字典离职原因
+QUTRES
+	否	STRING	3	户口性质	0	参考数据字典户口性质
+HOMTYP
+	否	STRING	3	政治面貌	2	参考数据字典政治面貌
+PLTSTS
+	否	STRING	30	联系地址区/县	南山区	-
+LNKDST
+	否	STRING	11	手机号	11202020101	-
+MOBNBR
+	否	STRING	3	运营机构	CMB	运营机构key
+OPRAGN						运营机构名称
+						ABC
+						中国农业银行
+						BCM
+						交通银行
+						BOC
+						中国银行
+						BWZ
+						深圳前海微众银行
+						CCB
+						中国建设银行
+						CIB
+						兴业银行
+						CMB
+						招商银行
+						ICB
+						中国工商银行
+						PSB
+						中国邮政储蓄银行
+						ZWS
+						浙江网商银行
+	否	STRING	3	实际试用期	B	参考数据字典试用期
+PBTPRD
+	否	STRING	3	证件类型(用户版本)	P01	-
+CERTTYPE
+	否	STRING	500	转正评价	-	-
+CORMSG
+	否	STRING	100	赔偿方案	-	-
+CPSAMT
+	否	ARRAY	-	工作经历	-	-
+wrk
+	否	STRING	20	证明人联系电话	14501010210	-
+RETMNR
+	否	DATE	-	工作结束日期	2024-07-19	格式 yyyy-MM-dd
+WENDAT
+	否	STRING	10	工作经历流水号	0000041652	-
+WRKNBR
+	否	DATE	-	工作开始日期	2022-11-10	格式 yyyy-MM-dd
+WBGDAT
+	否	STRING	100	证明人	证明人	-
+RETERE
+	否	STRING	20	离职薪资	10000	-
+LEASAL
+	否	STRING	50	曾任岗位	曾任岗位	-
+LSTPST
+	否	STRING	50	过往离职原因	家庭原因	-
+LEAREA
+	否	STRING	50	工作单位	工作单位	-
+LSTCOM
+	否	STRING	30	户籍所在地省	广东省	-
+HOMPRV
+	否	STRING	30	联系地省	广东省	-
+LNKPRV
+	否	STRING	20	个人公积金账号	44123	-
+FUNACT
+	否	STRING	-	联系地详细地址	xxx街道xxx小区	-
+LNKADR
+	否	STRING	8	企业号	XFV42994	-
+PRJCOD
+	否	DATE	-	入职日期	2024-11-05	格式 yyyy-MM-dd
+ENTDAT
+	否	ARRAY	-	家庭成员	-	-
+family
+	否	STRING	50	职位/岗位	职位/岗位	-
+WRKJOB
+	否	STRING	3	家庭成员关系	3	参考数据字典家庭成员关系
+RLTSHP
+	否	STRING	10	家庭成员流水号	0000041791	-
+MBESEQ
+	否	STRING	50	家庭成员电话	8987654	-
+CONTEL
+	否	DATE	-	家庭成员生日	2018-11-24	格式 yyyy-MM-dd
+BIRDAY
+	否	STRING	50	现工作单位	现工作单位	-
+WRKCOM
+	否	STRING	100	家庭成员姓名	家庭成员姓名	-
+MBENAM
+	否	ARRAY	-	个税申报信息	-	-
+taxdetail
+	否	DATE	-	任职受雇从业日期	-	格式 yyyy-MM-dd
+EMPDAT
+	否	STRING	1	任职受雇从业类型	0	0雇员、1保险营销员、2证券经纪人、3其他、4-实习学生（全日制学历教育）
+EMPTYP
+	否	BIGDECIMAL	-	个人投资总额	-	-
+INVAMT
+	否	BIGDECIMAL	-	个人投资比例	-	-
+INVPRP
+	否	STRING	1	是否扣除减除费用	Y	Y是，N否
+KCJCFY
+	否	STRING	1	个税人员状态	Y	Y-正常，N-非正常
+NRMSTS
+	否	STRING	1	个税状态	0	0-正常
+RECSTS						1-删除
+						事件中只会有正常的数据
+	否	STRING	30	企业/税局	-	-
+REGSEQ
+	否	STRING	10	涉税事由	0	0, 任职受雇 1, 提供临时劳务 2,转让财产 3, 从事投资和经营活动 4, 其他
+RELTYP
+	否	STRING	1	职务	1	0-高层，1-普通
+STFTTL
+	否	STRING	11	个税通知手机号	-	-
+TAXMOB
+	否	DATE	-	税局离职日期	-	格式 yyyy-MM-dd
+TAXQDT
+	否	STRING	40	个税备注	-	-
+TAXRMK
+	否	STRING	1	入职年度就业情形	0	0：新入职学生 1：其他当年首次就业
+WRKFST
+事件报文示例
+
+{  
+"TELNBR": "010-098765",  
+"OCRTYP": "",  
+"MARSTS": "1",  
+"HOMARE": "南山区",  
+"WRKDDT": "0",  
+"OTHCERTYPE": "",  
+"USLCTY": "深圳市",  
+"OPRUSR": "U0000",  
+"STFTYP": "0",  
+"BNKCTY": "深圳市",  
+"CCSDDT": "0",  
+"SECACT": "213123",  
+"EMPCRP": "COR000001",  
+"JOBSEQ": "J0001",  
+"cus": [  
+{  
+"FLDVAL": "字段1",  
+"FLDKEY": "FLD1100056",  
+"TRDSEQ": "0000000213",  
+"CLSKEY": "CLS1100053"  
+}  
+],  
+"LNKCTY": "深圳市",  
+"STFSEX": "0",  
+"POSNAM": "开发",  
+"REPSUP": "0000043970",  
+"UPDATE": "2024-11-05 11:40:27",  
+"REMARK": "备注备注备注",  
+"NATNLT": "CN",  
+"MTYNBR": "",  
+"BIRDAT": "1994-11-05",  
+"USDNAM": "姓名456",  
+"JOBRNK": "RNK0000006",  
+"MTYSTS": "",  
+"BIRLAD": "",  
+"SALCAR": "6325111000",  
+"CERISL": "0",  
+"CORPLD": "2025-01-24",  
+"HOMCTY": "深圳市",  
+"STFSEQ": "W0020",  
+"CORPLP": "B",  
+"RECSTS": "0",  
+"CERTYP": "A",  
+"WKPSEQ": "0000000001",  
+"POSUID": "00001",  
+"BGNDAT": "2018-08-01",  
+"BNKTYP": "招商银行",  
+"JOBNAM": "组长",  
+"CORREP": "",  
+"con": [  
+{  
+"CONSTS": "ZXZ",  
+"TRASEQ": "0000051666",  
+"ESNSTS": "",  
+"TIMLIM": "G",  
+"NOWBGN": "2024-11-05",  
+"CONTYP": "0",  
+"CONNBR": "CON8765123",  
+"CMPSEQ": "COR000001",  
+"NOWEND": "2027-11-04",  
+"SGNTYP": "0"  
+}  
+],  
+"CORDAT": "2025-01-24",  
+"ORGSEQ": "0000",  
+"POSSEQ": "P0001",  
+"RECORD": "W0020",  
+"GRPSEQ": "0000000001",  
+"DIGWET": "1478541",  
+"HOMDTL": "xxx街道xxx小区",  
+"DIBNBR": "",  
+"STFSTS": "1",  
+"CCSDAT": "2024-11-05",  
+"ETRDAT": "",  
+"NATION": "20",  
+"ADDRES": "xxx街道xxx小区",  
+"CERVAL": "2030-11-12",  
+"LOESTS": "",  
+"STFNBR": "STF78654",  
+"QUTFLG": "",  
+"atp": [  
+{  
+"ATPSEQ": "0000041620",  
+"ATPPST": "00001",  
+"ATPPOS": "P0001",  
+"ATPORG": "0001",  
+"STFSEQ": "W0020"  
+}  
+],  
+"CERSTS": "0",  
+"USLPRV": "广东省",  
+"CERNBR": "51142319941105001X",  
+"CSTRAT": "15",  
+"AFESTS": "1",  
+"USLDST": "南山区",  
+"CERLOC": "身份证地址",  
+"STFNAM": "姓名123",  
+"DPTDAT": "",  
+"edu": [  
+{  
+"GRASCH": "毕业院校",  
+"GRADAT": "2018-07-03",  
+"MAJORI": "专业",  
+"EDUNBR": "0000041742",  
+"BCKGRD": "H"  
+}  
+],  
+"SELEML": "111@yy.com",  
+"DIBSTS": "",  
+"BNKPRV": "广东省",  
+"QUTCOM": "",  
+"CHNNAM": "",  
+"CSTCET": {  
+"name": "成本中心3",  
+"id": "118364614696960"  
+},  
+"CORMAK": "",  
+"OCRNBR": "",  
+"ORGNAM": "郭澍泽企业",  
+"WRKEML": "111@XX.com",  
+"certificate": [  
+{  
+"CETNAM": "证书名称",  
+"VALEND": "2028-12-01",  
+"ISSDAT": "2024-09-12",  
+"CETSEQ": "0000041783",  
+"CETAUT": "证书机构",  
+"VALSTA": "2024-09-12"  
+}  
+],  
+"JOBUID": "00002",  
+"title": [
+
+],  
+"CORFLG": "",  
+"HIGSCH": "1",  
+"award": [
+
+],  
+"GENDER": "M",  
+"OPRTSP": "2024-11-05 11:40:28",  
+"QUTRES": "",  
+"HOMTYP": "0",  
+"PLTSTS": "2",  
+"LNKDST": "南山区",  
+"MOBNBR": "11202020101",  
+"OPRAGN": "CMB",  
+"PBTPRD": "B",  
+"CERTTYPE": "P01",  
+"CORMSG": "",  
+"wrk": [  
+{  
+"RETMNR": "14501010210",  
+"WENDAT": "2024-07-19",  
+"WRKNBR": "0000041652",  
+"WBGDAT": "2022-11-10",  
+"RETERE": "证明人",  
+"LEASAL": "10000",  
+"LSTPST": "曾任岗位",  
+"LEAREA": "家庭原因",  
+"LSTCOM": "工作单位"  
+}  
+],  
+"HOMPRV": "广东省",  
+"LNKPRV": "广东省",  
+"FUNACT": "44123",  
+"LNKADR": "xxx街道xxx小区",  
+"PRJCOD": "XFV42994",  
+"ENTDAT": "2024-11-05",  
+"family": [  
+{  
+"WRKJOB": "职位/岗位",  
+"RLTSHP": "3",  
+"MBESEQ": "0000041791",  
+"CONTEL": "8987654",  
+"BIRDAY": "2018-11-24",  
+"WRKCOM": "现工作单位",  
+"MBENAM": "家庭成员姓名"  
+}  
+],  
+"taxdetail":[]  
+}
+
+
+来自 <https://xft.cmbchina.com/open/#/doc/open-document?id=10692&mid=12038> 

@@ -1,0 +1,77 @@
+获取企业下所有角色
+更新时间: 2024-02-08 10:57:38
+接口调用地址
+生产环境地址：https://api.cmbchina.com/aut/OPSTAMOD/aut/role/list
+测试环境地址：https://api.cmburl.cn:8065/aut/aut/aut/role/list
+接口描述
+分页获取企业下所有角色
+调用方式
+METHOD: POST
+CONTENT-TYPE: application/json
+接口输入参数
+
+请求体
+仅必填全部展开
+参数	必填	类型	最大长度	名称	示例值	字段说明
+					
+	否	LONG	-	当前页	1	-
+currentPage
+	否	LONG	-	每页大小	20	-
+pageSize
+
+接口输出参数
+
+响应体
+仅必填全部展开
+参数	必存在	类型	最大长度	名称	示例值	字段说明
+					
+	否	STRING	-	返回码	SUC0000	-
+returnCode
+	否	STRING	-	错误信息	null	-
+errorMsg
+	否	OBJECT	-	返回体	-	-
+body
+	否	LONG	-	当前页	1	-
+currentPage
+	否	LONG	-	每页大小	20	-
+pageSize
+	否	LONG	-	总条数	33	-
+totalSize
+	否	ARRAY	-	数据记录	-	-
+records
+	否	STRING	-	角色编号	S0067	-
+roleCode
+	否	STRING	-	角色名称	测试角色1112	-
+roleName
+接口调用示例
+请求报文
+{  
+"currentPage":1,  
+"pageSize":2  
+}  
+响应报文
+{  
+    "returnCode": "SUC0000",  
+    "errorMsg": null,  
+    "body": {  
+        "currentPage": 1,  
+        "pageSize": 2,  
+        "totalSize": 33,  
+        "records": [  
+            {  
+                "roleCode": "S0067",  
+                "roleName": "测试角色1112"  
+            },  
+            {  
+                "roleCode": "S0066",  
+                "roleName": "测试角色1111"  
+            }  
+        ]  
+    }  
+}  
+错误码说明
+除HTTP返回码外，具体的业务异常错误码通常指的是返回报文中错误码字段的内容，常见通用错误码及解决方案请参考通用错误码。
+错误码	错误信息
+Data	Data
+
+来自 <https://xft.cmbchina.com/open/#/doc/open-document?id=10692&mid=13211> 

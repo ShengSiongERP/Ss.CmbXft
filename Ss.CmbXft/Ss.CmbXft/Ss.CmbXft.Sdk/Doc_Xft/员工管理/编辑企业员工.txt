@@ -1,0 +1,1273 @@
+编辑企业员工
+更新时间: 2025-11-07 19:40:00
+接口调用地址
+生产环境地址：https://api.cmbchina.com/hrm/hrm2/xft-employeeprofile/employee/staff-general-api/modify-staff
+测试环境地址：https://api.cmburl.cn:8065/xfthrm/hrm2uat/xft-employeeprofile/employee/staff-general-api/modify-staff
+接口描述
+本接口是花名册员工编辑接口，支持编辑薪福通-员工管理-花名册中的员工信息。通过对象化的入参降低调用方的使用难度，参数字段采用具有语义化的驼峰命名，降低调用方的阅读理解成本。
+使用该接口时，最大支持一次传入1000笔员工信息数据。
+调用方式
+METHOD: POST
+CONTENT-TYPE: application/json
+接口输入参数
+
+请求体
+仅必填全部展开
+参数	必填	类型	最大长度	名称	示例值	字段说明
+					
+	是	ARRAY	-	员工信息	-	使用该接口时，最大支持一次传入1000笔员工信息数据。
+staffInfoList
+	是	OBJECT	-	员工基本信息、员工个人信息	-	-
+staffBasicInfo
+	是	STRING	10	员工序号	0000000024	-
+stfSeq
+	否	STRING	3	员工类型	3	参考数据字典员工类型
+stfType
+	否	STRING	1	员工状态	1	参考数据字典员工状态
+stfStatus
+	否	STRING	100	员工姓名	测试员工姓名	-
+stfName
+	否	STRING	11	手机号	12345678901	-
+mobileNumber
+	否	STRING	1	证件类型	O	参考数据字典证件类型
+certificateType
+	否	STRING	30	证件号	THYU67543	-
+certificateNumber
+	否	STRING	1	性别	0	参考数据字典性别
+sex
+	否	STRING	2	国籍/地区	CN	参考数据字典-国籍/地区列表
+nationality
+	否	STRING	4	部门	0001	入参是部门id，例如0001
+orgSeq
+	否	STRING	10	岗位编码	P0001	入参是岗位编码，例如P0001
+posCode
+	否	STRING	10	职位编码	J0001	入参是职位编码，例如P0001
+jobCode
+	否	STRING	10	职级	RNK0000001	入参为职级id，例如RNK0000001
+jobRankSeq
+	否	STRING	20	员工号	HH6754	-
+stfNumber
+	否	STRING	20	座机	0105858987	-
+telephoneNumber
+	否	STRING	64	工作邮箱	123kdkd@qq.com	-
+workEmail
+	否	STRING	500	备注	备注	-
+remark
+	否	DATE	-	出生日期	1996-01-29	格式:yyyy-MM-dd
+birthday
+	否	STRING	1	婚姻状态	0	婚姻状态id
+hasMarried						婚姻状态名称
+						0
+						已婚
+						1
+						未婚
+						2
+						再婚
+						3
+						离异
+						4
+						丧偶
+						5
+						保密
+	否	STRING	1	是否已育	0	参考数据字典是否已育
+hasNurtured
+	否	STRING	2	民族	01	-
+nation
+	否	STRING	1	政治面貌	4	参考数据字典政治面貌
+politicalAppearance
+	否	STRING	30	现住址省	青海省	-
+presentAddressProvince
+	否	STRING	30	现住址市	西宁市	-
+presentAddressCity
+	否	STRING	30	现住址区/县	城东区	-
+presentAddressDistrict
+	否	STRING	300	现住址详细地址	昆仑东路xx号	-
+presentAddressDetail
+	否	STRING	30	户籍所在地省	青海省	-
+householdAddressProvince
+	否	STRING	30	户籍所在地市	西宁市	-
+householdAddressCity
+	否	STRING	30	户籍所在地区/县	城东区	-
+householdAddressDistrict
+	否	STRING	300	户籍所在地详细地址	昆仑东路xx号	-
+householdAddressDetail
+	否	STRING	1	户口性质	0	参考数据字典户口性质
+householdType
+	否	STRING	100	身份证地址	昆仑东路xx号	-
+certificateAddress
+	否	STRING	1	证件是否长期有效	0	0-否，1-是
+isCertificateLongTermEffective
+	否	DATE	-	证件签发日期	2019-09-01	格式:yyyy-MM-dd
+certificateValidBeginDate
+	否	DATE	-	证件到期日期	-	当证件长期有效时，身份证有效期止是null
+certificateValidEndDate						格式:yyyy-MM-dd
+	否	STRING	64	个人邮箱	sj125dkd@qq.com	-
+individualEmail
+	否	DATE	-	首次工作日期	2012-04-20	格式:yyyy-MM-dd
+firstWorkDate
+	否	INTEGER	-	工龄扣减期	1	工龄扣减期返回值是整数类型，最大值为6位，最小值是1位。 以6位为例，每两位表示年、月、天。 111015就表示11年10个月15天 以5位为例，从高位到低位，第一位表示年，后四位每两位表示月、天。 10911就表示1年9个月11天。 以4位为例，从高位到低位，每两位表示月、天。 1011就表示10个月11天。 以3位为例，从高位到低位，第一位表示月，后两位表示天。 811就表示8个月11天。 以2位为例，从高位到低位，两位表示天。 11就表示11天。 以1位为例，从高位到低位，表示天。 1就表示1天。 支持的最大扣减期为501130，即50年11个月30天。 支持的最小扣减期为0，即0天。
+workYearDeduction
+	否	STRING	10	工作地	0000000001	入参为工作地id，例如0000000001
+workplaceLocationSeq
+	否	STRING	30	联系地址省份	青海省	-
+contactAddressProvince
+	否	STRING	30	联系地址城市	青海省	-
+contactAddressCity
+	否	STRING	30	联系地址区/县	城东区	-
+contactAddressDistrict
+	否	STRING	300	联系地址详细地址	昆仑东路xx号	-
+contactAddressDetail
+	否	STRING	10	业务分组	0000000001	入参为业务分组id，例如0000000002
+businessGroupSeq
+	否	STRING	100	曾用名	测试曾用名	-
+formerName
+	否	STRING	10	汇报上级	0000000001	汇报上级传对应员工的员工序号
+reportSuperiorStfSeq
+	否	STRING	15	成本中心	117057401135104	入参是成本中心的id，数据源为薪福通-管理后台-组织-成本中心
+costCenter
+	否	DOUBLE	-	成本分摊比例	11.32	支持到小数点后两位
+costAllocationRatio
+	否	STRING	9	工作所属公司	COR000002	入参是工作所属公司的id，数据源为薪福通-管理后台-组织-法人公司
+employerCorporation
+	否	ARRAY	-	员工基本信息、员工个人信息对应自定义字段	-	-
+customerFieldInfoList
+	否	STRING	10	所属分组	S01BASIC	-
+classKey
+	否	STRING	15	自定义字段id	FLD000000000017	-
+fieldKey
+	否	STRING	500	字段值	测试字段值	-
+fieldValue
+	否	ARRAY	-	员工基本信息、员工个人信息对应自定义附件	-	-
+attachmentInfoList
+	否	STRING	15	附件key	FLD000000000018	-
+attachmentFieldKey
+	否	INTEGER	-	附件序号	0	同一个附件字段上传多个附件时，innerSeq按顺序递增传递即可
+innerSeq
+	否	STRING	30	附件id	20231016105303703-513184504302	-
+attachmentId
+	否	STRING	100	附件名称	API计划.xlsx	-
+attachmentName
+	否	OBJECT	-	员工在职信息、离职信息	-	-
+staffHrmInfo
+	否	DATE	-	入职日期	2021-09-21	格式:yyyy-MM-dd
+entryDate
+	否	STRING	3	实际试用期	3	参考数据字典试用期
+actutalProbationPeriod
+	否	DATE	-	实际转正日期	2021-09-21	格式:yyyy-MM-dd
+actualPositiveDate
+	否	DATE	-	实际离职日期	2021-09-21	格式:yyyy-MM-dd
+actualQuitDate
+	否	STRING	10	离职类型	A	参考数据字典离职类型
+quitType
+	否	STRING	10	离职原因	A01	参考数据字典离职原因
+quitReason
+	否	DATE	-	申请离职日期	2021-09-21	格式:yyyy-MM-dd
+applyQuitDate
+	否	DATE	-	计划离职日期	2021-09-21	格式:yyyy-MM-dd
+planQuitDate
+	否	DATE	-	薪资结算日期	2021-09-21	格式:yyyy-MM-dd
+salarySettleDate
+	否	STRING	300	离职备注	-	-
+quitRemark
+	否	DATE	-	转正申请日期	2021-09-21	格式:yyyy-MM-dd
+applyPositiveDate
+	否	DATE	-	计划转正日期	2022-07-20	格式:yyyy-MM-dd
+planPositiveDate
+	否	STRING	3	计划试用期	3	参考数据字典试用期
+planProbationPeriod
+	否	DATE	-	司龄开始日期	2022-04-20	格式:yyyy-MM-dd
+seniorityBeginDate
+	否	INTEGER	-	司龄扣减期	1	司龄扣减期返回值是整数类型，最大值为6位，最小值是1位。 以6位为例，每两位表示年、月、天。 111015就表示11年10个月15天 以5位为例，从高位到低位，第一位表示年，后四位每两位表示月、天。 10911就表示1年9个月11天。 以4位为例，从高位到低位，每两位表示月、天。 1011就表示10个月11天。 以3位为例，从高位到低位，第一位表示月，后两位表示天。 811就表示8个月11天。 以2位为例，从高位到低位，两位表示天。 11就表示11天。 以1位为例，从高位到低位，表示天。 1就表示1天。 支持的最大扣减期为501130，即50年11个月30天。 支持的最小扣减期为0，即0天。
+seniorityDeduction
+	否	ARRAY	-	员工在职信息、员工离职信息对应自定义字段	-	-
+customerFieldInfoList
+	否	STRING	10	所属分组	S02ONJOB	-
+classKey
+	否	STRING	15	自定义字段id	-	-
+fieldKey
+	否	STRING	500	字段值	-	-
+fieldValue
+	否	ARRAY	-	员工在职信息、员工离职信息对应自定义附件	-	-
+attachmentInfoList
+	否	STRING	15	附件key	-	-
+attachmentFieldKey
+	否	INTEGER	-	附件序号	0	同一个附件字段上传多个附件时，innerSeq按顺序递增传递即可
+innerSeq
+	否	STRING	30	附件id	-	-
+attachmentId
+	否	STRING	100	附件名称	-	-
+attachmentName
+	否	OBJECT	-	员工工资社保	-	-
+staffWagesAndSocialSecurityInfo
+	否	STRING	35	工资卡号	123	-
+bankCardAccount
+	否	STRING	30	开户行	招商银行	-
+bankName
+	否	STRING	30	开户行省	青海省	-
+bankOfProvince
+	否	STRING	30	开户行市	西宁市	-
+bankOfCity
+	否	STRING	35	数币钱包ID	-	-
+digitalWallet
+	否	STRING	3	运营机构	CMB	运营机构key
+digitalBank						运营机构名称
+						ABC
+						中国农业银行
+						BCM
+						交通银行
+						BOC
+						中国银行
+						BWZ
+						深圳前海微众银行
+						CCB
+						中国建设银行
+						CIB
+						兴业银行
+						CMB
+						招商银行
+						ICB
+						中国工商银行
+						PSB
+						中国邮政储蓄银行
+						ZWS
+						浙江网商银行
+	否	STRING	20	个人社保账号	123456	-
+socialSecurityAccount
+	否	STRING	20	个人公积金账号	654321	-
+accumulationFundAccount
+	否	ARRAY	-	员工工资社保自定义字段	-	-
+customerFieldInfoList
+	否	STRING	10	所属分组	S04SAISR	-
+classKey
+	否	STRING	15	自定义字段id	-	-
+fieldKey
+	否	STRING	500	字段值	-	-
+fieldValue
+	否	ARRAY	-	员工工资社保自定义附件	-	-
+attachmentInfoList
+	否	STRING	15	附件key	-	-
+attachmentFieldKey
+	否	INTEGER	-	附件序号	-	同一个附件字段上传多个附件时，innerSeq按顺序递增传递即可
+innerSeq
+	否	STRING	30	附件id	-	-
+attachmentId
+	否	STRING	100	附件名称	-	-
+attachmentName
+	否	OBJECT	-	员工紧急联系人信息	-	-
+staffEmergencyContact
+	否	STRING	100	紧急联系人	小明	-
+contactName
+	否	STRING	20	紧急联系人电话	18986523658	-
+contactTelephoneNumber
+	否	ARRAY	-	员工紧急联系人信息自定义字段	-	-
+customerFieldInfoList
+	否	STRING	10	所属分组	S06EMCNT	-
+classKey
+	否	STRING	15	自定义字段id	-	-
+fieldKey
+	否	STRING	500	字段值	-	-
+fieldValue
+	否	ARRAY	-	员工紧急联系人信息自定义附件	-	-
+attachmentInfoList
+	否	STRING	15	附件key	-	-
+attachmentFieldKey
+	否	INTEGER	-	附件序号	-	同一个附件字段上传多个附件时，innerSeq按顺序递增传递即可
+innerSeq
+	否	STRING	30	附件id	-	-
+attachmentId
+	否	STRING	100	附件名称	-	-
+attachmentName
+	否	OBJECT	-	集团服务信息	-	-
+StaffGroupServiceInfo
+	否	DATE	-	集团入职日期	2021-01-02	格式:yyyy-MM-dd
+groupJoinDate
+	否	INTEGER	-	集团司龄扣减期	1	集团司龄扣减期返回值是整数类型，最大值为6位，最小值是1位。 以6位为例，每两位表示年、月、天。 111015就表示11年10个月15天 以5位为例，从高位到低位，第一位表示年，后四位每两位表示月、天。 10911就表示1年9个月11天。 以4位为例，从高位到低位，每两位表示月、天。 1011就表示10个月11天。 以3位为例，从高位到低位，第一位表示月，后两位表示天。 811就表示8个月11天。 以2位为例，从高位到低位，两位表示天。 11就表示11天。 以1位为例，从高位到低位，表示天。 1就表示1天。 支持的最大扣减期为501130，即50年11个月30天。 支持的最小扣减期为0，即0天。
+groupServiceTimeDeduction
+	否	ARRAY	-	集团服务信息自定义字段	-	-
+customerFieldInfoList
+	否	STRING	10	所属分组	S19GRPSVS	-
+classKey
+	否	STRING	15	自定义字段id	-	-
+fieldKey
+	否	STRING	500	字段值	-	-
+fieldValue
+	否	ARRAY	-	集团服务信息自定义附件	-	-
+attachmentInfoList
+	否	STRING	15	附件key	-	-
+attachmentFieldKey
+	否	INTEGER	-	附件序号	-	同一个附件字段上传多个附件时，innerSeq按顺序递增传递即可
+innerSeq
+	否	STRING	30	附件id	-	-
+attachmentId
+	否	STRING	100	附件名称	-	-
+attachmentName
+	否	OBJECT	-	员工个税基础信息	-	-
+staffTaxBasicInfo
+	否	STRING	1	其他证件类型	O	参考数据字典证件类型
+otherCertificateType
+	否	STRING	30	其他证件号码	1111222	-
+otherCertificateNumber
+	否	STRING	2	出生地	CN	-
+birthLand
+	否	STRING	30	中文名	-	-
+chineseName
+	否	DATE	-	首次入境日期	1990-10-01	格式:yyyy-MM-dd
+firstInboundDate
+	否	DATE	-	预计离境日期	2030-10-01	格式:yyyy-MM-dd
+planOutboundDate
+	否	STRING	1	最高学历	0	0-大学本科以下 1-大学本科 2-研究生
+highestDegree
+	否	STRING	1	是否残疾	N	Y-是,N-否
+isDisabled
+	否	STRING	1	是否烈属	N	Y-是,N-否
+isMartyr
+	否	STRING	1	是否孤老	N	Y-是,N-否
+isLonelyAndOld
+	否	STRING	1	残疾证类型	1	条件必填
+disabilityCertificateType						当是否残疾为是时，该属性必填
+						属性传key
+						key
+						名称
+						1
+						残疾证
+						2
+						残疾军人证
+						3
+						伤残人民警察证
+						4
+						残疾消防救援人员证
+						5
+						伤残预备役人员、伤残民兵民工证
+						6
+						因公伤残人员证
+	否	STRING	50	残疾证号	-	条件必填
+disabilityCertificateNumber						当是否残疾为是时，该属性必填
+	否	STRING	50	烈属证号	-	条件必填
+martyrCertificateNumber						当是否烈属为是时，该属性必填
+	否	ARRAY	-	员工奖惩记录信息	-	当修改某条多记录分组时，请传入他的全部字段。以教育经历为例：
+staffAwardInfoList						{ "tradeSeq":"0000002325", "graduateSchool":"sjdkdkdkd毕业院校-克莱登大学", "degree":"A", "specialty":"专业-厨师1222", "graduateDate":"2022-04-20" }
+	否	STRING	50	奖惩事项	国家奖学金	-
+rewardAndPunishmentMatters
+	否	DATE	-	奖惩时间	2022-04-21	格式:yyyy-MM-dd
+rewardAndPunishmentDate
+	否	STRING	50	所在单位	XXX大学	-
+rewardAndPunishmentCompany
+	否	STRING	200	奖惩详情	详情是学习成绩靠前获得奖学金	-
+rewardAndPunishmentDetail
+	否	STRING	10	奖惩记录流水号	-	当需要修改某条记录时，请将该条数据的流水号传入trdseq，当trdseq没有传值时，新增该条记录。
+tradeSeq
+	否	ARRAY	-	员工奖惩记录信息自定义字段	-	-
+customerFieldInfoList
+	否	STRING	10	所属分组	S09RWDPNS	-
+classKey
+	否	STRING	15	自定义字段id	FLD000000000039	-
+fieldKey
+	否	STRING	500	字段值	测试字段值	-
+fieldValue
+	否	ARRAY	-	员工奖惩记录信息附件	-	-
+attachmentInfoList
+	否	STRING	15	附件key	AWDATH	-
+attachmentFieldKey
+	否	INTEGER	-	附件序号	0	同一个附件字段上传多个附件时，innerSeq按顺序递增传递即可
+innerSeq
+	否	STRING	30	附件id	20231016105303703-513184504302	-
+attachmentId
+	否	STRING	100	附件名称	API计划.xlsx	-
+attachmentName
+	否	ARRAY	-	员工工作经历信息	-	当修改某条多记录分组时，请传入他的全部字段。以教育经历为例： { "tradeSeq":"0000002325", "graduateSchool":"sjdkdkdkd毕业院校-克莱登大学", "degree":"A", "specialty":"专业-厨师1222", "graduateDate":"2022-04-20" }
+staffWorkInfoList
+	否	STRING	10	工作经历流水号	0000000014	当需要修改某条记录时，请将该条数据的流水号传入trdseq，当trdseq没有传值时，新增该条记录
+tradeSeq
+	否	STRING	50	工作单位	xxx单位	-
+lastCompanyName
+	否	STRING	50	曾任岗位	xxx岗位	-
+lastPositionName
+	否	DATE	-	工作开始日期	2022-04-20	格式:yyyy-MM-dd
+workBeginDate
+	否	DATE	-	工作结束日期	2022-04-20	格式:yyyy-MM-dd
+workEndDate
+	否	STRING	100	证明人	张某	-
+proverName
+	否	STRING	20	证明人联系电话	18986585896	-
+proverTelephoneNumber
+	否	STRING	50	过往离职原因	家庭原因	-
+leaveReason
+	否	STRING	20	离职薪资	10000	-
+leaveSalary
+	否	ARRAY	-	员工工作经历信息自定义字段	-	-
+customerFieldInfoList
+	否	STRING	10	所属分组	S08WRKEPR	-
+classKey
+	否	STRING	15	自定义字段id	FLD000000000032	-
+fieldKey
+	否	STRING	500	字段值	测试字段值	-
+fieldValue
+	否	ARRAY	-	员工工作经历信息附件	-	-
+attachmentInfoList
+	否	STRING	15	附件key	WRKATH	-
+attachmentFieldKey
+	否	INTEGER	-	附件序号	0	同一个附件字段上传多个附件时，innerSeq按顺序递增传递即可
+innerSeq
+	否	STRING	30	附件id	20231016105615904-237602044715	-
+attachmentId
+	否	STRING	100	附件名称	API计划.xlsx	-
+attachmentName
+	否	ARRAY	-	员工教育经历信息	-	当修改某条多记录分组时，请传入他的全部字段。以教育经历为例： { "tradeSeq":"0000002325", "graduateSchool":"sjdkdkdkd毕业院校-克莱登大学", "degree":"A", "specialty":"专业-厨师1222", "graduateDate":"2022-04-20" }
+staffEducationInfoList
+	否	STRING	10	教育经历流水号	0000000059	当需要修改某条记录时，请将该条数据的流水号传入trdseq，当trdseq没有传值时，新增该条记录
+tradeSeq
+	否	STRING	50	毕业院校	xxx大学	-
+graduateSchool
+	否	STRING	1	学历	H	参考数据字典学历
+degree
+	否	STRING	50	专业	自动化	-
+specialty
+	否	DATE	-	毕业时间	2022-04-20	格式:yyyy-MM-dd
+graduateDate
+	否	ARRAY	-	员工教育经历信息自定义字段	-	-
+customerFieldInfoList
+	否	STRING	10	所属分组	S07EDUCA	-
+classKey
+	否	STRING	15	自定义字段id	FLD000000000008	-
+fieldKey
+	否	STRING	500	字段值	测试字段值	-
+fieldValue
+	否	ARRAY	-	员工教育经历信息附件	-	-
+attachmentInfoList
+	否	STRING	15	附件key	EDUATH	-
+attachmentFieldKey
+	否	INTEGER	-	附件序号	0	同一个附件字段上传多个附件时，innerSeq按顺序递增传递即可
+innerSeq
+	否	STRING	30	附件id	20231016105615904-237602044715	-
+attachmentId
+	否	STRING	100	附件名称	API计划.xlsx	-
+attachmentName
+	否	ARRAY	-	员工专业证书信息	-	当修改某条多记录分组时，请传入他的全部字段。以教育经历为例： { "tradeSeq":"0000002325", "graduateSchool":"sjdkdkdkd毕业院校-克莱登大学", "degree":"A", "specialty":"专业-厨师1222", "graduateDate":"2022-04-20" }
+staffCertificateInfoList
+	否	STRING	50	证书名称	xxx证书	-
+certificateName
+	否	STRING	50	发证机构	xxx机构	-
+issuingAuthority
+	否	DATE	-	发证日期	2022-04-21	格式:yyyy-MM-dd
+issuingDate
+	否	DATE	-	证书有效期起始日	2022-04-21	格式:yyyy-MM-dd
+validBeginDate
+	否	STRING	-	证书有效期结束日	2022-04-21	格式:yyyy-MM-dd
+validEndDate
+	否	STRING	10	专业证书流水号	-	当需要修改某条记录时，请将该条数据的流水号传入trdseq，当trdseq没有传值时，新增该条记录
+tradeSeq
+	否	ARRAY	-	员工专业证书信息自定义字段	-	-
+customerFieldInfoList
+	否	STRING	10	所属分组	S09PFSCER	-
+classKey
+	否	STRING	15	自定义字段id	FLD000000000006	-
+fieldKey
+	否	STRING	100	字段值	测试字段值	-
+fieldValue
+	否	ARRAY	-	员工专业证书信息附件	-	-
+attachmentInfoList
+	否	STRING	15	附件key	CTEATH	-
+attachmentFieldKey
+	否	INTEGER	-	附件序号	0	同一个附件字段上传多个附件时，innerSeq按顺序递增传递即可
+innerSeq
+	否	STRING	30	附件id	20231016105615904-237602044715	-
+attachmentId
+	否	STRING	100	附件名称	API计划.xlsx	-
+attachmentName
+	否	ARRAY	-	员工职称信息	-	当修改某条多记录分组时，请传入他的全部字段。以教育经历为例： { "tradeSeq":"0000002325", "graduateSchool":"sjdkdkdkd毕业院校-克莱登大学", "degree":"A", "specialty":"专业-厨师1222", "graduateDate":"2022-04-20" }
+staffJobTitleInfoList
+	否	STRING	50	职称名称	xxx工程师	-
+titleName
+	否	STRING	3	职称级别	0	参考数据字典职称等级
+titleLevel
+	否	STRING	50	职称评定机构	xxx机构	-
+assessmentAuthority
+	否	DATE	-	职称获得日期	2022-04-21	格式:yyyy-MM-dd
+obtainDate
+	否	STRING	30	职称证书编号	xxx编号	-
+titleCertificateNumber
+	否	STRING	1	是否最高职称	0	参考数据字典是否最高职称
+isHighestTitle
+	否	STRING	10	职称流水号	-	当需要修改某条记录时，请将该条数据的流水号传入trdseq，当trdseq没有传值时，新增该条记录
+tradeSeq
+	否	ARRAY	-	员工职称信息自定义字段	-	-
+customerFieldInfoList
+	否	STRING	10	所属分组	S09TTITLE	-
+classKey
+	否	STRING	15	自定义字段id	FLD000000000035	-
+fieldKey
+	否	STRING	500	字段值	测试字段值	-
+fieldValue
+	否	ARRAY	-	员工职称信息附件	-	-
+attachmentInfoList
+	否	STRING	15	附件key	TTLATH	-
+attachmentFieldKey
+	否	INTEGER	-	附件序号	0	同一个附件字段上传多个附件时，innerSeq按顺序递增传递即可
+innerSeq
+	否	STRING	30	附件id	20231016105615904-237602044715	-
+attachmentId
+	否	STRING	100	附件名称	API计划.xlsx	-
+attachmentName
+	否	ARRAY	-	员工家庭成员信息	-	当修改某条多记录分组时，请传入他的全部字段。以教育经历为例： { "tradeSeq":"0000002325", "graduateSchool":"sjdkdkdkd毕业院校-克莱登大学", "degree":"A", "specialty":"专业-厨师1222", "graduateDate":"2022-04-20" }
+staffFamilyMemberInfoList
+	否	STRING	1	家庭成员关系	0	参考数据字典与本人关系
+relation
+	否	STRING	100	家庭成员姓名	张某	-
+name
+	否	DATE	-	家庭成员生日	1975-04-21	格式:yyyy-MM-dd
+birthDate
+	否	STRING	50	工作单位	xxx单位	-
+currentWorkCompany
+	否	STRING	50	任职职位	xxx职位	-
+position
+	否	STRING	50	家庭成员电话	18985626589	-
+contactNumber
+	否	STRING	10	家庭成员流水号	-	当需要修改某条记录时，请将该条数据的流水号传入trdseq，当trdseq没有传值时，新增该条记录
+tradeSeq
+	否	ARRAY	-	员工家庭成员信息自定义字段	-	-
+customerFieldInfoList
+	否	STRING	10	所属分组	S09FMLMEM	-
+classKey
+	否	STRING	15	自定义字段id	FLD000000000041	-
+fieldKey
+	否	STRING	500	字段值	sjdkdkdkd家庭文本	-
+fieldValue
+	否	ARRAY	-	员工家庭成员信息附件	-	-
+attachmentInfoList
+	否	STRING	15	附件key	FMLATH	-
+attachmentFieldKey
+	否	INTEGER	-	附件序号	0	同一个附件字段上传多个附件时，innerSeq按顺序递增传递即可
+innerSeq
+	否	STRING	30	附件id	20231016105615904-237602044715	-
+attachmentId
+	否	STRING	100	附件名称	API计划.xlsx	-
+attachmentName
+	否	ARRAY	-	员工个税申报信息	-	当修改某条多记录分组时，请传入他的全部字段。以教育经历为例： { "tradeSeq":"0000002325", "graduateSchool":"sjdkdkdkd毕业院校-克莱登大学", "degree":"A", "specialty":"专业-厨师1222", "graduateDate":"2022-04-20" }
+staffTaxDeclarationInfoList
+	是	STRING	-	税局登记序号	10117440191349040837	-
+registerSequence
+	是	STRING	1	任职受雇类型	0	0雇员、1保险营销员、2证券经纪人、3其他、4-实习学生（全日制学历教育）
+employedType
+	否	DATE	-	受雇日期	2022-10-10	格式:yyyy-MM-dd
+employedDate
+	否	STRING	1	入职年度就业情形	-	0-新入职学生，1-其他当年首次就业
+employmentSituation
+	否	STRING	1	职务	0	0-高层，1-普通
+duty
+	否	STRING	2000	税局员工备注	测试	-
+taxRemark
+	否	DATE	-	税局离职日期	-	格式:yyyy-MM-dd
+taxOfficeQuitDate
+	否	STRING	10	涉税事由	-	0, 任职受雇 1, 提供临时劳务 2,转让财产 3, 从事投资和经营活动 4, 其他
+taxRelatedReason
+	否	BIGDECIMAL	-	个人投资总额	-	-
+totalPersonalInvestment
+	否	BIGDECIMAL	-	个人投资比例	-	-
+individualInvestmentPercentage
+	否	STRING	1	是否扣除减除费用	-	Y是，N否
+isDeductionsDeducted
+	否	STRING	11	个税通知手机号	-	-
+taxMobileNumber
+	是	STRING	1	人员状态	Y	Y-正常，N-非正常
+personnelState
+	否	STRING	1	其他情况说明	1	条件必填
+otherEmployeeTypeNote						当任职受雇从业类型选择其他时，该属性必填
+						属性传值是key
+						key
+						名称
+						1
+						扣缴申报利息股息红利所得
+						2
+						扣缴申报偶然所得
+						3
+						申报其他所得
+	否	ARRAY	-	员工兼任信息	-	当修改某条多记录分组时，请传入他的全部字段。以教育经历为例： { "tradeSeq":"0000002325", "graduateSchool":"sjdkdkdkd毕业院校-克莱登大学", "degree":"A", "specialty":"专业-厨师1222", "graduateDate":"2022-04-20" }
+staffAdjunctInfoList
+	否	STRING	10	兼任信息	-	当需要修改某条记录时，请将该条数据的流水号传入trdseq，当trdseq没有传值时，新增该条记录
+tradeSeq
+	否	STRING	4	兼任部门	-	入参是部门id，例如0000
+adjunctOrgSeq
+	否	STRING	10	兼任岗位	-	-
+adjunctPosCode
+	否	ARRAY	-	员工自定义分组信息	-	-
+customerFieldInfoList
+	否	STRING	10	所属分组	CLS0000003	-
+classKey
+	否	STRING	15	自定义字段id	FLD000000000007	-
+fieldKey
+	否	STRING	500	字段值	测试字段值	1.自定义分组的自定义附件字段传附件id
+fieldValue
+	否	INTEGER	-	自定义分组自定义附件序号	-	1.自定义分组的自定义附件字段需要传
+attachmentFieldInnerSeq						2.同一个附件字段上传多个附件时，innerSeq按顺序递增传递即可
+	否	STRING	100	自定义分组自定义附件文件名	-	自定义分组的自定义附件字段需要传
+attachmentFieldName
+	否	STRING	-	自定义分组业务流水号	-	多记录自定义分组同一组数据的businessSeq保持一致，单记录自定义分组的可不传
+businessSeq
+	否	ARRAY	-	员工合同信息	-	当修改某条多记录分组时，请传入他的全部字段。以教育经历为例： { "tradeSeq":"0000002325", "graduateSchool":"sjdkdkdkd毕业院校-克莱登大学", "degree":"A", "specialty":"专业-厨师1222", "graduateDate":"2022-04-20" }
+staffContractInfoList
+	否	STRING	10	合同公司	COR000001	入参是合同公司的id，数据源为薪福通-管理后台-组织-法人公司
+contractCompany
+	否	STRING	30	合同编号	CON76541	-
+contractNumber
+	否	STRING	1	合同类型	1	参考数据字典合同类型
+contractType
+	否	STRING	1	合同期限	A	参考数据字典合同期限
+contractDuration
+	否	DATE	-	合同开始日期	2023-08-02	格式:yyyy-MM-dd
+contractBeginDate
+	否	DATE	-	合同结束日期	9999-12-31	格式:yyyy-MM-dd
+contractEndDate
+	否	STRING	9	合同流水号	COR000001	当需要修改某条记录时，请将该条数据的流水号传入trdseq，当trdseq没有传值时，新增该条记录
+tradeSeq
+	否	ARRAY	-	员工合同信息自定义字段	-	-
+customerFieldInfoList
+	否	STRING	10	所属分组	S05CONTACT	-
+classKey
+	否	STRING	15	自定义字段id	FLD000000000001	-
+fieldKey
+	否	STRING	500	字段值	合同信息文本	-
+fieldValue
+	否	ARRAY	-	员工合同信息附件	-	-
+attachmentInfoList
+	否	STRING	15	附件key	CONATH	-
+attachmentFieldKey
+	否	INTEGER	-	附件序号	0	同一个附件字段上传多个附件时，innerSeq按顺序递增传递即可
+innerSeq
+	否	STRING	30	附件id	20230901192255752-153628100558	-
+attachmentId
+	否	STRING	100	附件文件名	1.jpg	-
+attachmentName
+	否	ARRAY	-	员工个人材料附件信息	-	-
+staffAttachmentInfoList
+	否	STRING	15	附件字段key	-	-
+attachmentFieldKey
+	否	INTEGER	-	附件序号	-	同一个附件字段上传多个附件时，innerSeq按顺序递增传递即可
+innerSeq
+	否	STRING	30	附件id	-	-
+attachmentId
+	否	STRING	100	附件文件名	-	-
+attachmentName
+	否	ARRAY	-	培训记录	-	当修改某条多记录分组时，请传入他的全部字段。以教育经历为例： { "tradeSeq":"0000002325", "graduateSchool":"sjdkdkdkd毕业院校-克莱登大学", "degree":"A", "specialty":"专业-厨师1222", "graduateDate":"2022-04-20" }
+staffTrainRecordInfoList
+	否	STRING	50	课程名称	课程1	-
+courseName
+	否	STRING	50	课程编号	SS123	-
+courseNumber
+	否	STRING	3	培训类型	0	参考数据字典培训类型
+trainType
+	否	STRING	3	培训方式	1	参考数据字典培训方式
+trainWay
+	否	STRING	50	培训机构	培训中心	-
+trainInstitution
+	否	STRING	50	讲师	刘老师	-
+lecturer
+	否	DATE	-	培训开始日期	2023-08-01	格式:yyyy-MM-dd
+trainBegin
+	否	DATE	-	培训结束日期	2023-08-11	格式:yyyy-MM-dd
+trainEnd
+	否	STRING	50	培训地点	总部	-
+trainLocation
+	否	DATE	-	考试时间	2023-08-12	格式:yyyy-MM-dd
+examDate
+	否	STRING	50	考试结果	优秀	-
+examResult
+	否	STRING	16	培训记录流水号	-	当需要修改某条记录时，请将该条数据的流水号传入trdseq，当trdseq没有传值时，新增该条记录
+tradeSeq
+	否	ARRAY	-	培训记录自定义字段	-	-
+customerFieldInfoList
+	否	STRING	10	所属分组	S09TUTRAN	-
+classKey
+	否	STRING	15	自定义字段id	FLD000000000041	-
+fieldKey
+	否	STRING	500	字段值	测试字段值	-
+fieldValue
+	否	ARRAY	-	培训记录附件	-	-
+attachmentInfoList
+	否	STRING	15	附件key	-	-
+attachmentFieldKey
+	否	INTEGER	-	附件序号	0	同一个附件字段上传多个附件时，innerSeq按顺序递增传递即可
+innerSeq
+	否	STRING	30	附件id	-	-
+attachmentId
+	否	STRING	100	附件名称	-	-
+attachmentName
+	否	ARRAY	-	绩效考核	-	当修改某条多记录分组时，请传入他的全部字段。以教育经历为例： { "tradeSeq":"0000002325", "graduateSchool":"sjdkdkdkd毕业院校-克莱登大学", "degree":"A", "specialty":"专业-厨师1222", "graduateDate":"2022-04-20" }
+staffPerformanceInfoList
+	否	STRING	50	绩效考核周期	月度	-
+performanceCycle
+	否	STRING	50	绩效考核人	组长	-
+performanceEvaluator
+	否	STRING	50	绩效考核评分	80	-
+performanceScore
+	否	STRING	3	绩效考核等级	0	参考数据字典绩效考核等级
+performanceLevel
+	否	STRING	500	绩效考核评语	优秀	-
+performanceComments
+	否	STRING	16	绩效考核流水号	-	当需要修改某条记录时，请将该条数据的流水号传入trdseq，当trdseq没有传值时，新增该条记录
+tradeSeq
+	否	ARRAY	-	绩效考核自定义字段	-	-
+customerFieldInfoList
+	否	STRING	10	所属分组	S09TUVPFE	-
+classKey
+	否	STRING	15	自定义字段id	FLD000000000041	-
+fieldKey
+	否	STRING	500	字段值	测试字段值	-
+fieldValue
+	否	ARRAY	-	绩效考核附件	-	-
+attachmentInfoList
+	否	STRING	15	附件key	-	-
+attachmentFieldKey
+	否	INTEGER	-	附件序号	0	同一个附件字段上传多个附件时，innerSeq按顺序递增传递即可
+innerSeq
+	否	STRING	30	附件id	-	-
+attachmentId
+	否	STRING	100	附件名称	-	-
+attachmentName
+	否	STRING	1	多记录分组更新方式标志	0	该字段的具体用法和说明，请前往文档【员工管理-接口字段说明】查看（文档路径：开发文档/员工管理/员工管理-接口字段说明），也可直接通过链接跳转查看。
+multiGroupUpdateFlag
+
+接口输出参数
+
+响应体
+仅必填全部展开
+参数	必存在	类型	最大长度	名称	示例值	字段说明
+					
+	否	STRING	-	返回码	SUC0000	-
+returnCode
+	否	STRING	-	错误信息	-	-
+errorMsg
+	否	ARRAY	-	返回内容	-	-
+body
+	否	STRING	-	员工序号	0000002624	-
+stfSeq
+	否	STRING	-	证件类型	O	参考数据字典证件类型
+certificateType
+	否	STRING	-	证件号	OTHU231123123	-
+certificateNumber
+	否	STRING	-	校验信息	-	-
+errorMessage
+接口调用示例
+
+请求报文
+{  
+    "staffInfoList":[  
+        {  
+            "staffBasicInfo":{  
+                "stfSeq":"0000000024",  
+                "stfType":"3",  
+                "stfStatus":"1",  
+                "stfName":"测试员工姓名",  
+                "mobileNumber":"18552565251",  
+                "certificateType":"O",  
+                "certificateNumber":"THYU67543",  
+                "sex":"0",  
+                "nationality":"CN",  
+                "orgSeq":"0001",  
+                "posCode":"P0001",  
+                "jobCode":"J0001",  
+                "jobRankSeq":"RNK0000001",  
+                "stfNumber":"HH6754",  
+                "telephoneNumber":"0105858987",  
+                "workEmail":"123kdkd@qq.com",  
+                "remark":"备注",  
+                "birthday":"1996-01-29",  
+                "hasMarried":"0",  
+                "hasNurtured":"0",  
+                "nation":"01",  
+                "politicalAppearance":"4",  
+                "presentAddressProvince":"青海省",  
+                "presentAddressCity":"西宁市",  
+                "presentAddressDistrict":"城东区",  
+                "presentAddressDetail":"昆仑东路xx号",  
+                "householdAddressProvince":"青海省",  
+                "householdAddressCity":"西宁市",  
+                "householdAddressDistrict":"城东区",  
+                "householdAddressDetail":"昆仑东路xx号",  
+                "householdType":"0",  
+                "certificateAddress":"昆仑东路xx号",  
+                "isCertificateLongTermEffective":"0",  
+                "certificateValidBeginDate":"",  
+                "certificateValidEndDate":"",  
+                "individualEmail":"sj125dkd@qq.com",  
+                "firstWorkDate":"2012-04-20",  
+                "workplaceLocationSeq":"0000000001",  
+                "contactAddressProvince":"青海省",  
+                "contactAddressCity":"青海省",  
+                "contactAddressDistrict":"城东区",  
+                "contactAddressDetail":"昆仑东路xx号",  
+                "businessGroupSeq":"",  
+                "formerName":"测试曾用名",  
+                "reportSuperiorStfSeq":"0000000001",  
+                "customerFieldInfoList":[  
+                ],  
+                "attachmentInfoList":[  
+                ]  
+            },  
+            "staffHrmInfo":{  
+                "entryDate":"2021-09-21",  
+                "actutalProbationPeriod":"3",  
+                "actualPositiveDate":"",  
+                "actualQuitDate":"",  
+                "quitType":"",  
+                "quitReason":"",  
+                "applyQuitDate":"",  
+                "planQuitDate":"",  
+                "salarySettleDate":"",  
+                "quitRemark":"",  
+                "reasonForBlackList":"",  
+                "applyPositiveDate":"",  
+                "planPositiveDate":"2022-07-20",  
+                "planProbationPeriod":"3",  
+                "seniorityBeginDate":"2022-04-20"，  
+                "customerFieldInfoList":[  
+                ],  
+                "attachmentInfoList":[  
+                ]  
+            },  
+            "staffWagesAndSocialSecurityInfo":{  
+                "bankCardAccount":"123",  
+                "bankName":"招商银行",  
+                "bankOfProvince":"青海省",  
+                "bankOfCity":"西宁市",  
+                "digitalWallet":"",  
+                "digitalBank":"CMB",  
+                "socialSecurityAccount":"123456",  
+                "accumulationFundAccount":"654321",  
+                "customerFieldInfoList":[  
+                ],  
+                "attachmentInfoList":[  
+                ]  
+            },  
+            "staffEmergencyContact":{  
+                "contactName":"小明",  
+                "contactTelephoneNumber":"18986523658",  
+                "customerFieldInfoList":[  
+                ],  
+                "attachmentInfoList":[  
+                ]  
+            },  
+            "staffTaxBasicInfo":{  
+                "otherCertificateType":"O",  
+                "otherCertificateNumber":"1111222",  
+                "birthLand":"",  
+                "chineseName":"",  
+                "firstInboundDate":"1990-10-01",  
+                "planOutboundDate":"2030-10-01",  
+                "highestDegree":"",  
+                "isDisabled":"N",  
+                "isMartyr":"N",  
+                "isLonelyAndOld":"N",  
+                "disabilityCertificateNumber":"1234",  
+                "martyrCertificateNumber":"1234"  
+            },  
+            "staffAwardInfoList":[  
+                {  
+                    "rewardAndPunishmentMatters":"国家奖学金",  
+                    "rewardAndPunishmentDate":"2022-04-21",  
+                    "rewardAndPunishmentCompany":"xxx大学",  
+                    "rewardAndPunishmentDetail":"学习成绩靠前获得奖学金",  
+                    "customerFieldInfoList":[  
+                        {  
+                            "classKey":"S09RWDPNS",  
+                            "fieldKey":"FLD000000000039",  
+                            "fieldValue":"测试字段值"  
+                        }  
+                    ],  
+                    "attachmentInfoList":[  
+                        {  
+                            "attachmentFieldKey":"AWDATH",  
+                            "innerSeq":"0",  
+                            "attachmentId":"20231016105303703-513184504302",  
+                            "attachmentName":"API计划.xlsx"  
+                        },  
+                        {  
+                            "attachmentFieldKey":"FLD000000000034",  
+                            "innerSeq":"0",  
+                            "attachmentId":"20231016105303703-513184504302",  
+                            "attachmentName":"API计划.xlsx"  
+                        },  
+                        {  
+                            "attachmentFieldKey":"FLD000000000034",  
+                            "innerSeq":"1",  
+                            "attachmentId":"20231016105303703-513184504302",  
+                            "attachmentName":"API计划.xlsx"  
+                        }  
+                    ]  
+                }  
+            ],  
+            "staffWorkInfoList":[  
+                {  
+                    "tradeSeq":"0000000014",  
+                    "lastCompanyName":"xxx单位",  
+                    "lastPositionName":"xxx岗位",  
+                    "workBeginDate":"2022-04-20",  
+                    "workEndDate":"2022-04-20",  
+                    "proverName":"小王",  
+                    "proverTelephoneNumber":"18986585896",  
+                    "leaveReason":"家庭原因",  
+                    "leaveSalary":"10000",  
+                    "customerFieldInfoList":[  
+                        {  
+                            "classKey":"S08WRKEPR",  
+                            "fieldKey":"FLD000000000032",  
+                            "fieldValue":"测试字段值"  
+                        }  
+                    ],  
+                    "attachmentInfoList":[  
+                        {  
+                            "attachmentFieldKey":"WRKATH",  
+                            "innerSeq":"0",  
+                            "attachmentId":"20231016105615904-237602044715",  
+                            "attachmentName":"API计划.xlsx"  
+                        },  
+                        {  
+                            "attachmentFieldKey":"FLD000000000028",  
+                            "innerSeq":"0",  
+                            "attachmentId":"20231016105615904-237602044715",  
+                            "attachmentName":"API计划.xlsx"  
+                        }  
+                    ]  
+                }  
+            ],  
+            "staffEducationInfoList":[  
+                {  
+                    "tradeSeq":"0000000059",  
+                    "graduateSchool":"xxx大学",  
+                    "degree":"H",  
+                    "specialty":"自动化",  
+                    "graduateDate":"2022-04-20",  
+                    "customerFieldInfoList":[  
+                        {  
+                            "classKey":"S07EDUCA",  
+                            "fieldKey":"FLD000000000008",  
+                            "fieldValue":"测试字段值"  
+                        }  
+                    ],  
+                    "attachmentInfoList":[  
+                        {  
+                            "attachmentFieldKey":"EDUATH",  
+                            "innerSeq":"0",  
+                            "attachmentId":"20231016105615904-237602044715",  
+                            "attachmentName":"API计划.xlsx"  
+                        },  
+                        {  
+                            "attachmentFieldKey":"FLD000000000021",  
+                            "innerSeq":"0",  
+                            "attachmentId":"20231016105615904-237602044715",  
+                            "attachmentName":"API计划.xlsx"  
+                        }  
+                    ]  
+                },  
+                {  
+                    "graduateSchool":"xxx大学",  
+                    "degree":"I",  
+                    "specialty":"计算机",  
+                    "graduateDate":"2024-04-20",  
+                    "customerFieldInfoList":[  
+                        {  
+                            "classKey":"S07EDUCA",  
+                            "fieldKey":"FLD000000000008",  
+                            "fieldValue":"测试字段值"  
+                        }  
+                    ],  
+                    "attachmentInfoList":[  
+                        {  
+                            "attachmentFieldKey":"EDUATH",  
+                            "innerSeq":"0",  
+                            "attachmentId":"20231016105615904-237602044715",  
+                            "attachmentName":"API计划.xlsx"  
+                        },  
+                        {  
+                            "attachmentFieldKey":"FLD000000000021",  
+                            "innerSeq":"0",  
+                            "attachmentId":"20231016105615904-237602044715",  
+                            "attachmentName":"API计划.xlsx"  
+                        }  
+                    ]  
+                }  
+            ],  
+            "staffCertificateInfoList":[  
+                {  
+                    "certificateName":"xxx证书",  
+                    "issuingAuthority":"xxx机构",  
+                    "issuingDate":"2022-04-21",  
+                    "validBeginDate":"2022-04-21",  
+                    "validEndDate":"2022-04-21",  
+                    "customerFieldInfoList":[  
+                        {  
+                            "classKey":"S09PFSCER",  
+                            "fieldKey":"FLD000000000006",  
+                            "fieldValue":"测试字段值"  
+                        }  
+                    ],  
+                    "attachmentInfoList":[  
+                        {  
+                            "attachmentFieldKey":"CTEATH",  
+                            "innerSeq":"0",  
+                            "attachmentId":"20231016105615904-237602044715",  
+                            "attachmentName":"API计划.xlsx"  
+                        },  
+                        {  
+                            "attachmentFieldKey":"FLD000000000040",  
+                            "innerSeq":"0",  
+                            "attachmentId":"20231016105615904-237602044715",  
+                            "attachmentName":"API计划.xlsx"  
+                        }  
+                    ]  
+                }  
+            ],  
+            "staffJobTitleInfoList":[  
+                {  
+                    "titleName":"xxx职称",  
+                    "titleLevel":"0",  
+                    "assessmentAuthority":"xxx评定机构",  
+                    "obtainDate":"2022-04-21",  
+                    "titleCertificateNumber":"xxx编号",  
+                    "isHighestTitle":"0",  
+                    "customerFieldInfoList":[  
+                        {  
+                            "classKey":"S09TTITLE",  
+                            "fieldKey":"FLD000000000035",  
+                            "fieldValue":"测试字段值"  
+                        }  
+                    ],  
+                    "attachmentInfoList":[  
+                        {  
+                            "attachmentFieldKey":"TTLATH",  
+                            "innerSeq":"0",  
+                            "attachmentId":"20231016105615904-237602044715",  
+                            "attachmentName":"API计划.xlsx"  
+                        },  
+                        {  
+                            "attachmentFieldKey":"FLD000000000036",  
+                            "innerSeq":"0",  
+                            "attachmentId":"20231016105615904-237602044715",  
+                            "attachmentName":"API计划.xlsx"  
+                        }  
+                    ]  
+                }  
+            ],  
+            "staffFamilyMemberInfoList":[  
+                {  
+                    "relation":"0",  
+                    "name":"张某",  
+                    "birthDate":"2022-04-21",  
+                    "currentWorkCompany":"xxx单位",  
+                    "position":"xxx职位",  
+                    "contactNumber":"18985626589",  
+                    "customerFieldInfoList":[  
+                        {  
+                            "classKey":"S09FMLMEM",  
+                            "fieldKey":"FLD000000000041",  
+                            "fieldValue":"测试字段值"  
+                        }  
+                    ],  
+                    "attachmentInfoList":[  
+                        {  
+                            "attachmentFieldKey":"FMLATH",  
+                            "innerSeq":"0",  
+                            "attachmentId":"20231016105615904-237602044715",  
+                            "attachmentName":"API计划.xlsx"  
+                        },  
+                        {  
+                            "attachmentFieldKey":"FLD000000000042",  
+                            "innerSeq":"0",  
+                            "attachmentId":"20231016105615904-237602044715",  
+                            "attachmentName":"API计划.xlsx"  
+                        }  
+                    ]  
+                }  
+            ],  
+            "staffTaxDeclarationInfoList":[  
+                {  
+                    "registerSequence":"10117440191349040837",  
+                    "employedType":"0",  
+                    "employedDate":"2022-10-10",  
+                    "employmentSituation":"",  
+                    "personnelState":"Y",  
+                    "duty":"0",  
+                    "taxRemark":"备注"  
+                }  
+            ],  
+            "staffAdjunctInfoList":[  
+            ],  
+            "customerFieldInfoList":[  
+                {  
+                    "classKey":"CLS0000003",  
+                    "fieldKey":"FLD000000000007",  
+                    "fieldValue":"测试字段值"  
+                },  
+                {  
+                    "classKey":"CLS0000003",  
+                    "fieldKey":"FLD000000000022",  
+                    "fieldValue":"20231016105615904-237602044715",  
+                    "attachmentFieldInnerSeq":"0",  
+                    "attachmentFieldName":"API计划1.xlsx"  
+                },  
+                {  
+                    "classKey":"CLS0000003",  
+                    "fieldKey":"FLD000000000029",  
+                    "fieldValue":"20231016105615904-237602044715",  
+                    "attachmentFieldInnerSeq":"0",  
+                    "attachmentFieldName":"API计划2.xlsx"  
+                },  
+                {  
+                    "classKey":"CLS0000004",  
+                    "fieldKey":"FLD000000000019",  
+                    "fieldValue":"测试字段值1",  
+                    "businessSeq":"0000000071"  
+                },  
+                {  
+                    "classKey":"CLS0000004",  
+                    "fieldKey":"FLD000000000023",  
+                    "fieldValue":"测试字段值2",  
+                    "businessSeq":"0000000071"  
+                },  
+                {  
+                    "classKey":"CLS0000004",  
+                    "fieldKey":"FLD000000000020",  
+                    "fieldValue":"20231016105615904-237602044715",  
+                    "attachmentFieldInnerSeq":"0",  
+                    "attachmentFieldName":"API计划hhhh1.xlsx",  
+                    "businessSeq":"0000000071"  
+                },  
+                {  
+                    "classKey":"CLS0000004",  
+                    "fieldKey":"FLD000000000033",  
+                    "fieldValue":"20231016105615904-237602044715",  
+                    "attachmentFieldInnerSeq":"0",  
+                    "attachmentFieldName":"API计划hhhh1.xlsx",  
+                    "businessSeq":"0000000071"  
+                },  
+                {  
+                    "classKey":"CLS0000004",  
+                    "fieldKey":"FLD000000000019",  
+                    "fieldValue":"测试字段值3",  
+                    "businessSeq":"0000000072"  
+                },  
+                {  
+                    "classKey":"CLS0000004",  
+                    "fieldKey":"FLD000000000023",  
+                    "fieldValue":"测试字段值4",  
+                    "businessSeq":"0000000072"  
+                },  
+                {  
+                    "classKey":"CLS0000004",  
+                    "fieldKey":"FLD000000000020",  
+                    "fieldValue":"20231016105615904-237602044715",  
+                    "attachmentFieldInnerSeq":"0",  
+                    "attachmentFieldName":"API计划hhhh2.xlsx",  
+                    "businessSeq":"0000000072"  
+                },  
+                {  
+                    "classKey":"CLS0000004",  
+                    "fieldKey":"FLD000000000033",  
+                    "fieldValue":"20231016105615904-237602044715",  
+                    "attachmentFieldInnerSeq":"0",  
+                    "attachmentFieldName":"API计划hhhh2.xlsx",  
+                    "businessSeq":"0000000072"  
+                }  
+            ],  
+            "staffContractInfoList":[  
+                {  
+                    "contractCompany":"COR000001",  
+                    "contractNumber":"kiejdj",  
+                    "contractType":"1",  
+                    "contractDuration":"A",  
+                    "contractBeginDate":"2023-08-02",  
+                    "contractEndDate":"9999-12-31",  
+                    "customerFieldInfoList":[  
+                        {  
+                            "classKey":"S05CONTACT",  
+                            "fieldKey":"FLD000000000001",  
+                            "fieldValue":"合同信息文本"  
+                        }  
+                    ],  
+                    "attachmentInfoList":[  
+                        {  
+                            "attachmentFieldKey":"CONATH",  
+                            "innerSeq":"0",  
+                            "attachmentId":"20230901192255752-153628100558",  
+                            "attachmentName":"9DCC696187A1AA27BE103430678C40F2_IMAGE.jpg"  
+                        }  
+                    ]  
+                }  
+            ],  
+            "staffAttachmentInfoList":[  
+            ]  
+        }  
+    ]  
+}  
+
+响应报文
+
+{  
+    "returnCode":"SUC0000",  
+    "errorMsg":null,  
+    "body":[  
+        {  
+            "stfSeq":"0000002624",  
+            "certificateType":"O",  
+            "certificateNumber":"OTHU231123123",  
+            "errorMessage":""  
+        }  
+    ]  
+}  
+
+
+错误码说明
+除HTTP返回码外，具体的业务异常错误码通常指的是返回报文中错误码字段的内容，常见通用错误码及解决方案请参考通用错误码。
+错误码	错误信息
+errorMessage	新增接口中的错误新增会统一获取后在返回结果中展示
+本文档对应的创建企业员工接口，会将输入参数中员工信息的处理结果通过响应报文中body的errorMessage返回。
+当errorMessage为""表示员工正常通过校验进行花名册。例如：
+
+{  
+    "returnCode": "SUC0000",  
+    "errorMsg": null,  
+    "body": [  
+        {  
+            "stfSeq": "0000000001",  
+            "certificateType": "O",  
+            "certificateNumber": "350721191111110403",  
+            "errorMessage": ""  
+        }  
+    ]  
+}  
+ 
+
+当errorMessage不为""表示员工被校验拦截，需要根据errorMessage的提示内容对输入参数中的员工信息进行调整。例如：
+
+{  
+    "returnCode": "SUC0000",  
+    "errorMsg": null,  
+    "body": [  
+        {  
+            "stfSeq": "0000000001",  
+            "certificateType": "O",  
+            "certificateNumber": "350721191111110403",  
+            "errorMessage": "员工号：与员工花名册的员工的员工号重复，请修改;部门：不存在"  
+        }  
+    ]  
+}  
+
+
+常见的提示信息与解决方案如下：
+提示信息	解决方案
+员工号：与同批次员工的员工号重复，请修改	入参报文中员工信息之间员工工号存在重复，请接口调用方进行调整，避免重复
+员工号：与员工花名册的员工的员工号重复，请修改	入参报文中员工信息的员工工号与员工管理-花名册中的员工的员工工号重复，请接口调用方进行调整，避免重复
+手机号：与同批的在职员工手机号重复，请修改	入参报文中员工信息之间手机号存在重复，请接口调用方进行调整，避免重复
+手机号：与员工花名册的在职员工的手机号重复，请修改	入参报文中员工信息的手机号与员工管理-花名册中的员工的手机号重复，请接口调用方进行调整，避免重复
+证件号码:本次处理员工之间存在重复,请修改！	入参报文中员工信息之间证件信息(证件类型+证件号码)存在重复，请接口调用方进行调整，避免重复
+证件号码：与花名册员工的证件号码重复，请修改！	入参报文中员工信息的证件信息(证件类型+证件号码)与员工管理-花名册中的员工的证件信息(证件类型+证件号码)重复，请接口调用方进行调整，避免重复
+汇报上级：花名册不存在对应人员，请新增人员	检查入参报文中员工信息的汇报上级属性，不能传递员工管理-花名册中不存在员工的员工序号
+部门：不存在	检查入参报文中员工信息的部门属性，不能传递不存在的部门id
+证件信息：该员工已实名认证，不支持更新，请通知员工前往【个人账号】修改或联系客服处理	已实名认证员工不能修改证件信息
+手机号：该员工已实名认证，不支持更新，请通知员工前往【个人账号】修改或联系客服处理	已实名认证员工不能修改手机号
+姓名：该员工已实名认证，不支持更新，请通知员工前往【个人账号】修改或联系客服处理	已实名认证员工不能修改姓名
+仅支持通过任职管理修改字段信息，如需直接修改，可前往【员工管理-基础设置】打开【任职信息轻管理模式】开关	请前往接口调用方【员工管理-基础设置】，判断是打开【任职信息轻管理模式】开关还是调整入参
+当前修改员工不存在,请检查员工序号是否传递正确	请调用方检查入参中员工信息的员工序号
+员工状态:已离职状态暂不支持批量修改，请通过新增导入或在员工详情页修改	已离职员工的员工状态不支持修改
+实际离职日期：在职员工不能维护实际离职日期	请接口调用方检查入参，在职员工不能维护实际离职日期
+
+来自 <https://xft.cmbchina.com/open/#/doc/open-document?id=10692&mid=13033> 

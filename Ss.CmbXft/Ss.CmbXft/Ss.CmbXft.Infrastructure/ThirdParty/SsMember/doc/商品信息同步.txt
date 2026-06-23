@@ -1,0 +1,107 @@
+3.	商品信息同步
+创建人: 阿玛耳忒亚
+更新人: 阿玛耳忒亚
+创建时间: 2025-10-12 17:28:39
+更新时间: 2026-05-12 11:13:55
+暂无描述
+接口状态
+完成
+接口URL
+https://member.shengsiongcn.com/api/erp/goods_sync
+请求方式
+POST
+Content-Type
+json
+请求Header参数
+参数名	示例值	参数类型	是否必填	参数描述
+Accept	application/json	string	否	-
+请求Body参数
+{
+"current":1778555630,
+"sign":"d856ef98b20eee4500b944752083a83c",
+"products": [
+        {
+"productCode":"10000101",
+"productDescription":"*SP 福润德桂花酒酿 300 克",
+"department":"生鲜冻品",
+"subCategory":"低温成品",
+"category":"加工食品",
+"segment":"甜品",
+"itemClass":"冻品 3",
+"brand":"福润德",
+"uom":"个",
+"status":"1",
+"barcodes": [
+                {
+"barcode":"6911569123601",
+"uom":"个"
+                }
+            ],
+"taxRate":"0.13",
+"taxCode":"1030306"
+        },
+        {
+"productCode":"10000102",
+"productDescription":"金锣Q香蘑菇味 80克",
+"department":"百货食品",
+"subCategory":"方便速食",
+"category":"粮油副食",
+"segment":"火腿肠",
+"itemClass":"食品3",
+"brand":"金锣",
+"uom":"支",
+"status":1,
+"barcodes": [
+                {
+"uomName":"支",
+"barcode":"6927462209380"
+                }
+            ],
+"taxRate":0.13,
+"taxCode":"103010899"
+        }
+    ]
+}
+参数名	示例值	参数类型	是否必填	参数描述
+current	1778555630	long	是	当前时间戳（10位）
+sign	d856ef98b20eee4500b944752083a83c	string	是	签名
+products	-	array	是	商品列表
+products[].productCode	10000101	string	是	商品编码
+products[].productDescription	*SP 福润德桂花酒酿 300 克	string	是	商品描述
+products[].department	生鲜冻品	string	否	部门名称
+products[].subCategory	低温成品	string	否	子类别名称
+products[].category	加工食品	string	否	类别名称
+products[].segment	甜品	string	否	细分市场名称
+products[].itemClass	冻品 3	string	否	商品分类名称
+products[].brand	福润德	string	否	品牌名称
+products[].uom	个	string	否	单位编码
+products[].status	1/string|int	否	状态（1=启用，可传string或int）
+products[].barcodes	-	array	否	条码列表
+products[].barcodes[].barcode	6911569123601	string	是	条码
+products[].barcodes[].uom	个	string	否	单位编码（与uomName二选一）
+products[].barcodes[].uomName	支	string	否	单位名称（与uom二选一）
+products[].taxRate	0.13|string|decimal	否	税率（可传string或decimal）
+products[].taxCode	1030306	string	否	税码
+认证方式
+继承父级
+响应示例
+•	200(200)
+{
+"status":"success",
+"code":200,
+"message":"",
+"data": {},
+"error": {}
+}
+参数名	示例值	参数类型	参数描述
+status	-	string	-
+code	-	integer	-
+message	-	string	-
+data	-	object	-
+error	-	object	-
+•	失败(404)
+暂无数据
+请求Header参数
+参数名	示例值	参数类型	是否必填	参数描述
+Accept	application/json	string	否	-
+Query

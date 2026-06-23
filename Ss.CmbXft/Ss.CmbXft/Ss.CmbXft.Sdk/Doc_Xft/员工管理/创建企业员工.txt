@@ -1,0 +1,1057 @@
+创建企业员工
+更新时间: 2025-11-07 19:30:00
+接口调用地址
+生产环境地址：https://api.cmbchina.com/hrm/hrm2/xft-employeeprofile/employee/staffGeneralApi/addStaff
+测试环境地址：https://api.cmburl.cn:8065/xfthrm/hrm2uat/xft-employeeprofile/employee/staffGeneralApi/addStaff
+接口描述
+本接口是花名册员工新增接口，支持新增员工到薪福通-员工管理-花名册中。通过对象化的入参降低调用方的使用难度，参数字段采用具有语义化的驼峰命名，降低调用方的阅读理解成本。
+使用该接口时，最大支持一次传入1000笔员工信息数据。
+调用方式
+METHOD: POST
+CONTENT-TYPE: application/json
+接口输入参数
+
+最大支持一次传入1000笔员工信息数据
+仅必填全部展开
+参数	必填	类型	最大长度	名称	示例值	字段说明
+					
+	否	ARRAY	-	请求体根节点	-	最大支持一次传入1000笔员工信息数据
+body
+	是	OBJECT	-	员工基本信息、个人信息	-	-
+staffBasicInfo
+	否	STRING	3	员工类型	0	参考数据字典员工类型
+stfType
+	否	STRING	1	员工状态	1	参考数据字典员工状态
+stfStatus
+	是	STRING	100	员工姓名	测试员工姓名	-
+stfName
+	否	STRING	11	手机号	15566669999	-
+mobileNumber
+	是	STRING	1	证件类型	A	参考数据字典证件类型
+certificateType
+	是	STRING	30	证件号	123456789123456789	-
+certificateNumber
+	否	STRING	1	性别	0	参考数据字典性别
+sex
+	否	STRING	2	国籍/地区	CN	参考数据字典国籍
+nationality
+	否	STRING	4	部门	0000	入参是部门id，例如0000
+orgSeq
+	否	STRING	10	岗位编码	P0001	入参是岗位编码，例如P0001
+posCode
+	否	STRING	10	职位编码	J0001	入参是职位编码，例如P0001
+jobCode
+	否	STRING	10	职级	RNK0000001	入参为职级id，例如RNK0000001
+jobRankSeq
+	否	STRING	20	员工号	-	-
+stfNumber
+	否	STRING	20	座机	-	-
+telephoneNumber
+	否	STRING	64	工作邮箱	sjdkdkdkd@qq.com	-
+workEmail
+	否	STRING	500	备注	从组织架构添加的员工	-
+remark
+	否	DATE	-	出生日期	1993-08-12	格式:yyyy-MM-dd
+birthday
+	否	STRING	1	婚姻状态	1	婚姻状态id
+hasMarried						婚姻状态名称
+						0
+						已婚
+						1
+						未婚
+						2
+						再婚
+						3
+						离异
+						4
+						丧偶
+						5
+						保密
+	否	STRING	1	是否已育	1	参考数据字典是否已育
+hasNurtured
+	否	STRING	2	民族	01	参考数据字典民族
+nation
+	否	STRING	3	政治面貌	0	参考数据字典政治面貌
+politicalAppearance
+	否	STRING	30	现住址省	广东省	-
+presentAddressProvince
+	否	STRING	30	现住址市	深圳市	-
+presentAddressCity
+	否	STRING	30	现住址区/县	南山区	-
+presentAddressDistrict
+	否	STRING	256	现住址详细地址	科学园1号	-
+presentAddressDetail
+	否	STRING	30	户籍所在地省	广东省	-
+householdAddressProvince
+	否	STRING	30	户籍所在地市	深圳市	-
+householdAddressCity
+	否	STRING	30	户籍所在地区/县	南山区	-
+householdAddressDistrict
+	否	STRING	256	户籍所在地详细地址	科学园1号	-
+householdAddressDetail
+	否	STRING	3	户口性质	0	参考数据字典户口性质
+householdType
+	否	STRING	100	身份证地址	南山区粤海街道xx号	-
+certificateAddress
+	否	STRING	1	证件是否长期有效	0	0-否，1-是
+isCertificateLongTermEffective
+	否	DATE	-	证件签发日期	2010-01-01	格式:yyyy-MM-dd
+certificateValidBeginDate
+	否	DATE	-	证件到期日期	2030-01-01	格式:yyyy-MM-dd，当身份证的期限是永久，传null
+certificateValidEndDate
+	否	STRING	64	个人邮箱	11122228@qq.com	-
+individualEmail
+	否	DATE	-	首次工作日期	2017-08-10	格式:yyyy-MM-dd
+firstWorkDate
+	否	INTEGER	-	工龄扣减期	1	工龄扣减期返回值是整数类型，最大值为6位，最小值是1位。 以6位为例，每两位表示年、月、天。 111015就表示11年10个月15天 以5位为例，从高位到低位，第一位表示年，后四位每两位表示月、天。 10911就表示1年9个月11天。 以4位为例，从高位到低位，每两位表示月、天。 1011就表示10个月11天。 以3位为例，从高位到低位，第一位表示月，后两位表示天。 811就表示8个月11天。 以2位为例，从高位到低位，两位表示天。 11就表示11天。 以1位为例，从高位到低位，表示天。 1就表示1天。 支持的最大扣减期为501130，即50年11个月30天。 支持的最小扣减期为0，即0天。
+workYearDeduction
+	否	STRING	10	工作地	0000000003	入参为工作地id，例如0000000003
+workplaceLocationSeq
+	否	STRING	30	联系地址省份	内蒙古自治区	-
+contactAddressProvince
+	否	STRING	30	联系地址城市	鄂尔多斯市	-
+contactAddressCity
+	否	STRING	30	联系地址区/县	鄂托克旗	-
+contactAddressDistrict
+	否	STRING	256	联系地址详细地址	xx小区xx栋	-
+contactAddressDetail
+	否	STRING	10	业务分组	0000000002	入参为业务分组id，例如0000000002
+businessGroupSeq
+	否	STRING	100	曾用名	测试曾用名	-
+formerName
+	否	STRING	10	汇报上级	0000000002	汇报上级传对应员工的员工序号
+reportSuperiorStfSeq
+	否	STRING	15	成本中心	117057401135104	入参是成本中心的id，数据源为薪福通-管理后台-组织-成本中心
+costCenter
+	否	DOUBLE	-	成本分摊比例	11.32	支持到小数点后两位
+costAllocationRatio
+	否	STRING	9	工作所属公司	COR000002	入参是工作所属公司的id，数据源为薪福通-管理后台-组织-法人公司
+employerCorporation
+	否	ARRAY	-	自定义字段信息	-	-
+customerFieldInfoList
+	否	STRING	10	所属分组	S01BASIC	-
+classKey
+	否	STRING	15	自定义字段id	FLD000000000017	-
+fieldKey
+	否	STRING	500	字段值	测试字段值	-
+fieldValue
+	否	ARRAY	-	附件信息	-	-
+attachmentInfoList
+	否	STRING	15	附件key	-	-
+attachmentFieldKey
+	否	INTEGER	-	附件序号	-	同一个附件字段下，有多个附件信息时，通过该字段区分排序
+innerSeq
+	否	STRING	30	附件id	-	-
+attachmentId
+	否	STRING	100	附件名称	-	-
+attachmentName
+	否	OBJECT	-	员工在职信息、离职信息	-	-
+staffHrmInfo
+	否	DATE	-	入职日期	2023-08-13	格式:yyyy-MM-dd
+entryDate
+	否	STRING	3	实际试用期	0	参考数据字典试用期
+actutalProbationPeriod
+	否	STRING	-	实际转正日期	2023-07-25	格式:yyyy-MM-dd
+actualPositiveDate
+	否	DATE	-	实际离职日期	2023-07-25	格式:yyyy-MM-dd
+actualQuitDate
+	否	STRING	10	离职类型	A	参考数据字典离职类型
+quitType
+	否	STRING	10	离职原因	A01	参考数据字典离职原因
+quitReason
+	否	DATE	-	离职申请日期	2023-07-25	格式:yyyy-MM-dd
+applyQuitDate
+	否	DATE	-	计划离职日期	2023-07-25	格式:yyyy-MM-dd
+planQuitDate
+	否	DATE	-	薪资结算日期	2023-07-25	离职信息，格式:yyyy-MM-DD
+salarySettleDate
+	否	STRING	256	离职备注	-	-
+quitRemark
+	否	DATE	-	申请转正日期	2023-07-25	格式:yyyy-MM-dd
+applyPositiveDate
+	否	DATE	-	计划转正日期	2023-08-11	格式:yyyy-MM-dd
+planPositiveDate
+	否	STRING	3	计划试用期	0	参考数据字典试用期
+planProbationPeriod
+	否	DATE	-	司龄开始日期	2023-07-25	格式:yyyy-MM-dd
+seniorityBeginDate
+	否	INTEGER	-	司龄扣减期	1	司龄扣减期返回值是整数类型，最大值为6位，最小值是1位。 以6位为例，每两位表示年、月、天。 111015就表示11年10个月15天 以5位为例，从高位到低位，第一位表示年，后四位每两位表示月、天。 10911就表示1年9个月11天。 以4位为例，从高位到低位，每两位表示月、天。 1011就表示10个月11天。 以3位为例，从高位到低位，第一位表示月，后两位表示天。 811就表示8个月11天。 以2位为例，从高位到低位，两位表示天。 11就表示11天。 以1位为例，从高位到低位，表示天。 1就表示1天。 支持的最大扣减期为501130，即50年11个月30天。 支持的最小扣减期为0，即0天。
+seniorityDeduction
+	否	ARRAY	-	员工在职信息、员工离职信息对应自定义字段	-	-
+customerFieldInfoList
+	否	STRING	10	所属分组	S02ONJOB	-
+classKey
+	否	STRING	15	自定义字段id	-	-
+fieldKey
+	否	STRING	500	字段值	-	-
+fieldValue
+	否	ARRAY	-	员工在职信息、员工离职信息对应自定义附件	-	-
+attachmentInfoList
+	否	STRING	15	附件key	-	-
+attachmentFieldKey
+	否	INTEGER	-	附件序号	0	同一个附件字段上传多个附件时，innerSeq按顺序递增传递即可
+innerSeq
+	否	STRING	30	附件id	-	-
+attachmentId
+	否	STRING	100	附件名称	-	-
+attachmentName
+	否	OBJECT	-	工资社保	-	-
+staffWagesAndSocialSecurityInfo
+	否	STRING	29	工资卡号	620147	-
+bankCardAccount
+	否	STRING	30	开户行	招商银行	-
+bankName
+	否	STRING	30	开户行省	广东省	-
+bankOfProvince
+	否	STRING	30	开户行市	深圳市	-
+bankOfCity
+	否	STRING	29	数币钱包ID	-	-
+digitalWallet
+	否	STRING	3	运营机构	BCM	运营机构key
+digitalBank						运营机构名称
+						ABC
+						中国农业银行
+						BCM
+						交通银行
+						BOC
+						中国银行
+						BWZ
+						深圳前海微众银行
+						CCB
+						中国建设银行
+						CIB
+						兴业银行
+						CMB
+						招商银行
+						ICB
+						中国工商银行
+						PSB
+						中国邮政储蓄银行
+						ZWS
+						浙江网商银行
+	否	STRING	20	个人社保账号	12343	-
+socialSecurityAccount
+	否	STRING	20	个人公积金账号	5678	-
+accumulationFundAccount
+	否	ARRAY	-	员工工资社保自定义字段	-	-
+customerFieldInfoList
+	否	STRING	10	所属分组	S04SAISR	-
+classKey
+	否	STRING	15	自定义字段id	-	-
+fieldKey
+	否	STRING	500	字段值	-	-
+fieldValue
+	否	ARRAY	-	员工工资社保自定义附件	-	-
+attachmentInfoList
+	否	STRING	15	附件key	-	-
+attachmentFieldKey
+	否	INTEGER	-	附件序号	-	同一个附件字段上传多个附件时，innerSeq按顺序递增传递即可
+innerSeq
+	否	STRING	30	附件id	-	-
+attachmentId
+	否	STRING	100	附件名称	-	-
+attachmentName
+	否	OBJECT	-	紧急联系人	-	-
+staffEmergencyContact
+	否	STRING	20	紧急联系人	李某	-
+contactName
+	否	STRING	20	紧急联系人电话	12556566565	-
+contactTelephoneNumber
+	否	ARRAY	-	员工紧急联系人信息自定义字段	-	-
+customerFieldInfoList
+	否	STRING	10	所属分组	S06EMCNT	-
+classKey
+	否	STRING	15	自定义字段id	-	-
+fieldKey
+	否	STRING	500	字段值	-	-
+fieldValue
+	否	ARRAY	-	员工紧急联系人信息自定义附件	-	-
+attachmentInfoList
+	否	STRING	15	附件key	-	-
+attachmentFieldKey
+	否	INTEGER	-	附件序号	-	同一个附件字段上传多个附件时，innerSeq按顺序递增传递即可
+innerSeq
+	否	STRING	30	附件id	-	-
+attachmentId
+	否	STRING	100	附件名称	-	-
+attachmentName
+	否	OBJECT	-	集团服务信息	-	-
+StaffGroupServiceInfo
+	否	DATE	-	集团入职日期	2021-01-02	格式:yyyy-MM-dd
+groupJoinDate
+	否	INTEGER	-	集团司龄扣减期	1	集团司龄扣减期返回值是整数类型，最大值为6位，最小值是1位。 以6位为例，每两位表示年、月、天。 111015就表示11年10个月15天 以5位为例，从高位到低位，第一位表示年，后四位每两位表示月、天。 10911就表示1年9个月11天。 以4位为例，从高位到低位，每两位表示月、天。 1011就表示10个月11天。 以3位为例，从高位到低位，第一位表示月，后两位表示天。 811就表示8个月11天。 以2位为例，从高位到低位，两位表示天。 11就表示11天。 以1位为例，从高位到低位，表示天。 1就表示1天。 支持的最大扣减期为501130，即50年11个月30天。 支持的最小扣减期为0，即0天。
+groupServiceTimeDeduction
+	否	ARRAY	-	集团服务信息自定义字段	-	-
+customerFieldInfoList
+	否	STRING	10	所属分组	S19GRPSVS	-
+classKey
+	否	STRING	15	自定义字段id	-	-
+fieldKey
+	否	STRING	500	字段值	-	-
+fieldValue
+	否	ARRAY	-	集团服务信息自定义附件	-	-
+attachmentInfoList
+	否	STRING	-	附件key	-	-
+attachmentFieldKey
+	否	INTEGER	-	附件序号	-	同一个附件字段上传多个附件时，innerSeq按顺序递增传递即可
+innerSeq
+	否	STRING	-	附件id	-	-
+attachmentId
+	否	STRING	-	附件名称	-	-
+attachmentName
+	否	ARRAY	-	奖惩记录	-	-
+staffAwardInfoList
+	否	STRING	50	奖惩事项	奖励奖金x元	-
+rewardAndPunishmentMatters
+	否	DATE	-	奖惩时间	2023-08-11	格式:yyyy-MM-dd
+rewardAndPunishmentDate
+	否	STRING	50	奖惩单位	xxx单位	-
+rewardAndPunishmentCompany
+	否	STRING	200	奖惩详情	因xx项目成功奖励	-
+rewardAndPunishmentDetail
+	否	ARRAY	-	员工奖惩记录信息自定义字段	-	-
+customerFieldInfoList
+	否	STRING	10	所属分组	S09RWDPNS	-
+classKey
+	否	STRING	15	自定义字段id	FLD000000000039	-
+fieldKey
+	否	STRING	500	字段值	测试字段值	-
+fieldValue
+	否	ARRAY	-	员工奖惩记录信息附件	-	-
+attachmentInfoList
+	否	STRING	15	附件key	-	-
+attachmentFieldKey
+	否	INTEGER	-	附件序号	-	同一个附件字段上传多个附件时，innerSeq按顺序递增传递即可
+innerSeq
+	否	STRING	30	附件id	-	-
+attachmentId
+	否	STRING	100	附件名称	-	-
+attachmentName
+	否	ARRAY	-	工作经历	-	-
+staffWorkInfoList
+	否	STRING	50	工作单位	测试单位	-
+lastCompanyName
+	否	STRING	50	曾任岗位	测试岗位	-
+lastPositionName
+	否	DATE	-	工作开始日期	2020-08-06	格式:yyyy-MM-dd
+workBeginDate
+	否	DATE	-	工作结束日期	2022-08-19	格式:yyyy-MM-dd
+workEndDate
+	否	STRING	100	证明人	测试	-
+proverName
+	否	STRING	20	证明人联系电话	12256566363	-
+proverTelephoneNumber
+	否	STRING	50	过往离职原因	其他原因	-
+leaveReason
+	否	STRING	20	离职薪资	10000	-
+leaveSalary
+	否	ARRAY	-	员工工作经历信息自定义字段	-	-
+customerFieldInfoList
+	否	STRING	10	所属分组	S08WRKEPR	-
+classKey
+	否	STRING	15	自定义字段id	-	-
+fieldKey
+	否	STRING	500	字段值	-	-
+fieldValue
+	否	ARRAY	-	员工工作经历信息附件	-	-
+attachmentInfoList
+	否	STRING	15	附件key	-	-
+attachmentFieldKey
+	否	INTEGER	-	附件序号	0	同一个附件字段上传多个附件时，innerSeq按顺序递增传递即可
+innerSeq
+	否	STRING	30	附件id	-	-
+attachmentId
+	否	STRING	100	附件名称	-	-
+attachmentName
+	否	ARRAY	-	教育经历	-	-
+staffEducationInfoList
+	否	STRING	50	毕业院校	XX大学	-
+graduateSchool
+	否	STRING	3	学历	H	参考数据字典学历
+degree
+	否	STRING	50	专业	自动化	-
+specialty
+	否	DATE	-	毕业日期	2018-06-29	格式:yyyy-MM-dd
+graduateDate
+	否	ARRAY	-	员工教育经历信息自定义字段	-	-
+customerFieldInfoList
+	否	STRING	10	所属分组	S07EDUCA	-
+classKey
+	否	STRING	15	自定义字段id	-	-
+fieldKey
+	否	STRING	500	字段值	-	-
+fieldValue
+	否	ARRAY	-	员工教育经历信息附件	-	-
+attachmentInfoList
+	否	STRING	15	附件key	-	-
+attachmentFieldKey
+	否	INTEGER	-	附件序号	0	同一个附件字段上传多个附件时，innerSeq按顺序递增传递即可
+innerSeq
+	否	STRING	30	附件id	-	-
+attachmentId
+	否	STRING	100	附件名称	-	-
+attachmentName
+	否	ARRAY	-	专业证书	-	-
+staffCertificateInfoList
+	否	STRING	50	证书名称	xx证书	-
+certificateName
+	否	STRING	50	证书机构	xx机构	-
+issuingAuthority
+	否	DATE	-	发证日期	2020-08-27	格式:yyyy-MM-dd
+issuingDate
+	否	DATE	-	有效期起始日	2020-08-20	格式:yyyy-MM-dd
+validBeginDate
+	否	DATE	-	有效期到期日	2023-08-04	格式:yyyy-MM-dd
+validEndDate
+	否	ARRAY	-	员工专业证书信息自定义字段	-	-
+customerFieldInfoList
+	否	STRING	10	所属分组	S09PFSCER	-
+classKey
+	否	STRING	15	自定义字段id	-	-
+fieldKey
+	否	STRING	500	字段值	-	-
+fieldValue
+	否	ARRAY	-	员工专业证书信息附件	-	-
+attachmentInfoList
+	否	STRING	15	附件key	-	-
+attachmentFieldKey
+	否	INTEGER	-	附件序号	0	同一个附件字段上传多个附件时，innerSeq按顺序递增传递即可
+innerSeq
+	否	STRING	30	附件id	-	-
+attachmentId
+	否	STRING	100	附件名称	-	-
+attachmentName
+	否	ARRAY	-	职称	-	-
+staffJobTitleInfoList
+	否	STRING	50	职称评定机构	xx机构	-
+assessmentAuthority
+	否	DATE	-	职称获得日期	2023-08-25	格式:yyyy-MM-dd
+obtainDate
+	否	STRING	30	职称证书编号	312323	-
+titleCertificateNumber
+	否	STRING	1	是否最高职称	0	0-是，1-否
+isHighestTitle
+	否	ARRAY	-	员工职称信息自定义字段	-	-
+customerFieldInfoList
+	否	STRING	10	所属分组	S09TTITLE	-
+classKey
+	否	STRING	15	自定义字段id	-	-
+fieldKey
+	否	STRING	500	字段值	-	-
+fieldValue
+	否	STRING	50	职称名称	工程师	-
+titleName
+	否	STRING	3	职称级别	2	参考数据字典职称级别
+titleLevel
+	否	ARRAY	-	员工职称信息附件	-	-
+attachmentInfoList
+	否	STRING	15	附件key	-	-
+attachmentFieldKey
+	否	INTEGER	-	附件序号	0	同一个附件字段上传多个附件时，innerSeq按顺序递增传递即可
+innerSeq
+	否	STRING	30	附件id	-	-
+attachmentId
+	否	STRING	100	附件名称	-	-
+attachmentName
+	否	ARRAY	-	家庭成员	-	-
+staffFamilyMemberInfoList
+	否	STRING	3	家庭成员关系	0	参考数据字典与本人关系
+relation
+	否	STRING	100	家庭成员姓名	张某	-
+name
+	否	DATE	-	家庭成员生日	2017-08-10	格式:yyyy-MM-dd
+birthDate
+	否	STRING	50	现工作单位	xx单位	-
+currentWorkCompany
+	否	STRING	50	职位/岗位	xx职位	-
+position
+	否	STRING	50	家庭成员电话	125256565	-
+contactNumber
+	否	ARRAY	-	员工家庭成员信息自定义字段	-	-
+customerFieldInfoList
+	否	STRING	10	所属分组	S09FMLMEM	-
+classKey
+	否	STRING	15	自定义字段id	-	-
+fieldKey
+	否	STRING	500	字段值	-	-
+fieldValue
+	否	ARRAY	-	员工家庭成员信息附件	-	-
+attachmentInfoList
+	否	STRING	15	附件key	-	-
+attachmentFieldKey
+	否	INTEGER	-	附件序号	0	同一个附件字段上传多个附件时，innerSeq按顺序递增传递即可
+innerSeq
+	否	STRING	30	附件id	-	-
+attachmentId
+	否	STRING	100	附件名称	-	-
+attachmentName
+	否	ARRAY	-	兼任信息	-	-
+staffAdjunctInfoList
+	否	STRING	4	兼任部门	0001	入参是部门id，例如0000
+adjunctOrgSeq
+	否	STRING	10	兼任岗位编码	-	-
+adjunctPosCode
+	否	ARRAY	-	员工自定义分组信息	-	-
+customerFieldInfoList
+	否	STRING	10	所属分组	CLS000000001	-
+classKey
+	否	STRING	15	自定义字段id	FLD000000000099	-
+fieldKey
+	否	STRING	16	业务流水号	-	单记录自定义分组可不传。多记录自定义分组同一条记录传一样的值，如0，1
+businessSeq
+	否	STRING	500	字段值	测试字段值	-
+fieldValue
+	否	ARRAY	-	个人材料	-	-
+staffAttachmentInfoList
+	否	STRING	15	个人材料字段key	CERBAC	-
+attachmentFieldKey
+	否	INTEGER	-	个人材料内序号	0	-
+innerSeq
+	否	STRING	30	个人材料存储桶id	20230811220305876-446324636246	-
+attachmentId
+	否	STRING	100	个人材料文件名称	pic.jpg	-
+attachmentName
+	否	ARRAY	-	合同信息	-	-
+staffContractInfoList
+	否	STRING	10	合同公司	COR000001	入参是合同公司的id，数据源为薪福通-管理后台-组织-法人公司
+contractCompany
+	否	STRING	30	合并编号	CONTTT	-
+contractNumber
+	否	STRING	3	合同类型	0	参考数据字典合同类型
+contractType
+	否	STRING	3	合同期限	G	参考数据字典合同期限
+contractDuration
+	否	DATE	-	合同起始日	2023-08-11	格式:yyyy-MM-dd
+contractBeginDate
+	否	DATE	-	合同到期日	2026-08-10	格式:yyyy-MM-dd
+contractEndDate
+	否	ARRAY	-	员工合同信息自定义字段	-	-
+customerFieldInfoList
+	否	STRING	10	所属分组	S05CONTACT	-
+classKey
+	否	STRING	15	自定义字段id	-	-
+fieldKey
+	否	STRING	500	字段值	-	-
+fieldValue
+	否	ARRAY	-	员工合同信息附件	-	-
+attachmentInfoList
+	否	STRING	15	附件key	-	-
+attachmentFieldKey
+	否	INTEGER	-	附件序号	0	同一个附件字段上传多个附件时，innerSeq按顺序递增传递即可
+innerSeq
+	否	STRING	30	附件id	-	-
+attachmentId
+	否	STRING	100	附件文件名	-	-
+attachmentName
+	否	ARRAY	-	个税申报信息	-	-
+staffTaxDeclarationInfoList
+	是	STRING	30	税局登记序号	10117440191349040837	-
+registerSequence
+	是	STRING	1	任职受雇从业类型	0	0雇员、1保险营销员、2证券经纪人、3其他、4-实习学生（全日制学历教育）
+employedType
+	否	DATE	-	任职受雇从业日期	2022-10-10	格式:yyyy-MM-dd
+employedDate
+	否	STRING	1	入职年度就业情形	1	0：新入职学生
+employmentSituation						1：其他当年首次就业
+	否	STRING	-	税局离职日期	-	格式:yyyy-MM-dd
+taxOfficeQuitDate
+	否	STRING	1	职务	1	0-高层，1-普通
+duty
+	否	STRING	10	涉税事由	1	0, 任职受雇
+taxRelatedReason						1, 提供临时劳务
+						2,转让财产
+						3, 从事投资和经营活动
+						4, 其他
+	否	BIGDECIMAL	-	个人投资总额	-	-
+totalPersonalInvestment
+	否	BIGDECIMAL	-	个人投资比例	-	-
+individualInvestmentPercentage
+	否	STRING	1	是否扣除减除费用	-	Y是，N否
+isDeductionsDeducted
+	否	STRING	40	个税备注	-	-
+taxRemark
+	否	STRING	11	个税通知手机号	-	-
+taxMobileNumber
+	是	STRING	1	人员状态	Y	Y-正常，N-非正常
+personnelState
+	否	STRING	1	其他情况说明	1	条件必填
+otherEmployeeTypeNote						当任职受雇从业类型输入其他时，该属性必填。
+						属性传递时，传key
+						key
+						名称
+						1
+						扣缴申报利息股息红利所得
+						2
+						扣缴申报偶然所得
+						3
+						申报其他所得
+	否	OBJECT	-	个税基础信息	-	-
+staffTaxBasicInfo
+	否	STRING	1	其他证件类型	-	参考数据字典证件类型
+otherCertificateType
+	否	STRING	30	其他证件号码	-	-
+otherCertificateNumber
+	否	STRING	2	出生地	-	-
+birthLand
+	否	STRING	30	中文名	-	-
+chineseName
+	否	DATE	-	首次入境日期	-	格式:yyyy-MM-dd
+firstInboundDate
+	否	DATE	-	预计离境日期	-	格式:yyyy-MM-dd
+planOutboundDate
+	否	STRING	1	最高学历	0	0-大学本科以下，1-大学本科，2-研究生
+highestDegree
+	否	STRING	1	是否残疾	-	Y-是，N-否
+isDisabled
+	否	STRING	1	是否烈属	-	Y-是，N-否
+isMartyr
+	否	STRING	1	是否孤老	-	Y-是，N-否
+isLonelyAndOld
+	否	STRING	1	残疾证类型	-	条件必填
+disabilityCertificateType						当是否残疾为是时，该属性必填
+						属性传key
+						key
+						名称
+						1
+						残疾证
+						2
+						残疾军人证
+						3
+						伤残人民警察证
+						4
+						残疾消防救援人员证
+						5
+						伤残预备役人员、伤残民兵民工证
+						6
+						因公伤残人员证
+	否	STRING	50	残疾证号	-	条件必填
+disabilityCertificateNumber						当是否残疾为是时，该属性必填
+	否	STRING	50	烈属证号	-	条件必填
+martyrCertificateNumber						当是否烈属为是时，该属性必填
+	否	ARRAY	-	培训记录	-	-
+staffTrainRecordInfoList
+	否	STRING	50	课程名称	培训课程	-
+courseName
+	否	STRING	50	课程编号	SS111	-
+courseNumber
+	否	STRING	3	培训类型	0	参考数据字典培训类型
+trainType
+	否	STRING	3	培训方式	1	参考数据字典培训方式
+trainWay
+	否	STRING	50	培训机构	机构	-
+trainInstitution
+	否	STRING	50	讲师	刘老师	-
+lecturer
+	否	DATE	-	培训开始日期	2023-08-08	格式:yyyy-MM-dd
+trainBegin
+	否	DATE	-	培训结束日期	2023-08-20	格式:yyyy-MM-dd
+trainEnd
+	否	STRING	50	培训地点	总部	-
+trainLocation
+	否	DATE	-	考试时间	2023-08-21	格式:yyyy-MM-dd
+examDate
+	否	STRING	50	考试结果	通过	-
+examResult
+	否	ARRAY	-	培训记录自定义字段	-	-
+customerFieldInfoList
+	否	STRING	10	所属分组	S09TUTRAN	-
+classKey
+	否	STRING	15	自定义字段id	-	-
+fieldKey
+	否	STRING	500	字段值	-	-
+fieldValue
+	否	ARRAY	-	培训记录附件	-	-
+attachmentInfoList
+	否	STRING	15	附件key	-	-
+attachmentFieldKey
+	否	INTEGER	-	附件序号	0	同一个附件字段上传多个附件时，innerSeq按顺序递增传递即可
+innerSeq
+	否	STRING	30	附件id	-	-
+attachmentId
+	否	STRING	100	附件名称	-	-
+attachmentName
+	否	ARRAY	-	绩效考核	-	-
+staffPerformanceInfoList
+	否	STRING	50	绩效考核周期	月度	-
+performanceCycle
+	否	STRING	50	绩效考核人	组长	-
+performanceEvaluator
+	否	STRING	50	绩效考核评分	80	-
+performanceScore
+	否	STRING	3	绩效考核等级	0	参考数据字典绩效考核等级
+performanceLevel
+	否	STRING	256	绩效考核评语	good	-
+performanceComments
+	否	ARRAY	-	绩效考核自定义字段	-	-
+customerFieldInfoList
+	否	STRING	10	所属分组	S09TUVPFE	-
+classKey
+	否	STRING	15	自定义字段id	-	-
+fieldKey
+	否	STRING	500	字段值	-	-
+fieldValue
+	否	ARRAY	-	绩效考核附件	-	-
+attachmentInfoList
+	否	STRING	15	附件key	-	-
+attachmentFieldKey
+	否	INTEGER	-	附件序号	0	同一个附件字段上传多个附件时，innerSeq按顺序递增传递即可
+innerSeq
+	否	STRING	30	附件id	-	-
+attachmentId
+	否	STRING	100	附件名称	-	-
+attachmentName
+
+接口输出参数
+
+响应体
+仅必填全部展开
+参数	必存在	类型	最大长度	名称	示例值	字段说明
+					
+	否	STRING	-	返回码	SUC0000	-
+returnCode
+	否	STRING	-	错误信息	null	-
+errorMsg
+	否	ARRAY	-	返回报文	-	-
+body
+	否	STRING	-	员工序号	0000000001	-
+stfSeq
+	否	STRING	-	证件类型	A	参考数据字典证件类型
+certificateType
+	否	STRING	-	证件号	121212121212121212	-
+certificateNumber
+	否	STRING	-	错误信息	-	-
+errorMessage
+接口调用示例
+
+请求报文
+[  
+    {  
+        "staffBasicInfo": {  
+            "stfType": "0",  
+            "stfStatus": "1",  
+            "stfName": "测试员工姓名",  
+            "mobileNumber": "12314121012",  
+            "certificateType": "O",  
+            "certificateNumber": "350721191111110403",  
+            "sex": "0",  
+            "nationality": "CN",  
+            "orgSeq": "0000",  
+            "posCode": "P0001",  
+            "jobCode": "J0001",  
+            "jobRankSeq": "RNK0000001",  
+            "stfNumber": "",  
+            "telephoneNumber": "",  
+            "workEmail": "sjdkdkdkd@qq.com",  
+            "remark": "从组织架构添加的员工",  
+            "birthday": "1993-08-12",  
+            "hasMarried": "1",  
+            "hasNurtured": "1",  
+            "nation": "01",  
+            "politicalAppearance": "0",  
+            "presentAddressProvince": "北京市",  
+            "presentAddressCity": "北京市",  
+            "presentAddressDistrict": "东城区",  
+            "presentAddressDetail": "CES",  
+            "householdAddressProvince": null,  
+            "householdAddressCity": null,  
+            "householdAddressDistrict": null,  
+            "householdAddressDetail": null,  
+            "householdType": "0",  
+            "certificateAddress": null,  
+            "isCertificateLongTermEffective": null,  
+            "certificateValidBeginDate": null,  
+            "certificateValidEndDate": null,  
+            "individualEmail": "11122228@qq.com",  
+            "firstWorkDate": "2017-08-10",  
+            "workplaceLocationSeq": "0000000003",  
+            "contactAddressProvince": "内蒙古自治区",  
+            "contactAddressCity": "鄂尔多斯市",  
+            "contactAddressDistrict": "鄂托克旗",  
+            "contactAddressDetail": "CES",  
+            "businessGroupSeq": null,  
+            "formerName": "测试曾用名",  
+            "reportSuperiorStfSeq": "0000000002",  
+            "customerFieldInfoList": [  
+                {  
+                    "classKey": "S01BASIC",  
+                    "fieldKey": "FLD000000000017",  
+                    "fieldValue": "测试字段值"  
+                }  
+            ]  
+        },  
+        "staffHrmInfo": {  
+            "entryDate": "2023-08-13",  
+            "actutalProbationPeriod": "0",  
+            "actualPositiveDate": "2023-07-25",  
+            "actualQuitDate": null,  
+            "quitType": null,  
+            "quitReason": null,  
+            "applyQuitDate": null,  
+            "planQuitDate": null,  
+            "salarySettleDate": null,  
+            "quitRemark": null,  
+            "inBlackList": "0",  
+            "reasonForBlackList": null,  
+            "applyPositiveDate": null,  
+            "planPositiveDate": "2023-08-11",  
+            "planProbationPeriod": "0",  
+            "seniorityBeginDate": "2023-07-25",  
+            "customerFieldInfoList": []  
+        },  
+        "staffWagesAndSocialSecurityInfo": {  
+            "bankCardAccount": "",  
+            "bankName": "招商银行",  
+            "bankOfProvince": "北京市",  
+            "bankOfCity": "北京市",  
+            "digitalWallet": "",  
+            "digitalBank": "CMB",  
+            "socialSecurityAccount": "12343",  
+            "accumulationFundAccount": "5678",  
+            "customerFieldInfoList": [  
+                {  
+                    "classKey": "S04SAISR",  
+                    "fieldKey": "FLD000000000001",  
+                    "fieldValue": "测试字段值"  
+                }  
+            ]  
+        },  
+        "staffEmergencyContact": {  
+            "contactName": "张某",  
+            "contactTelephoneNumber": "12556566565",  
+            "customerFieldInfoList": [  
+                {  
+                    "classKey": "S06EMCNT",  
+                    "fieldKey": "FLD000000000002",  
+                    "fieldValue": "3123123"  
+                }  
+            ]  
+        },  
+        "staffAwardInfoList": [  
+            {  
+                "rewardAndPunishmentMatters": "奖励奖金x元",  
+                "rewardAndPunishmentDate": "2023-08-11",  
+                "rewardAndPunishmentCompany": "测试单位",  
+                "rewardAndPunishmentDetail": "项目上线奖励",  
+                "customerFieldInfoList": [  
+                    {  
+                        "classKey": "S09RWDPNS",  
+                        "fieldKey": "FLD000000000009",  
+                        "fieldValue": "测试字段值"  
+                    }  
+                ]  
+            }  
+        ],  
+        "staffWorkInfoList": [  
+            {  
+                "lastCompanyName": "测试单位",  
+                "lastPositionName": "测试岗位",  
+                "workBeginDate": "2020-08-06",  
+                "workEndDate": "2022-08-19",  
+                "proverName": "李某",  
+                "proverTelephoneNumber": "12256566363",  
+                "leaveReason": "其他原因",  
+                "leaveSalary": "10000",  
+                "customerFieldInfoList": [  
+                    {  
+                        "classKey": "S08WRKEPR",  
+                        "fieldKey": "FLD000000000005",  
+                        "fieldValue": "测试字段值"  
+                    }  
+                ]  
+            }  
+        ],  
+        "staffEducationInfoList": [  
+            {  
+                "graduateSchool": "xxx大学",  
+                "degree": "H",  
+                "specialty": "自动化",  
+                "graduateDate": "2018-06-29",  
+                "customerFieldInfoList": [  
+                    {  
+                        "classKey": "S07EDUCA",  
+                        "fieldKey": "FLD000000000004",  
+                        "fieldValue": "测试字段值"  
+                    }  
+                ]  
+            },  
+            {  
+                "graduateSchool": "xxx大学",  
+                "degree": "I",  
+                "specialty": "计算机",  
+                "graduateDate": "2020-06-29",  
+                "customerFieldInfoList": [  
+                    {  
+                        "classKey": "S07EDUCA",  
+                        "fieldKey": "FLD000000000004",  
+                        "fieldValue": "测试字段值"  
+                    }  
+                ]  
+            }  
+        ],  
+        "staffCertificateInfoList": [  
+            {  
+                "certificateName": "xx证书",  
+                "issuingAuthority": "xx机构",  
+                "issuingDate": "2020-08-27",  
+                "validBeginDate": "2020-08-20",  
+                "validEndDate": "2023-08-04",  
+                "customerFieldInfoList": [  
+                    {  
+                        "classKey": "S09PFSCER",  
+                        "fieldKey": "FLD000000000008",  
+                        "fieldValue": "测试字段值"  
+                    }  
+                ]  
+            }  
+        ],  
+        "staffJobTitleInfoList": [  
+            {  
+                "titleName": "工程师",  
+                "titleLevel": "0",  
+                "assessmentAuthority": "xx机构",  
+                "obtainDate": "2023-08-25",  
+                "titleCertificateNumber": "312323",  
+                "isHighestTitle": "0",  
+                "customerFieldInfoList": [  
+                    {  
+                        "classKey": "S09TTITLE",  
+                        "fieldKey": "FLD000000000010",  
+                        "fieldValue": "测试字段值"  
+                    },  
+                    {  
+                        "classKey": "S09TTITLE",  
+                        "fieldKey": "FLD000000000011",  
+                        "fieldValue": "测试字段值"  
+                    }  
+                ]  
+            }  
+        ],  
+        "staffFamilyMemberInfoList": [  
+            {  
+                "relation": "0",  
+                "name": "张某",  
+                "birthDate": "2017-08-10",  
+                "currentWorkCompany": "xx单位",  
+                "position": "xx岗位",  
+                "contactNumber": "125256565",  
+                "customerFieldInfoList": [  
+                    {  
+                        "classKey": "S09FMLMEM",  
+                        "fieldKey": "FLD000000000006",  
+                        "fieldValue": "测试字段值"  
+                    },  
+                    {  
+                        "classKey": "S09FMLMEM",  
+                        "fieldKey": "FLD000000000007",  
+                        "fieldValue": "测试字段值"  
+                    }  
+                ]  
+            }  
+        ],  
+        "staffAdjunctInfoList": [  
+            {  
+                "adjunctOrgSeq": "0001"  
+            }  
+        ],  
+        "customerFieldInfoList": [  
+            {  
+                "classKey": "CLS000000001",  
+                "fieldKey": "FLD000000000099",  
+                "businessSeq": "",  
+                "fieldValue": "测试字段值"  
+            }  
+        ],  
+        "staffAttachmentInfoList": [  
+            {  
+                "attachmentFieldKey": "CERBAC",  
+                "innerSeq": "0",  
+                "attachmentId": "20230811220305876-446324636246",  
+                "attachmentName": "pic.jpg",  
+                "businessNumber": ""  
+            },  
+            {  
+                "attachmentFieldKey": "CERBAC",  
+                "innerSeq": "1",  
+                "attachmentId": "20230811220311205-714596384792",  
+                "attachmentName": "1.jpg",  
+                "businessNumber": ""  
+            }  
+       
+        ],  
+        "staffContractInfoList": [  
+            {  
+                "contractCompany": "COR000001",  
+                "contractNumber": "CONTTT",  
+                "contractType": "0",  
+                "contractDuration": "G",  
+                "contractBeginDate": "2023-08-11",  
+                "contractEndDate": "2026-08-10",  
+                "customerFieldInfoList": [  
+                    {  
+                        "classKey": "S05CONTACT",  
+                        "fieldKey": "FLD000000000003",  
+                        "fieldValue": "测试字段值"  
+                    }  
+                ],  
+                "attachmentInfoList": [  
+                    {  
+                        "attachmentFieldKey": "CONATH",  
+                        "innerSeq": "0",  
+                        "attachmentId": "20230811101503952-521856610598",  
+                        "attachmentName": "test.xlsx"  
+                    }  
+                ]  
+            }  
+        ]  
+    }  
+]  
+
+错误码说明
+除HTTP返回码外，具体的业务异常错误码通常指的是返回报文中错误码字段的内容，常见通用错误码及解决方案请参考通用错误码。
+错误码	错误信息
+errorMessage	新增接口中的错误新增会统一获取后在返回结果中展示
+本文档对应的创建企业员工接口，会将输入参数中员工信息的处理结果通过响应报文中body的errorMessage返回。
+当errorMessage为""表示员工正常通过校验进行花名册。例如：
+
+1. {  
+2. "returnCode": "SUC0000",  
+3. "errorMsg": null,  
+4. "body": [  
+5. {  
+6. "stfSeq": "0000000001",  
+7. "certificateType": "O",  
+8. "certificateNumber": "350721191111110403",  
+9. "errorMessage": ""  
+10. }  
+11. ]  
+12. }  
+当errorMessage不为""表示员工被校验拦截，需要根据errorMessage的提示内容对输入参数中的员工信息进行调整。例如：
+
+13. {  
+14. "returnCode": "SUC0000",  
+15. "errorMsg": null,  
+16. "body": [  
+17. {  
+18. "stfSeq": "0000000001",  
+19. "certificateType": "O",  
+20. "certificateNumber": "350721191111110403",  
+21. "errorMessage": "员工号：与员工花名册的员工的员工号重复，请修改;部门：不存在"  
+22. }  
+23. ]  
+24. }  
+常见的提示信息与解决方案如下：
+提示信息	解决方案
+员工状态: 不能新增或重入职待离职员工	检查入参报文中该员工信息里的员工状态属性，不能维护待离职状态
+员工号：与同批次员工的员工号重复，请修改	入参报文中员工信息之间员工工号存在重复，请接口调用方进行调整，避免重复
+员工号：与员工花名册的员工的员工号重复，请修改	入参报文中员工信息的员工工号与员工管理-花名册中的员工的员工工号重复，请接口调用方进行调整，避免重复
+手机号：与同批的在职员工手机号重复，请修改	入参报文中员工信息之间手机号存在重复，请接口调用方进行调整，避免重复
+手机号：与员工花名册的在职员工的手机号重复，请修改	入参报文中员工信息的手机号与员工管理-花名册中的员工的手机号重复，请接口调用方进行调整，避免重复
+证件号码:本次处理员工之间存在重复,请修改！	入参报文中员工信息之间证件信息(证件类型+证件号码)存在重复，请接口调用方进行调整，避免重复
+证件号码：与花名册员工的证件号码重复，请修改！	入参报文中员工信息的证件信息(证件类型+证件号码)与员工管理-花名册中的员工的证件信息(证件类型+证件号码)重复，请接口调用方进行调整，避免重复
+汇报上级：花名册不存在对应人员，请新增人员	检查入参报文中员工信息的汇报上级属性，不能传递员工管理-花名册中不存在员工的员工序号
+部门：不存在	检查入参报文中员工信息的部门属性，不能传递不存在的部门id
+此人员在录用审批中，不能进入花名册	请接口调用方前往异动管理-录用审批查看，并判断是否调整入参
+证件号码：与企业待入职人员的证件号码重复，请修改	请接口调用方前往异动管理-入职管理-待入职中查看，并判断是否调整入参
+该人员已加入黑名单	请接口调用方前往员工管理设置-黑名单管理查看，并判断是否调整入参
+
+来自 <https://xft.cmbchina.com/open/#/doc/open-document?id=10692&mid=12516> 
