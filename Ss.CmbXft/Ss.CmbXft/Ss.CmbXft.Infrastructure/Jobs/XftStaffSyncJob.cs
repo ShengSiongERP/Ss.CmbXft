@@ -32,7 +32,7 @@ public class XftStaffSyncJob : JobBase
     {
         _logger.LogInformation("开始执行薪福通员工数据同步...");
 
-        var syncedCount = await _syncService.SyncFromXftAsync(cancellationToken);
+        var syncedCount = await _syncService.SyncStaffAsync(cancellationToken);
 
         _logger.LogInformation("薪福通员工数据同步完成，共同步 {SyncedCount} 条记录", syncedCount);
     }

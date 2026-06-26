@@ -68,7 +68,7 @@ public class XftErpSyncService : IXftErpSyncService
     /// <summary>
     /// 从薪福通同步员工数据到本地数据库
     /// </summary>
-    public async Task<int> SyncFromXftAsync(CancellationToken cancellationToken = default)
+    public async Task<int> SyncStaffAsync(CancellationToken cancellationToken = default)
     {
         _logger.LogInformation("开始从薪福通同步员工数据到数据库");
         #region 获取数据 机构 岗位（用于映射中文名称）
@@ -164,6 +164,129 @@ public class XftErpSyncService : IXftErpSyncService
 
         return allXftStaffs.Count;
     }
+
+    ///// <summary>
+    ///// 同步数据到主数据库（XftStaff）
+    ///// </summary>
+    //private async Task SyncToPrimaryDatabaseAsync(List<SdkStaffInfo> xftStaffs, CancellationToken cancellationToken)
+    //{
+    //    await _unitOfWork.BeginTransactionAsync(cancellationToken);
+    //    try
+    //    {
+    //        // 获取所有员工编码（用于查询和比对）
+    //        var staffSeqs = xftStaffs
+    //            .Select(r => r.StaffSeq)
+    //            .Where(s => !string.IsNullOrEmpty(s))
+    //            .Distinct()
+    //            .ToList();
+
+    //        // 查询主数据库中所有员工（包括已删除的）
+    //        var allExistingStaff = await _xftStaffRepository.GetListAsync(
+    //            predicate: e => !string.IsNullOrEmpty(e.StaffSeq),
+    //            null, null,
+    //            false, true, cancellationToken);
+
+    //        var existingStaffDict = allExistingStaff
+    //            .Where(e => !string.IsNullOrEmpty(e.StaffSeq))
+    //            .ToDictionary(e => e.StaffSeq!);
+
+    //        var toInsert = new List<XftStaff>();
+    //        var toUpdate = new List<XftStaff>();
+    //        var totalInserted = 0;
+    //        var totalUpdated = 0;
+
+    //        foreach (var staffInfo in xftStaffs)
+    //        {
+    //            if (string.IsNullOrEmpty(staffInfo.StaffSeq))
+    //            {
+    //                _logger.LogWarning("跳过员工序号为空的员工数据");
+    //                continue;
+    //            }
+
+    //            var staffJson = JsonConvert.SerializeObject(staffInfo, Formatting.None,
+    //                new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
+
+    //            if (existingStaffDict.TryGetValue(staffInfo.StaffSeq, out var exist))
+    //            {
+    //                // 更新现有记录（如果已删除则恢复）
+    //                exist.EnterpriseId = staffInfo.StaffBasicInfo?.EnterpriseId;
+    //                exist.StaffSeq = staffInfo.StaffSeq;
+    //                exist.StfType = staffInfo.StaffBasicInfo?.StfType;
+    //                exist.StfStatus = staffInfo.StaffBasicInfo?.StfStatus;
+    //                exist.StfName = staffInfo.StaffBasicInfo?.StfName;
+    //                exist.MobileNumber = staffInfo.StaffBasicInfo?.MobileNumber;
+    //                exist.StaffJson = staffJson;
+    //                exist.IsDeleted = false; // 恢复删除状态
+    //                exist.UpdateTime = DateTime.Now;
+    //                toUpdate.Add(exist);
+    //            }
+    //            else
+    //            {
+    //                // 创建新记录
+    //                var newEntity = new XftStaff
+    //                {
+    //                    Id = YitIdHelper.NextId(),
+    //                    EnterpriseId = staffInfo.StaffBasicInfo?.EnterpriseId,
+    //                    StaffSeq = staffInfo.StaffSeq,
+    //                    StfType = staffInfo.StaffBasicInfo?.StfType,
+    //                    StfStatus = staffInfo.StaffBasicInfo?.StfStatus,
+    //                    StfName = staffInfo.StaffBasicInfo?.StfName,
+    //                    MobileNumber = staffInfo.StaffBasicInfo?.MobileNumber,
+    //                    StaffJson = staffJson
+    //                };
+    //                toInsert.Add(newEntity);
+    //            }
+    //        }
+
+    //        // 批量插入
+    //        if (toInsert.Any())
+    //        {
+    //            await _xftStaffRepository.AddRangeAsync(toInsert, cancellationToken);
+    //            totalInserted += toInsert.Count;
+    //            _logger.LogInformation("主数据库批量插入 {Count} 条员工数据", toInsert.Count);
+    //        }
+
+    //        // 批量更新
+    //        if (toUpdate.Any())
+    //        {
+    //            _xftStaffRepository.Update(toUpdate);
+    //            totalUpdated += toUpdate.Count;
+    //            _logger.LogInformation("主数据库批量更新 {Count} 条员工数据", toUpdate.Count);
+    //        }
+
+    //        // 处理删除逻辑：将本地存在但远程不存在的员工标记为删除
+    //        var toDelete = allExistingStaff
+    //            .Where(e => !string.IsNullOrEmpty(e.StaffSeq) &&
+    //                        !staffSeqs.Contains(e.StaffSeq) &&
+    //                        !e.IsDeleted)
+    //            .ToList();
+
+    //        if (toDelete.Any())
+    //        {
+    //            foreach (var staff in toDelete)
+    //            {
+    //                staff.IsDeleted = true;
+    //                staff.UpdateTime = DateTime.Now;
+    //            }
+    //            _xftStaffRepository.Update(toDelete);
+    //            _logger.LogInformation("主数据库将 {Count} 条不存在的员工标记为删除", toDelete.Count);
+    //        }
+
+    //        // 保存更改
+    //        await _unitOfWork.SaveChangesAsync(cancellationToken);
+    //        await _unitOfWork.CommitTransactionAsync(cancellationToken);
+
+    //        _logger.LogInformation(
+    //            "主数据库员工数据同步完成，新增 {Inserted} 条，更新 {Updated} 条，删除 {Deleted} 条",
+    //            totalInserted, totalUpdated, toDelete.Count);
+    //    }
+    //    catch (Exception ex)
+    //    {
+    //        _logger.LogError(ex, "主数据库员工数据同步失败，已回滚事务");
+    //        await _unitOfWork.RollbackTransactionAsync(cancellationToken);
+    //        throw;
+    //    }
+    //}
 
     /// <summary>
     /// 同步数据到ERP数据库（SserpERPTxnEmployee）(关系SserpERPTxnEmployee的EmployeeCode=staff_req 0000000001)

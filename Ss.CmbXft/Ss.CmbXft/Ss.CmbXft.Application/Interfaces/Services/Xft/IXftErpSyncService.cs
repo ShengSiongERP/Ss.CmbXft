@@ -13,6 +13,6 @@ public interface IXftErpSyncService
     /// </summary>
     /// <param name="cancellationToken">取消令牌</param>
     /// <returns>同步的员工数量</returns>
-    Task<int> SyncFromXftAsync(CancellationToken cancellationToken = default);
+    Task<int> SyncStaffAsync(CancellationToken cancellationToken = default);
 
 }

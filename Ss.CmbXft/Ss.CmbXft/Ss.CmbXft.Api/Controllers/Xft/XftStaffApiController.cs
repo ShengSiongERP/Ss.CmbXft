@@ -63,13 +63,13 @@ public class XftStaffApiController : ApiControllerBase
     /// </summary>
     /// <param name="cancellationToken">取消令牌</param>
     /// <returns>同步的员工数量</returns>
-    [HttpPost("sync-to-both")]
-    public async Task<ApiResult<int>> SyncToBothDatabases(
+    [HttpPost("sync_staff")]
+    public async Task<ApiResult<int>> SyncStaff(
         CancellationToken cancellationToken = default)
     {
         _logger.LogInformation("开始从薪福通同步员工数据到双数据库");
 
-        var count = await _xftStaffSyncService.SyncFromXftAsync(cancellationToken);
+        var count = await _xftStaffSyncService.SyncStaffAsync(cancellationToken);
 
         _logger.LogInformation("从薪福通同步员工数据到数据库完成，共同步 {Count} 条记录", count);
 

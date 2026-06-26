@@ -236,7 +236,6 @@ public class XftClient : IXftClient
             var response = await _httpClient.SendAsync(request, cancellationToken);
             var responseContent = await response.Content.ReadAsStringAsync();
 
-            //LogDebug("[xft响应]Status:{Status},Body:{Content}", response.StatusCode + (int)response.StatusCode, responseContent);
             LogDebug("[xft响应]Status:{Status}", response.StatusCode + (int)response.StatusCode);
 
             return responseContent;
