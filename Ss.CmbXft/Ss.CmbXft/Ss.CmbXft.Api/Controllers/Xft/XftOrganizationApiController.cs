@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using Ss.CmbXft.Api.Infrastructure.Common;
 using Ss.CmbXft.Application.Dtos;
 using Ss.CmbXft.Application.Services;
+using Ss.CmbXft.Common.Models;
 
 namespace Ss.CmbXft.Api.Controllers;
 
@@ -28,17 +29,9 @@ public class XftOrganizationApiController : ApiControllerBase
     /// <param name="input">查询请求</param>
     /// <returns>组织列表分页结果</returns>
     [HttpPost("list")]
-    public async Task<IActionResult> GetOrganizationList([FromBody] GetOrganizationListRequestDto input)
+    public async Task<ApiResult<PageResult<OrgOrgDto>>> GetOrganizationList([FromBody] GetOrganizationListRequestDto input)
     {
-        try
-        {
-            var result = await _organizationAppService.GetOrganizationListAsync(input);
-            return Success(result);
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "获取组织列表失败");
-            return Failure($"获取组织列表失败: {ex.Message}");
-        }
+        var result = await _organizationAppService.GetOrganizationListAsync(input);
+        return ApiResult<PageResult<OrgOrgDto>>.Success(result);
     }
 }

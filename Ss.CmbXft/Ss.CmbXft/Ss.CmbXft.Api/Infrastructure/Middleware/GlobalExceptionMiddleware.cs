@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Ss.CmbXft.Common.Exceptions;
 using Ss.CmbXft.Common.Models;
+using Ss.CmbXft.Sdk.Exceptions;
 using System.Net;
 using System.Text.Json;
 
@@ -92,6 +93,12 @@ public class GlobalExceptionMiddleware
                 code = ApiResultEnum.Unauthorized;
                 message = ex.Message ?? ApiResultEnum.Unauthorized.GetMsg();
                 strType = "【未授权】";
+                break;
+            case XftBusinessException xftEx://薪福通业务异常
+                statusCode = StatusCodes.Status200OK;
+                code = ApiResultEnum.BusinessError;
+                message = xftEx.ErrorMessage ?? xftEx.Message;
+                strType = "【薪福通业务异常】";
                 break;
             case DbUpdateException dbEx://EF Core 数据库异常
                 statusCode = StatusCodes.Status200OK;

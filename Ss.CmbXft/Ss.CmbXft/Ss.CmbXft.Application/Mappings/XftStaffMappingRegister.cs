@@ -12,8 +12,8 @@ public class XftStaffMappingRegister : IRegister
     /// <inheritdoc />
     public void Register(TypeAdapterConfig config)
     {
-        config.NewConfig<XftStaff, XftStaffDto>();
-        config.NewConfig<CreateXftStaffDto, XftStaff>();
-        config.NewConfig<UpdateXftStaffDto, XftStaff>();
+        //config.NewConfig<XftStaff, XftStaffDto>();
+        //config.NewConfig<CreateXftStaffDto, XftStaff>();
+        //config.NewConfig<UpdateXftStaffDto, XftStaff>();
     }
 }

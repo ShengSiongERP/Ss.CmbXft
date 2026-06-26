@@ -59,7 +59,7 @@ builder.Services.AddXftSdk(options =>
     options.BaseUrl = builder.Configuration["XftOptions:BaseUrl"] ?? string.Empty;
     options.Environment = int.TryParse(builder.Configuration["XftOptions:Environment"], out var env) ? (XftEnvironment)env : XftEnvironment.Test;
     options.TimeoutSeconds = int.TryParse(builder.Configuration["XftOptions:TimeoutSeconds"], out var timeout) ? timeout : 30;
-    options.EnableLogging = false;
+    options.EnableLogging = bool.TryParse(builder.Configuration["XftOptions:EnableLogging"], out bool enbaleLogging) ? enbaleLogging : false;
     options.UsrUid = builder.Configuration["XftOptions:UsrUid"] ?? "AUTO0001";
     options.UsrNbr = builder.Configuration["XftOptions:UsrNbr"] ?? "A0001";
 });

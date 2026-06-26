@@ -1,4 +1,4 @@
-using Ss.CmbXft.Common.Models;
+using Ss.CmbXft.Common.Models.Request;
 using System.ComponentModel.DataAnnotations;
 
 namespace Ss.CmbXft.Application.Dtos.Sserp;
@@ -22,7 +22,7 @@ public class AbpRoleDto
 /// <summary>
 /// Abp角色查询DTO
 /// </summary>
-public class AbpRoleQueryDto : PagedRequestBase
+public class AbpRoleQueryDto : PageRequestBase
 {
     /// <summary>
     /// 角色名称

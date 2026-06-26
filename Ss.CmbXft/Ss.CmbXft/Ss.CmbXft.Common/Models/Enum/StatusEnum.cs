@@ -1,4 +1,4 @@
-﻿namespace Ss.CmbXft.Domain.Enum;
+﻿namespace Ss.CmbXft.Common.Models.Enums;
 
 /// <summary>
 /// 通用状态枚举

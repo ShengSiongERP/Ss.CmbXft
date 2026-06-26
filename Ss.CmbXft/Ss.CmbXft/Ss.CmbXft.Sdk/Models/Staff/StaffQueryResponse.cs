@@ -156,7 +156,7 @@ public class StaffBasicInfo
     public string? StfType { get; set; }
 
     /// <summary>
-    /// 员工状态
+    /// 员工状态 0试用1正式2已离职3待离职
     /// </summary>
     public string? StfStatus { get; set; }
 

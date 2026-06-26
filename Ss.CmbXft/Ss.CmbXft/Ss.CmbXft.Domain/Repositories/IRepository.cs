@@ -88,16 +88,66 @@ public interface IRepository<TEntity, TKey> where TEntity : class
     #endregion
 
     #region 删除
+
+    /// <summary>
+    /// 软删除实体
+    /// </summary>
     void Delete(TEntity entity);
-    void DeleteRange(IEnumerable<TEntity> entities);
+
+    /// <summary>
+    /// 软删除实体集合
+    /// </summary>
+    void Delete(IEnumerable<TEntity> entities);
+
+    /// <summary>
+    /// 软删除实体（异步）
+    /// </summary>
     Task DeleteAsync(TEntity entity);
-    Task DeleteRangeAsync(IEnumerable<TEntity> entities);
+
+    /// <summary>
+    /// 软删除实体集合（异步）
+    /// </summary>
+    Task DeleteAsync(IEnumerable<TEntity> entities);
+
+    /// <summary>
+    /// 根据ID软删除实体
+    /// </summary>
     Task DeleteAsync(TKey id, CancellationToken cancellationToken = default);
 
     /// <summary>
-    /// 根据条件批量删除
+    /// 根据条件批量软删除
     /// </summary>
     Task<int> DeleteAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default);
+
+    ///// <summary>
+    ///// 硬删除实体（从数据库中彻底移除）
+    ///// </summary>
+    //void Remove(TEntity entity);
+
+    ///// <summary>
+    ///// 硬删除实体集合（从数据库中彻底移除）
+    ///// </summary>
+    //void Remove(IEnumerable<TEntity> entities);
+
+    /// <summary>
+    /// 硬删除实体（异步，从数据库中彻底移除）
+    /// </summary>
+    Task RemoveAsync(TEntity entity);
+
+    /// <summary>
+    /// 硬删除实体集合（异步，从数据库中彻底移除）
+    /// </summary>
+    Task RemoveAsync(IEnumerable<TEntity> entities);
+
+    /// <summary>
+    /// 根据ID硬删除实体（从数据库中彻底移除）
+    /// </summary>
+    Task RemoveAsync(TKey id, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// 根据条件批量硬删除（从数据库中彻底移除）
+    /// </summary>
+    Task<int> RemoveAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default);
     #endregion
 
     #region 计数
@@ -110,10 +160,4 @@ public interface IRepository<TEntity, TKey> where TEntity : class
     #region 事务
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
     #endregion
-}
-public interface IUpdateSetters<TEntity>
-{
-    void SetProperty<TProperty>(
-        Expression<Func<TEntity, TProperty>> propertyExpression,
-        TProperty value);
 }

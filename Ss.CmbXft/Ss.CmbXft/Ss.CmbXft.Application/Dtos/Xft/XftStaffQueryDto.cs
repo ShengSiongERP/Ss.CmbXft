@@ -1,11 +1,11 @@
-using Ss.CmbXft.Common.Models;
+using Ss.CmbXft.Common.Models.Request;
 
 namespace Ss.CmbXft.Application.Dtos.Xft;
 
 /// <summary>
 /// 员工查询请求DTO
 /// </summary>
-public class XftStaffQueryDto : PagedRequestBase
+public class XftStaffQueryDto : PageRequestBase
 {
     /// <summary>
     /// 员工序号

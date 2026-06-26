@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using Ss.CmbXft.Api.Infrastructure.Common;
 using Ss.CmbXft.Application.Dtos;
 using Ss.CmbXft.Application.Services;
+using Ss.CmbXft.Common.Models;
 
 namespace Ss.CmbXft.Api.Controllers;
 
@@ -28,17 +29,9 @@ public class XftPositionApiController : ApiControllerBase
     /// <param name="input">查询请求</param>
     /// <returns>职位列表分页结果</returns>
     [HttpPost("list")]
-    public async Task<IActionResult> GetPositionList([FromBody] GetPositionListRequestDto input)
+    public async Task<ApiResult<PageResult<PositionDto>>> GetPositionList([FromBody] GetPositionListRequestDto input)
     {
-        try
-        {
-            var result = await _xftPositionAppService.GetPositionListAsync(input);
-            return Success(result);
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "查询职位列表失败");
-            return Failure($"查询职位列表失败: {ex.Message}");
-        }
+        var result = await _xftPositionAppService.GetPositionListAsync(input);
+        return ApiResult<PageResult<PositionDto>>.Success(result);
     }
 }

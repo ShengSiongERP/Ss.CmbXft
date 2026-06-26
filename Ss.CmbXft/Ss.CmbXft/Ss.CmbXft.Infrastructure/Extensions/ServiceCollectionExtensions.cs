@@ -1,11 +1,14 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 using Ss.CmbXft.Application.Interfaces.Services.Sserp.SsMember;
+using Ss.CmbXft.Domain.Entities.Sserp;
 using Ss.CmbXft.Domain.Repositories;
 using Ss.CmbXft.Domain.Services;
 using Ss.CmbXft.Infrastructure.EntityFrameworkCore;
+using Ss.CmbXft.Infrastructure.EntityFrameworkCore.Repository;
 using Ss.CmbXft.Infrastructure.Services;
 using Ss.CmbXft.Infrastructure.Tenant;
 using Ss.CmbXft.Infrastructure.ThirdParty;
@@ -13,6 +16,10 @@ using Ss.CmbXft.Infrastructure.ThirdParty.SsMember;
 using Ss.CmbXft.Infrastructure.ThirdParty.SsMember.Interfaces;
 using Ss.CmbXft.Infrastructure.ThirdParty.SsMember.Services;
 using Ss.CmbXft.Sdk.Configuration;
+//// MySQL 相关
+//using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
+//// PostgreSQL 相关
+//using Npgsql.EntityFrameworkCore.PostgreSQL;
 
 namespace Ss.CmbXft.Infrastructure.Extensions;
 
@@ -65,6 +72,9 @@ public static class ServiceCollectionExtensions
 
         // 注册当前租户服务
         services.AddScoped<ICurrentTenant, CurrentTenant>();
+
+        // 注册 ASP.NET Core Identity 密码哈希器 同步xft用户到erp使用
+        services.AddScoped<IPasswordHasher<AbpUser>, PasswordHasher<AbpUser>>();
 
         return services;
     }

@@ -1,4 +1,4 @@
-using Ss.CmbXft.Common.Models;
+using Ss.CmbXft.Common.Models.Request;
 using System.ComponentModel.DataAnnotations;
 
 namespace Ss.CmbXft.Application.Dtos.Sserp;
@@ -187,7 +187,7 @@ public class EmployeeSaveDto
 /// <summary>
 /// 员工信息查询 DTO
 /// </summary>
-public class EmployeeQueryDto : PagedRequestBase
+public class EmployeeQueryDto : PageRequestBase
 {
     /// <summary>
     /// 员工编码

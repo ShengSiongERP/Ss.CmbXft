@@ -48,10 +48,15 @@ public class StoreSyncAppService : IStoreSyncAppService
 
 #if DEBUG
         var storeInfo = new StoreInfo();
-        storeInfo.StoreId = "TEST01";
-        storeInfo.StoreName = "TEST";
+        storeInfo.StoreId = "KM06";
+        storeInfo.StoreName = "昆明广福店1";
         storeInfo.Address = "中国云南省昆明市西山区广福路488号爱琴海购物公园地下一层B1001号";
         list = new List<StoreInfo> { storeInfo };
+        //var storeInfo = new StoreInfo();
+        //storeInfo.StoreId = "TEST01";
+        //storeInfo.StoreName = "TEST";
+        //storeInfo.Address = "中国云南省昆明市西山区广福路488号爱琴海购物公园地下一层B1001号";
+        //list = new List<StoreInfo> { storeInfo };
 #endif
 
         var response = await _storeService.SyncStoresAsync(list, ct);

@@ -1,13 +1,9 @@
+using FluentValidation;
 using Mapster;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using Ss.CmbXft.Application.Services;
-using Ss.CmbXft.Application.Mappings;
-using System;
-using System.Linq;
-using System.Reflection;
-using FluentValidation;
 using Ss.CmbXft.Application.Validators;
+using System.Reflection;
 
 namespace Ss.CmbXft.Application.Extensions;
 
@@ -16,24 +12,11 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddApplication(this IServiceCollection services)
     {
         // 注册应用服务
-        services.AddScoped<IXftStaffAppService, XftStaffAppService>();
-        services.AddScoped<IXftEventService, XftEventService>();
         services.AddScoped<IXftErpSyncService, XftErpSyncService>();
         services.AddScoped<IRoleAppService, RoleAppService>();
         services.AddScoped<IOrganizationAppService, OrganizationAppService>();
         services.AddScoped<IXftPositionAppService, XftPositionAppService>();
         services.AddScoped<IPostAppService, PostAppService>();
-
-        #region Sserp
-        // ERP员工信息服务
-        services.AddScoped<IEmployeeAppService, EmployeeAppService>();
-        // Abp用户信息服务
-        services.AddScoped<IAbpUserAppService, AbpUserAppService>();
-        // Abp用户角色关联服务
-        services.AddScoped<IAbpUserRoleAppService, AbpUserRoleAppService>();
-        // Abp角色服务
-        services.AddScoped<IAbpRoleAppService, AbpRoleAppService>();
-        #endregion
 
         // 注册验证服务
         services.AddScoped<IValidationService, ValidationService>();

@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using Ss.CmbXft.Application.Dtos;
 using Ss.CmbXft.Application.Services;
 using Ss.CmbXft.Api.Infrastructure.Common;
+using Ss.CmbXft.Common.Models;
 
 namespace Ss.CmbXft.Api.Controllers;
 
@@ -24,17 +25,9 @@ public class XftRoleApiController : ApiControllerBase
     /// <param name="input">查询请求</param>
     /// <returns>角色列表分页结果</returns>
     [HttpPost("list")]
-    public async Task<IActionResult> GetRoleList([FromBody] GetRoleListRequestDto input)
+    public async Task<ApiResult<PageResult<RoleDto>>> GetRoleList([FromBody] GetRoleListRequestDto input)
     {
-        try
-        {
-            var result = await _roleAppService.GetRoleListAsync(input);
-            return Success(result);
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "获取角色列表失败");
-            return Failure($"获取角色列表失败: {ex.Message}");
-        }
+        var result = await _roleAppService.GetRoleListAsync(input);
+        return ApiResult<PageResult<RoleDto>>.Success(result);
     }
 }

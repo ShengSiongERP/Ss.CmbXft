@@ -1,18 +1,20 @@
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using Ss.CmbXft.Domain.Repositories;
 
 namespace Ss.CmbXft.Infrastructure.EntityFrameworkCore;
 
 /// <summary>
-/// Sserp数据库的工作单元实现
+/// 通用工作单元泛型基类，聚合事务 / 保存 / 释放逻辑。
+/// 子类只需指定具体的 DbContext 类型即可。
 /// </summary>
-public class SserpUnitOfWork : ISserpUnitOfWork
+public abstract class UnitOfWorkBase<TDbContext> : IUnitOfWork, IDisposable, IAsyncDisposable
+    where TDbContext : DbContext
 {
-    private readonly SserpDbContext _dbContext;
+    private readonly TDbContext _dbContext;
     private IDbContextTransaction? _transaction;
-    private bool _disposed;
 
-    public SserpUnitOfWork(SserpDbContext context, IServiceProvider serviceProvider)
+    protected UnitOfWorkBase(TDbContext context, IServiceProvider serviceProvider)
     {
         _dbContext = context;
     }
@@ -47,7 +49,6 @@ public class SserpUnitOfWork : ISserpUnitOfWork
     #region 保存
 
     public async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default) => await _dbContext.SaveChangesAsync(cancellationToken);
-
 
     #endregion
 

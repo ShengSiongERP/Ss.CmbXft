@@ -34,6 +34,7 @@ public class PosVoucherConfiguration : IEntityTypeConfiguration<PosVoucher>
         builder.Property(e => e.MaxQtyPerReceipt).HasColumnName("MaxQtyPerReceipt");
         builder.Property(e => e.RedeemType).HasColumnName("RedeemType");
         builder.Property(e => e.RequiredQty).HasColumnName("RequiredQty").HasColumnType("decimal(18,2)");
+        builder.Property(e => e.TotalQty).HasColumnName("TotalQty").HasColumnType("decimal(18,2)");
         builder.Property(e => e.IsVoidable).HasColumnName("IsVoidable");
     }
 }

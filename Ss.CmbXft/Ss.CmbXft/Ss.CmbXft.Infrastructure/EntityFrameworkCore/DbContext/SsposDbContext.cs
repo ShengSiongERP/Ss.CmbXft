@@ -16,6 +16,7 @@ public class SsposDbContext : DbContext
     // POS 数据库实体
     public DbSet<PosLocation> Locations { get; set; }
     public DbSet<PosVoucher> Vouchers { get; set; }
+    public DbSet<PosControlLocation> ControlLocations { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -24,6 +25,7 @@ public class SsposDbContext : DbContext
         // POS 实体配置
         modelBuilder.ApplyConfiguration(new PosLocationConfiguration());
         modelBuilder.ApplyConfiguration(new PosVoucherConfiguration());
+        modelBuilder.ApplyConfiguration(new PosControlLocationConfiguration());
     }
 
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)

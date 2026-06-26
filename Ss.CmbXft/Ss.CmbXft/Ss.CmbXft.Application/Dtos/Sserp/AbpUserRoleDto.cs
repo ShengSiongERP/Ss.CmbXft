@@ -1,4 +1,4 @@
-using Ss.CmbXft.Common.Models;
+using Ss.CmbXft.Common.Models.Request;
 using System.ComponentModel.DataAnnotations;
 
 namespace Ss.CmbXft.Application.Dtos.Sserp;
@@ -50,7 +50,7 @@ public class AbpUserRoleSaveDto
 /// <summary>
 /// Abp用户角色关联查询 DTO
 /// </summary>
-public class AbpUserRoleQueryDto : PagedRequestBase
+public class AbpUserRoleQueryDto : PageRequestBase
 {
     /// <summary>
     /// 用户ID筛选

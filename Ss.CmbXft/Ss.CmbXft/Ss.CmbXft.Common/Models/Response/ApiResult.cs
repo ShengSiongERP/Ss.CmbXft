@@ -146,7 +146,7 @@ public class ApiResult<T> : ApiResult
     /// 响应数据
     /// </summary>
     [JsonPropertyName("data")]
-    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
     public T? Data { get; protected set; }
 
     /// <summary>
@@ -180,7 +180,7 @@ public class ApiResult<T> : ApiResult
     /// <summary>
     /// 创建失败响应（自定义状态码）
     /// </summary>
-    public static ApiResult<T> Fail(string code, string message, T? data = default, string? traceId = null)
+    public static ApiResult<T> Error(string code, string message, T? data = default, string? traceId = null)
     {
         return new ApiResult<T>
         {

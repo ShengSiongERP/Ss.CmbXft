@@ -1,11 +1,11 @@
-using Ss.CmbXft.Common.Models;
+using Ss.CmbXft.Common.Models.Request;
 
 namespace Ss.CmbXft.Application.Dtos.Sspos;
 
 /// <summary>
 /// 门店同步查询条件 DTO
 /// </summary>
-public class StoreSyncQueryDto : PagedRequestBase
+public class StoreSyncQueryDto : PageRequestBase
 {
     /// <summary>
     /// 门店编码（精确匹配，多个用逗号分隔）

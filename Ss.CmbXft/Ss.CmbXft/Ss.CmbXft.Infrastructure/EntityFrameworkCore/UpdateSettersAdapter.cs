@@ -1,13 +1,13 @@
-using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query;
-using Ss.CmbXft.Common.Models;
 using Ss.CmbXft.Domain.Repositories;
-using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Ss.CmbXft.Infrastructure.EntityFrameworkCore;
 
+/// <summary>
+/// 解决参数params Expression<Func<T, object>>[] propertyExpressions的问题 Domain层Update无法依赖Microsoft.EntityFrameworkCore的问题
+/// 适配器模式（Adapter）外部业务代码不直接依赖 UpdateSettersBuilder，只依赖抽象接口 IUpdateSetters<TEntity> 
+/// </summary>
 public class UpdateSettersAdapter<TEntity> : IUpdateSetters<TEntity>
 {
     private readonly UpdateSettersBuilder<TEntity> _builder;

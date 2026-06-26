@@ -172,7 +172,7 @@ public class XftClient : IXftClient
             requestBody = JsonConvert.SerializeObject(request);
         }
 
-        LogDebug("加密POST请求（带解密） - URL: {Url}, Body: {Body}", apiPath, requestBody);
+        LogDebug("[xft请求]URL:{Url},Body:{Body}", apiPath, requestBody);
 
         // 加密请求体
         var secretMsg = CryptographyUtils.EncryptWithSm4Ecb(requestBody, _options.GetEncryptionKey());
@@ -209,6 +209,7 @@ public class XftClient : IXftClient
         try
         {
             decrypted = CryptographyUtils.DecryptWithSm4Ecb(rawResponse, _options.GetEncryptionKey());
+            LogDebug("[xft响应]解密:{Body}", decrypted);
         }
         catch (Exception ex)
         {
@@ -235,7 +236,8 @@ public class XftClient : IXftClient
             var response = await _httpClient.SendAsync(request, cancellationToken);
             var responseContent = await response.Content.ReadAsStringAsync();
 
-            LogDebug("HTTP响应 - Status: {Status}, Content: {Content}", response.StatusCode, responseContent);
+            //LogDebug("[xft响应]Status:{Status},Body:{Content}", response.StatusCode + (int)response.StatusCode, responseContent);
+            LogDebug("[xft响应]Status:{Status}", response.StatusCode + (int)response.StatusCode);
 
             return responseContent;
         }

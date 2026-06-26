@@ -1,11 +1,11 @@
-using Ss.CmbXft.Common.Models;
+using Ss.CmbXft.Common.Models.Request;
 
 namespace Ss.CmbXft.Application.Dtos.Sspos;
 
 /// <summary>
 /// 优惠券同步查询条件 DTO
 /// </summary>
-public class CouponSyncQueryDto : PagedRequestBase
+public class CouponSyncQueryDto : PageRequestBase
 {
     /// <summary>
     /// 优惠券编码（精确匹配，多个用逗号分隔）

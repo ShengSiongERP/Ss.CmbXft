@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Ss.CmbXft.Api.Infrastructure.Common;
+using Ss.CmbXft.Common.Models;
 
 namespace Ss.CmbXft.Api.Controllers;
 
@@ -11,9 +12,9 @@ public class HealthController : ApiControllerBase
     }
 
     [HttpGet]
-    public IActionResult Get()
+    public ApiResult Get()
     {
         _logger.LogInformation("Health check performed.");
-        return Success(new { Status = "Healthy", Timestamp = DateTime.UtcNow });
+        return ApiResult.Success();
     }
 }

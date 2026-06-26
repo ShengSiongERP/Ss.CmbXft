@@ -1,4 +1,4 @@
-namespace Ss.CmbXft.Common.Models;
+namespace Ss.CmbXft.Common.Models.Request;
 
 /// <summary>
 /// 基础请求接口

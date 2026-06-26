@@ -1,4 +1,6 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using Ss.CmbXft.Domain.Entities;
 using Ss.CmbXft.Domain.Entities.Sserp;
@@ -17,8 +19,6 @@ namespace Ss.CmbXft.Application.Services;
 /// </summary>
 public class XftErpSyncService : IXftErpSyncService
 {
-    private readonly IUnitOfWork _unitOfWork;
-    private readonly IRepository<XftStaff, long> _xftStaffRepository;
     private readonly ISserpUnitOfWork _secondaryUnitOfWork;
     private readonly ISserpRepository<SserpERPTxnEmployee, long> _sserpERPTxnEmployeeRepository;
     private readonly ISserpRepository<AbpUser, Guid> _abpUserRepository;
@@ -28,10 +28,9 @@ public class XftErpSyncService : IXftErpSyncService
     private readonly IOrganizationService _organizationService;
     private readonly IPostService _postService;
     private readonly ILogger<XftErpSyncService> _logger;
+    private readonly IPasswordHasher<AbpUser> _passwordHasher;
 
     public XftErpSyncService(
-        IRepository<XftStaff, long> primaryRepository,
-        IUnitOfWork primaryUnitOfWork,
         ISserpRepository<SserpERPTxnEmployee, long> secondaryRepository,
         ISserpRepository<AbpUser, Guid> abpUserRepository,
         ISserpRepository<AbpUserRole, Guid> abpUserRoleRepository,
@@ -40,10 +39,9 @@ public class XftErpSyncService : IXftErpSyncService
         IStaffService staffService,
         IOrganizationService organizationService,
         IPostService postService,
-        ILogger<XftErpSyncService> logger)
+        ILogger<XftErpSyncService> logger,
+        IPasswordHasher<AbpUser> passwordHasher)
     {
-        _xftStaffRepository = primaryRepository;
-        _unitOfWork = primaryUnitOfWork;
         _sserpERPTxnEmployeeRepository = secondaryRepository;
         _abpUserRepository = abpUserRepository;
         _abpUserRoleRepository = abpUserRoleRepository;
@@ -53,14 +51,19 @@ public class XftErpSyncService : IXftErpSyncService
         _organizationService = organizationService;
         _postService = postService;
         _logger = logger;
+        _passwordHasher = passwordHasher;
     }
 
     //还原ERP_Txn_Employee表数据用sql
     //TRUNCATE TABLE ERP_Txn_Employee;
     //INSERT INTO ERP_Txn_Employee SELECT * FROM ERP_Txn_Employee_copy1;
-    //delete from AbpUsers where id=手动删除新加的3个 很慢可以删;
+    //还原用户角色
     //TRUNCATE TABLE AbpUserRoles;
     //INSERT INTO AbpUserRoles SELECT * FROM AbpUserRoles_copy1;
+    //删除新增用户 筛选出删除数据 分条删除
+    //select * FROM AbpUsers WHERE CAST(CreationTime AS DATE) = '2026-06-22';
+    //delete from AbpUsers where id='F4168F3F-2321-4DC8-AB08-01DDF1EF7B6D';
+    //delete from AbpUsers where id='F4168F3F-2321-4DC8-AB08-01DDF1EF7B6D';
 
     /// <summary>
     /// 从薪福通同步员工数据到本地数据库
@@ -68,22 +71,24 @@ public class XftErpSyncService : IXftErpSyncService
     public async Task<int> SyncFromXftAsync(CancellationToken cancellationToken = default)
     {
         _logger.LogInformation("开始从薪福通同步员工数据到数据库");
-
-        // 预加载组织机构和岗位数据（用于映射中文名称）
+        #region 获取数据 机构 岗位（用于映射中文名称）
         var organizationDict = await LoadOrganizationDataAsync(cancellationToken);
         var postDict = await LoadPostDataAsync(cancellationToken);
+        #endregion
 
-        var allRecords = new List<SdkStaffInfo>();
+        var allXftStaffs = new List<SdkStaffInfo>();
         var currentPage = 1;
         int pageSize = 1000;
 #if DEBUG
-        pageSize = 10;
+        //pageSize = 10;
 #endif
 
         bool hasMoreData = true;
 
         try
         {
+            #region 获取数据 机构 岗位（用于映射中文名称）
+
             while (hasMoreData)
             {
                 _logger.LogInformation("开始获取第 {Page} 页数据，每页 {PageSize} 条", currentPage, pageSize);
@@ -125,30 +130,31 @@ public class XftErpSyncService : IXftErpSyncService
                     break;
                 }
 
-                var records = response.Body.Records.Where(r => r.StaffBasicInfo != null).ToList();
-                if (!records.Any())
+                var staffs = response.Body.Records.Where(r => r.StaffBasicInfo != null).ToList();
+                if (!staffs.Any())
                 {
                     _logger.LogInformation("第 {Page} 页无有效数据", currentPage);
                     hasMoreData = false;
                     break;
                 }
 
-                allRecords.AddRange(records);
+                allXftStaffs.AddRange(staffs);
 
                 // 检查是否还有更多数据
                 hasMoreData = (currentPage * pageSize) < response.Body.TotalSize;
 #if DEBUG
-                hasMoreData = false; //调试时只同步一页数据
+                //hasMoreData = false; //调试时只同步一页数据
 #endif
                 currentPage++;
             }
 
-            _logger.LogInformation("共获取 {Total} 条员工数据，开始同步到数据库", allRecords.Count);
-
+            _logger.LogInformation("共获取 {Total} 条员工数据，开始同步到数据库", allXftStaffs.Count);
+            #endregion
+            //var test = allXftStaffs.FirstOrDefault(x=>x.StaffBasicInfo);
             // 同步到主数据库和ERP数据库
-            await SyncToSecondaryDatabaseAsync(allRecords, organizationDict, postDict, cancellationToken);
+            await SyncToSecondaryDatabaseAsync(allXftStaffs, organizationDict, postDict, cancellationToken);
 
-            _logger.LogInformation("员工数据同步完成，共同步 {Total} 条", allRecords.Count);
+            _logger.LogInformation("员工数据同步完成，共同步 {Total} 条", allXftStaffs.Count);
         }
         catch (Exception ex)
         {
@@ -156,137 +162,14 @@ public class XftErpSyncService : IXftErpSyncService
             throw;
         }
 
-        return allRecords.Count;
-    }
-
-    /// <summary>
-    /// 同步数据到主数据库（XftStaff）
-    /// </summary>
-    private async Task SyncToPrimaryDatabaseAsync(List<SdkStaffInfo> records, CancellationToken cancellationToken)
-    {
-        await _unitOfWork.BeginTransactionAsync(cancellationToken);
-        try
-        {
-            // 获取所有员工编码（用于查询和比对）
-            var staffSeqs = records
-                .Select(r => r.StaffSeq)
-                .Where(s => !string.IsNullOrEmpty(s))
-                .Distinct()
-                .ToList();
-
-            // 查询主数据库中所有员工（包括已删除的）
-            var allExistingStaff = await _xftStaffRepository.GetListAsync(
-                predicate: e => !string.IsNullOrEmpty(e.StaffSeq),
-                null, null,
-                false, true, cancellationToken);
-
-            var existingStaffDict = allExistingStaff
-                .Where(e => !string.IsNullOrEmpty(e.StaffSeq))
-                .ToDictionary(e => e.StaffSeq!);
-
-            var toInsert = new List<XftStaff>();
-            var toUpdate = new List<XftStaff>();
-            var totalInserted = 0;
-            var totalUpdated = 0;
-
-            foreach (var staffInfo in records)
-            {
-                if (string.IsNullOrEmpty(staffInfo.StaffSeq))
-                {
-                    _logger.LogWarning("跳过员工序号为空的员工数据");
-                    continue;
-                }
-
-                var staffJson = JsonConvert.SerializeObject(staffInfo, Formatting.None,
-                    new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
-
-                if (existingStaffDict.TryGetValue(staffInfo.StaffSeq, out var exist))
-                {
-                    // 更新现有记录（如果已删除则恢复）
-                    exist.EnterpriseId = staffInfo.StaffBasicInfo?.EnterpriseId;
-                    exist.StaffSeq = staffInfo.StaffSeq;
-                    exist.StfType = staffInfo.StaffBasicInfo?.StfType;
-                    exist.StfStatus = staffInfo.StaffBasicInfo?.StfStatus;
-                    exist.StfName = staffInfo.StaffBasicInfo?.StfName;
-                    exist.MobileNumber = staffInfo.StaffBasicInfo?.MobileNumber;
-                    exist.StaffJson = staffJson;
-                    exist.IsDeleted = false; // 恢复删除状态
-                    exist.UpdateTime = DateTime.Now;
-                    toUpdate.Add(exist);
-                }
-                else
-                {
-                    // 创建新记录
-                    var newEntity = new XftStaff
-                    {
-                        Id = YitIdHelper.NextId(),
-                        EnterpriseId = staffInfo.StaffBasicInfo?.EnterpriseId,
-                        StaffSeq = staffInfo.StaffSeq,
-                        StfType = staffInfo.StaffBasicInfo?.StfType,
-                        StfStatus = staffInfo.StaffBasicInfo?.StfStatus,
-                        StfName = staffInfo.StaffBasicInfo?.StfName,
-                        MobileNumber = staffInfo.StaffBasicInfo?.MobileNumber,
-                        StaffJson = staffJson
-                    };
-                    toInsert.Add(newEntity);
-                }
-            }
-
-            // 批量插入
-            if (toInsert.Any())
-            {
-                await _xftStaffRepository.AddRangeAsync(toInsert, cancellationToken);
-                totalInserted += toInsert.Count;
-                _logger.LogInformation("主数据库批量插入 {Count} 条员工数据", toInsert.Count);
-            }
-
-            // 批量更新
-            if (toUpdate.Any())
-            {
-                _xftStaffRepository.Update(toUpdate);
-                totalUpdated += toUpdate.Count;
-                _logger.LogInformation("主数据库批量更新 {Count} 条员工数据", toUpdate.Count);
-            }
-
-            // 处理删除逻辑：将本地存在但远程不存在的员工标记为删除
-            var toDelete = allExistingStaff
-                .Where(e => !string.IsNullOrEmpty(e.StaffSeq) &&
-                            !staffSeqs.Contains(e.StaffSeq) &&
-                            !e.IsDeleted)
-                .ToList();
-
-            if (toDelete.Any())
-            {
-                foreach (var staff in toDelete)
-                {
-                    staff.IsDeleted = true;
-                    staff.UpdateTime = DateTime.Now;
-                }
-                _xftStaffRepository.Update(toDelete);
-                _logger.LogInformation("主数据库将 {Count} 条不存在的员工标记为删除", toDelete.Count);
-            }
-
-            // 保存更改
-            await _unitOfWork.SaveChangesAsync(cancellationToken);
-            await _unitOfWork.CommitTransactionAsync(cancellationToken);
-
-            _logger.LogInformation(
-                "主数据库员工数据同步完成，新增 {Inserted} 条，更新 {Updated} 条，删除 {Deleted} 条",
-                totalInserted, totalUpdated, toDelete.Count);
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "主数据库员工数据同步失败，已回滚事务");
-            await _unitOfWork.RollbackTransactionAsync(cancellationToken);
-            throw;
-        }
+        return allXftStaffs.Count;
     }
 
     /// <summary>
     /// 同步数据到ERP数据库（SserpERPTxnEmployee）(关系SserpERPTxnEmployee的EmployeeCode=staff_req 0000000001)
     /// </summary>
     private async Task SyncToSecondaryDatabaseAsync(
-        List<SdkStaffInfo> records,
+        List<SdkStaffInfo> xftStaffs,
         Dictionary<string, OrganizationInfo> organizationDict,
         Dictionary<string, string> postDict,
         CancellationToken cancellationToken)
@@ -295,7 +178,7 @@ public class XftErpSyncService : IXftErpSyncService
         try
         {
             // 获取所有员工编码（用于查询和比对）
-            var employeeCodes = records
+            var employeeCodes = xftStaffs
                 .Select(r => NormalizeEmployeeCode(r.StaffSeq))
                 .Where(s => !string.IsNullOrEmpty(s))
                 .Distinct()
@@ -318,8 +201,12 @@ public class XftErpSyncService : IXftErpSyncService
 
             // 收集员工同步信息（用于后续AbpUser同步和角色匹配：EmployeeNo, Name, OrgNamePath）
             var employeeSyncInfoList = new List<(string EmployeeNo, string Name, string? OrgNamePath)>();
+            // 收集需要禁用的AbpUsers（UserName列表）
+            var usersToDisable = new List<string>();
 
-            foreach (var staffInfo in records)
+            //只有staffInfo.StaffBasicInfo.stfStatus=1和0的进行创建正常用户
+            //staffInfo.StaffBasicInfo.stfStatus=2的用户对原有employee更改Status=0（禁用）
+            foreach (var staffInfo in xftStaffs)
             {
                 if (string.IsNullOrEmpty(staffInfo.StaffSeq))
                 {
@@ -343,57 +230,78 @@ public class XftErpSyncService : IXftErpSyncService
                 var orgNamePath = organizationDict.TryGetValue(basicInfo?.OrgSeq ?? string.Empty, out var org) ? org.NamePath : null;
                 var (workingLocationCode, accessGroupCode) = MapLocationAndAccessGroup(orgNamePath);
 
-                // 收集员工同步信息（用于后续AbpUser同步和角色匹配）
-                if (!string.IsNullOrEmpty(employeeNo))
-                {
-                    employeeSyncInfoList.Add((employeeNo, basicInfo?.StfName ?? string.Empty, orgNamePath));
-                }
+                // 判断员工状态
+                var stfStatus = basicInfo?.StfStatus;
+                var isActiveUser = stfStatus == "0" || stfStatus == "1"; // 0试用1正式2已离职3待离职
+                var isDisabledUser = stfStatus == "2"; // 2为禁用用户
 
                 if (existingEmployeeDict.TryGetValue(normalizedStaffSeq, out var exist))
                 {
                     // 更新现有记录
                     exist.EmployeeNo = employeeNo;
-                    //exist.Name = basicInfo?.StfName ?? exist.Name;
                     exist.EnglishName = englishName;
-                    //exist.Sex = ParseSex(basicInfo?.Sex);
-                    //exist.AGE = CalculateAge(basicInfo?.Birthday);
-                    //exist.BIRTHDATE = basicInfo?.Birthday;
                     exist.ID = basicInfo?.CertificateNumber ?? string.Empty;
                     exist.Department = department;
                     exist.Position = position;
-                    //exist.Status = 1; // 正常用户
                     exist.IsAccessAllOutlet = isAccessAllOutlet;
-                    //exist.WorkingLocationCode = workingLocationCode;
-                    //exist.AccessGroupCode = accessGroupCode;
                     exist.ModifyUser = "SYSTEM";
                     exist.ModifyDate = DateTime.Now;
+
+                    if (isDisabledUser)
+                    {
+                        // 禁用用户
+                        exist.Status = 0;
+                        // 收集需要禁用的AbpUser
+                        if (!string.IsNullOrEmpty(employeeNo))
+                        {
+                            usersToDisable.Add(employeeNo);
+                        }
+                    }
+                    else if (isActiveUser)
+                    {
+                        // 正常用户
+                        exist.Status = 1;
+                        // 收集员工同步信息（用于后续AbpUser同步和角色匹配）
+                        if (!string.IsNullOrEmpty(employeeNo))
+                        {
+                            employeeSyncInfoList.Add((employeeNo, basicInfo?.StfName ?? string.Empty, orgNamePath));
+                        }
+                    }
+
                     toUpdate.Add(exist);
                 }
                 else
                 {
-                    // 创建新记录
-                    var newEntity = new SserpERPTxnEmployee
+                    // 只有stfStatus=0或1的才创建新记录
+                    if (isActiveUser)
                     {
-                        EmployeeCode = normalizedStaffSeq.PadLeft(7, '0'),
-                        EmployeeNo = employeeNo,
-                        Name = basicInfo?.StfName ?? string.Empty,
-                        EnglishName = englishName,
-                        Sex = ParseSex(basicInfo?.Sex),
-                        AGE = CalculateAge(basicInfo?.Birthday),
-                        BIRTHDATE = basicInfo?.Birthday,
-                        ID = basicInfo?.CertificateNumber ?? string.Empty,
-                        Department = department,
-                        Position = position,
-                        Status = 1, // 正常用户
-                        IsAccessAllOutlet = isAccessAllOutlet,
-                        WorkingLocationCode = workingLocationCode,
-                        AccessGroupCode = accessGroupCode,
-                        CreateUser = "SYSTEM",
-                        CreateDate = DateTime.Now,
-                        //ModifyUser = "SYSTEM",
-                        //ModifyDate = DateTime.Now
-                    };
-                    toInsert.Add(newEntity);
+                        var newEntity = new SserpERPTxnEmployee
+                        {
+                            EmployeeCode = normalizedStaffSeq.PadLeft(7, '0'),
+                            EmployeeNo = employeeNo,
+                            Name = basicInfo?.StfName ?? string.Empty,
+                            EnglishName = englishName,
+                            Sex = ParseSex(basicInfo?.Sex),
+                            AGE = CalculateAge(basicInfo?.Birthday),
+                            BIRTHDATE = basicInfo?.Birthday,
+                            ID = basicInfo?.CertificateNumber ?? string.Empty,
+                            Department = department,
+                            Position = position,
+                            Status = 1, // 正常用户
+                            IsAccessAllOutlet = isAccessAllOutlet,
+                            WorkingLocationCode = workingLocationCode,
+                            AccessGroupCode = accessGroupCode,
+                            CreateUser = "SYSTEM",
+                            CreateDate = DateTime.Now
+                        };
+                        toInsert.Add(newEntity);
+
+                        // 收集员工同步信息（用于后续AbpUser同步和角色匹配）
+                        if (!string.IsNullOrEmpty(employeeNo))
+                        {
+                            employeeSyncInfoList.Add((employeeNo, basicInfo?.StfName ?? string.Empty, orgNamePath));
+                        }
+                    }
                 }
             }
 
@@ -414,11 +322,7 @@ public class XftErpSyncService : IXftErpSyncService
             }
 
             // 处理删除逻辑：将本地存在但远程不存在的员工Status改为0
-            var toDelete = allExistingEmployees
-                .Where(e => !string.IsNullOrEmpty(e.EmployeeCode) &&
-                            !employeeCodes.Contains(NormalizeEmployeeCode(e.EmployeeCode)) &&
-                            e.Status != 0)
-                .ToList();
+            var toDelete = allExistingEmployees.Where(e => !string.IsNullOrEmpty(e.EmployeeCode) && !employeeCodes.Contains(NormalizeEmployeeCode(e.EmployeeCode)) && e.Status != 0).ToList();
 
             if (toDelete.Any())
             {
@@ -433,19 +337,18 @@ public class XftErpSyncService : IXftErpSyncService
             }
 
             // ===== 同步Employee到AbpUser并匹配角色 =====
-            if (employeeSyncInfoList.Any())
+            if (employeeSyncInfoList.Any() || usersToDisable.Any())
             {
-                var abpUserSyncResult = await SyncAbpUsersWithRolesAsync(employeeSyncInfoList, cancellationToken);
-                _logger.LogInformation("AbpUser同步完成，新增用户 {Inserted} 条，更新用户 {Updated} 条，新增角色关联 {RoleInserted} 条",
-                    abpUserSyncResult.InsertedUsers, abpUserSyncResult.UpdatedUsers, abpUserSyncResult.InsertedRoles);
+                var abpUserSyncResult = await SyncAbpUsersWithRolesAsync(employeeSyncInfoList, usersToDisable, cancellationToken);
+                _logger.LogInformation("AbpUser同步完成，新增用户 {Inserted} 条，禁用用户 {Disabled} 条，新增角色关联 {RoleInserted} 条",
+                    abpUserSyncResult.InsertedUsers, abpUserSyncResult.DisabledUsers, abpUserSyncResult.InsertedRoles);
             }
 
             // 保存更改
             await _secondaryUnitOfWork.SaveChangesAsync(cancellationToken);
             await _secondaryUnitOfWork.CommitTransactionAsync(cancellationToken);
 
-            _logger.LogInformation(
-                "ERP数据库员工数据同步完成，新增 {Inserted} 条，更新 {Updated} 条，删除 {Deleted} 条",
+            _logger.LogInformation("ERP数据库员工数据同步完成，新增 {Inserted} 条，更新 {Updated} 条，删除 {Deleted} 条",
                 totalInserted, totalUpdated, toDelete.Count);
         }
         catch (Exception ex)
@@ -663,15 +566,17 @@ public class XftErpSyncService : IXftErpSyncService
     }
 
     /// <summary>
-    /// 同步员工到AbpUser并匹配角色（在同一个事务中执行）
+    /// 同步员工到AbpUser并匹配角色
     /// 匹配规则：EmployeeNo 与 AbpUser.UserName 忽略大小写匹配
-    /// 已存在的用户只更新LastModificationTime，新增用户根据组织机构namePath匹配角色
+    /// 新增用户根据组织机构namePath匹配角色
+    /// 禁用的用户（stfStatus=2）设置IsActive=false
     /// </summary>
-    private async Task<(int InsertedUsers, int UpdatedUsers, int InsertedRoles)> SyncAbpUsersWithRolesAsync(
+    private async Task<(int InsertedUsers, int DisabledUsers, int InsertedRoles)> SyncAbpUsersWithRolesAsync(
         List<(string EmployeeNo, string Name, string? OrgNamePath)> employeeSyncInfoList,
+        List<string> usersToDisable,
         CancellationToken cancellationToken)
     {
-        _logger.LogInformation("开始同步Employee到AbpUser，共 {Count} 条待处理", employeeSyncInfoList.Count);
+        _logger.LogInformation("开始同步Employee到AbpUser，共 {Count} 条待处理，{DisableCount} 条需要禁用", employeeSyncInfoList.Count, usersToDisable.Count);
 
         // 查询所有AbpUser
         var allAbpUsers = await _abpUserRepository.GetListAsync(
@@ -708,11 +613,11 @@ public class XftErpSyncService : IXftErpSyncService
         }
 
         var toInsertUsers = new List<AbpUser>();
-        var toUpdateUsers = new List<AbpUser>();
+        var toDisableUsers = new List<AbpUser>();
         var toInsertUserRoles = new List<AbpUserRole>();
 
-        // 固定密码哈希（对应123456密码）
-        const string defaultPasswordHash = "AQAAAAEAACcQAAAAEJf3rjqJ150sxv1qGosTFVqWtlqVrBIdOcI3DGSgU9ejo4ekQYetYZM8UcH9TO3tVw==";
+        // 将usersToDisable转换为HashSet以便快速查找
+        var usersToDisableSet = new HashSet<string>(usersToDisable.Select(u => u.ToUpperInvariant()));
 
         foreach (var (employeeNo, name, orgNamePath) in employeeSyncInfoList)
         {
@@ -720,9 +625,15 @@ public class XftErpSyncService : IXftErpSyncService
 
             if (existingUserDict.TryGetValue(normalizedUserName, out var existingUser))
             {
-                // 已存在：只更新LastModificationTime
-                existingUser.LastModificationTime = DateTime.Now;
-                toUpdateUsers.Add(existingUser);
+                // 已存在：判断是否需要禁用
+                if (usersToDisableSet.Contains(normalizedUserName) && existingUser.IsActive)
+                {
+                    // 需要禁用的用户
+                    existingUser.IsActive = false;
+                    existingUser.LastModificationTime = DateTime.Now;
+                    toDisableUsers.Add(existingUser);
+                }
+                // 已存在且不需要禁用的用户：不做更新
             }
             else
             {
@@ -740,7 +651,6 @@ public class XftErpSyncService : IXftErpSyncService
                     Email = $"{employeeNo}@test.com",
                     NormalizedEmail = $"{normalizedUserName}@TEST.COM",
                     EmailConfirmed = false,
-                    PasswordHash = defaultPasswordHash,
                     SecurityStamp = newUserId.ToString("n"),
                     IsExternal = false,
                     PhoneNumber = string.Empty,
@@ -762,7 +672,8 @@ public class XftErpSyncService : IXftErpSyncService
                     IsFirstTimeLogin = true,
                     IsActive = true
                 };
-
+                // 使用ABP vNext加密方式：密码=账号(employeeNo)
+                newUser.PasswordHash = _passwordHasher.HashPassword(newUser, employeeNo);
                 toInsertUsers.Add(newUser);
 
                 // 只有新增用户才匹配角色和创建角色关联
@@ -793,12 +704,12 @@ public class XftErpSyncService : IXftErpSyncService
             _logger.LogInformation("AbpUser批量新增 {Count} 条", toInsertUsers.Count);
         }
 
-        //// 批量更新AbpUser（预留更新用）
-        //if (toUpdateUsers.Any())
-        //{
-        //    await _abpUserRepository.UpdateAsync(toUpdateUsers, [u => u.LastModificationTime!]);
-        //    _logger.LogInformation("AbpUser批量更新LastModificationTime {Count} 条", toUpdateUsers.Count);
-        //}
+        // 批量禁用AbpUser
+        if (toDisableUsers.Any())
+        {
+            _abpUserRepository.Update(toDisableUsers);
+            _logger.LogInformation("AbpUser批量禁用 {Count} 条", toDisableUsers.Count);
+        }
 
         // 批量新增AbpUserRole
         if (toInsertUserRoles.Any())
@@ -810,7 +721,7 @@ public class XftErpSyncService : IXftErpSyncService
             _logger.LogInformation("AbpUserRole批量新增 {Count} 条", toInsertUserRoles.Count);
         }
 
-        return (toInsertUsers.Count, toUpdateUsers.Count, toInsertUserRoles.Count);
+        return (toInsertUsers.Count, toDisableUsers.Count, toInsertUserRoles.Count);
     }
 
     /// <summary>

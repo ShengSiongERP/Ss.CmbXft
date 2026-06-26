@@ -107,6 +107,11 @@ public class PosVoucher
     public decimal? RequiredQty { get; set; }
 
     /// <summary>
+    /// 需要数量
+    /// </summary>
+    public decimal? TotalQty { get; set; }
+
+    /// <summary>
     /// 是否可作废
     /// </summary>
     public bool? IsVoidable { get; set; }

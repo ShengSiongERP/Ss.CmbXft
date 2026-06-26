@@ -13,14 +13,4 @@ public abstract class ApiControllerBase : ControllerBase
     {
         _logger = logger;
     }
-
-    protected IActionResult Success<T>(T data, string message = "Success")
-    {
-        return Ok(new { code = 0, data = data, message = message });
-    }
-
-    protected IActionResult Failure(string message = "Failure", string code = "ERROR")
-    {
-        return BadRequest(new { code = code, message = message });
-    }
 }

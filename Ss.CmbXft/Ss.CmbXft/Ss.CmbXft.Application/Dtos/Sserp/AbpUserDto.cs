@@ -1,4 +1,4 @@
-using Ss.CmbXft.Common.Models;
+using Ss.CmbXft.Common.Models.Request;
 using System.ComponentModel.DataAnnotations;
 
 namespace Ss.CmbXft.Application.Dtos.Sserp;
@@ -299,7 +299,7 @@ public class AbpUserSaveDto
 /// <summary>
 /// Abp用户查询 DTO
 /// </summary>
-public class AbpUserQueryDto : PagedRequestBase
+public class AbpUserQueryDto : PageRequestBase
 {
     /// <summary>
     /// 用户名（模糊搜索）

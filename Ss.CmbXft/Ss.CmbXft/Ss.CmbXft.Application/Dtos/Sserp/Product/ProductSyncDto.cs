@@ -1,11 +1,11 @@
-using Ss.CmbXft.Common.Models;
+using Ss.CmbXft.Common.Models.Request;
 
 namespace Ss.CmbXft.Application.Dtos.Sserp.Product;
 
 /// <summary>
 /// 商品同步查询条件 DTO
 /// </summary>
-public class ProductSyncQueryDto : PagedRequestBase
+public class ProductSyncQueryDto : PageRequestBase
 {
     /// <summary>
     /// 商品编码（精确匹配，多个用逗号分隔）
@@ -168,7 +168,7 @@ public class ProductSyncPreviewDto
 /// <summary>
 /// 商品分页查询 DTO（用于浏览商品列表）
 /// </summary>
-public class ProductQueryDto : PagedRequestBase
+public class ProductQueryDto : PageRequestBase
 {
     /// <summary>
     /// 商品编码（模糊搜索）
