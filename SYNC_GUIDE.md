@@ -70,7 +70,7 @@ Ss.CmbXft/
 
 | 方法 | 路径 | 说明 |
 |------|------|------|
-| POST | `/api/xft_staff/sync-to-both` | 手动触发同步到数据库 |
+| POST | `/api/xft_staff/sync_stafff` | 手动触发同步到数据库 |
 | POST | `/api/xft_staff/api_list` | 分页查询员工信息 |
 | POST | `/api/xft_staff/api_dict` | 员工数据字典查询 |
 
