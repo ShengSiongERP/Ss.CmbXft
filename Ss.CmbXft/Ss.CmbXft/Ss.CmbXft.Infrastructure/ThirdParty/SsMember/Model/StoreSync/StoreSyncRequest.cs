@@ -25,11 +25,11 @@ public class StoreInfo
     [JsonProperty("address")]
     public string Address { get; set; } = string.Empty;
 
-    /// <summary>
-    /// 门店信息（可选扩展数据）
-    /// </summary>
-    [JsonProperty("data")]
-    public object? Data { get; set; }
+    ///// <summary>
+    ///// 门店信息（可选扩展数据 暂时用不到）
+    ///// </summary>
+    //[JsonProperty("data")]
+    //public object? Data { get; set; }
 }
 
 /// <summary>
