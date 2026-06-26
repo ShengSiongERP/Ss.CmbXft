@@ -55,6 +55,11 @@ public class ProductSyncQueryDto : PageRequestBase
     /// <summary>
     /// 修改时间起始（用于增量同步，只同步该时间之后修改的商品）
     /// </summary>
+    public DateTime? CreatedSince { get; set; }
+
+    /// <summary>
+    /// 修改时间起始（用于增量同步，只同步该时间之后修改的商品）
+    /// </summary>
     public DateTime? ModifiedSince { get; set; }
 
     /// <summary>

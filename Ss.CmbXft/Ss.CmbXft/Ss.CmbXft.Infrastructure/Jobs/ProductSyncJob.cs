@@ -1,7 +1,8 @@
 using Microsoft.Extensions.Logging;
+using Quartz;
 using Ss.CmbXft.Application.Dtos.Sserp.Product;
 using Ss.CmbXft.Application.Interfaces.Services.Sserp.SsMember;
-using Quartz;
+using Ss.CmbXft.Common.Models;
 
 namespace Ss.CmbXft.Infrastructure.Jobs;
 
@@ -33,8 +34,9 @@ public class ProductSyncJob : JobBase
     {
         _logger.LogInformation("开始执行商品数据同步...");
 
-        var query = new ProductSyncQueryDto();
-        var result = await _productSyncService.SyncProductsAsync(query, cancellationToken);
+        DateTime dt = DateTime.UtcNow.AddDays(-2);
+        ProductSyncQueryDto query = new() { PageIndex = 1, PageSize = 1000, ModifiedSince = dt, CreatedSince = dt };
+        ApiResult result = await _productSyncService.SyncProductsAsync(query, cancellationToken);
 
         _logger.LogInformation("商品数据同步完成：{Msg}", result.Msg);
     }

@@ -65,52 +65,62 @@ public class ProductSyncAppService : IProductSyncAppService
             "找到 {TotalCount} 个商品，从第 {PageIndex} 页开始（跳过 {Skip} 条），每页 {PageSize} 条，最多同步 {MaxSync} 个",
             totalCount, query.PageIndex, query.Skip, query.PageSize, maxSync);
 
-        // 分页处理
+        // 一次性获取所有需要同步的产品数据
+        _logger.LogInformation("正在加载所有需要同步的产品数据...");
+        var allProducts = await productsQuery
+            .Skip(query.Skip)
+            .Take(maxSync)
+            .ToListAsync(ct);
+        _logger.LogInformation("产品数据加载完成，共 {ProductCount} 个产品", allProducts.Count);
+
+        // 一次性获取所有这些产品的条码信息（约14万条数据）
+        _logger.LogInformation("正在加载所有产品的条码信息...");
+        var allProductCodes = allProducts.Select(p => p.ProductCode).ToList();
+        var allBarcodes = await _db.Barcodes
+            .Where(b => allProductCodes.Contains(b.ProductCode) && b.Status == 1)
+            .Join(_db.Uoms, b => b.UOMID, u => u.UOMID, (b, u) => new { b, u })
+            .Select(x => new
+            {
+                x.b.ProductCode,
+                x.b.Barcode,
+                x.u.UOMName
+            })
+            .ToListAsync(ct);
+
+        // 按产品编码分组条码
+        var allBarcodeDict = allBarcodes
+            .GroupBy(x => x.ProductCode)
+            .ToDictionary(g => g.Key, g => g.Select(x => new GoodsBarcode
+            {
+                Barcode = x.Barcode,
+                UomName = x.UOMName
+            }).ToList());
+
+        _logger.LogInformation("条码信息加载完成，共 {BarcodeCount} 条条码数据", allBarcodes.Count);
+
+        // 分批处理内存中的数据
         var totalSynced = 0;
         var totalFailed = 0;
         var batchIndex = 0;
-        var skip = query.Skip;
+        var currentIndex = 0;
 
-        while (totalSynced + totalFailed < maxSync)
+        while (currentIndex < allProducts.Count)
         {
             ct.ThrowIfCancellationRequested();
 
-            var take = Math.Min(query.PageSize, maxSync - totalSynced - totalFailed);
-            var batchProducts = await productsQuery
-                .Skip(skip)
-                .Take(take)
-                .ToListAsync(ct);
+            var batchSize = Math.Min(query.PageSize, allProducts.Count - currentIndex);
+            var batchProducts = allProducts.Skip(currentIndex).Take(batchSize).ToList();
 
             if (batchProducts.Count == 0)
             {
                 break;
             }
 
+            currentIndex += batchSize;
+
             batchIndex++;
             _logger.LogInformation("正在处理第 {Current} 批，本批 {Count} 个商品",
                 batchIndex, batchProducts.Count);
-
-            // 获取这些产品的条码信息
-            var productCodes = batchProducts.Select(p => p.ProductCode).ToList();
-            var barcodes = await _db.Barcodes
-                .Where(b => productCodes.Contains(b.ProductCode) && b.Status == 1)
-                .Join(_db.Uoms, b => b.UOMID, u => u.UOMID, (b, u) => new { b, u })
-                .Select(x => new
-                {
-                    x.b.ProductCode,
-                    x.b.Barcode,
-                    x.u.UOMName
-                })
-                .ToListAsync(ct);
-
-            // 按产品编码分组条码
-            var barcodeDict = barcodes
-                .GroupBy(x => x.ProductCode)
-                .ToDictionary(g => g.Key, g => g.Select(x => new GoodsBarcode
-                {
-                    Barcode = x.Barcode,
-                    UomName = x.UOMName
-                }).ToList());
 
             // 映射到 GoodsInfo
             var goodsInfoList = batchProducts.Select(p => new GoodsInfo
@@ -127,14 +137,14 @@ public class ProductSyncAppService : IProductSyncAppService
                 Status = p.Status,
                 TaxRate = p.TaxRate.HasValue ? (object)p.TaxRate.Value : null,
                 TaxCode = p.TaxCode,
-                Barcodes = barcodeDict.GetValueOrDefault(p.ProductCode, new List<GoodsBarcode>())
+                Barcodes = allBarcodeDict.GetValueOrDefault(p.ProductCode, new List<GoodsBarcode>())
             }).ToList();
 
 #if DEBUG
-            if (goodsInfoList.Count > 0)
-            {
-                goodsInfoList = goodsInfoList.Take(1).ToList();
-            }
+            //if (goodsInfoList.Count > 0)
+            //{
+            //    goodsInfoList = goodsInfoList.Take(1).ToList();
+            //}
 #endif
 
             // 调用第三方服务同步
@@ -152,8 +162,8 @@ public class ProductSyncAppService : IProductSyncAppService
                 _logger.LogError("第 {Current} 批同步失败: {Message}",
                     batchIndex, response.GetErrorMessage());
             }
-
-            skip += query.PageSize;
+            //请求太快会返回429 Too Many Attempts.
+            await Task.Delay(500, ct);
         }
 
         if (totalFailed > 0)
@@ -191,7 +201,7 @@ public class ProductSyncAppService : IProductSyncAppService
                             from b in bJoin.DefaultIfEmpty()
                             join u in _db.Uoms on p.DefaultUOMID equals u.UOMID into uJoin
                             from u in uJoin.DefaultIfEmpty()
-                            // 简单的 LEFT JOIN ProductAttribute - 通过 where 条件过滤 AttributeID = 18
+                                // 简单的 LEFT JOIN ProductAttribute - 通过 where 条件过滤 AttributeID = 18
                             join pa in _db.ProductAttributes.Where(x => x.AttributeId == TAX_CODE_ATTRIBUTE_ID)
                                 on p.ProductCode equals pa.ProductCode into paJoin
                             from pa in paJoin.DefaultIfEmpty()
@@ -217,14 +227,15 @@ public class ProductSyncAppService : IProductSyncAppService
         return productsQuery
             .WhereIfNotNull(query.Status, p => p.Status == query.Status!.Value)
             .WhereInSplit(query.ProductCode, p => p.ProductCode)
-            .WhereIfNotWhiteSpace(query.ProductDescription, p => p.ProductDescription != null && p.ProductDescription.Contains(query.ProductDescription))
-            .WhereIfNotWhiteSpace(query.Department, p => p.DepartmentName != null && p.DepartmentName.Contains(query.Department))
-            .WhereIfNotWhiteSpace(query.Category, p => p.CategoryName != null && p.CategoryName.Contains(query.Category))
-            .WhereIfNotWhiteSpace(query.SubCategory, p => p.SubCategoryName != null && p.SubCategoryName.Contains(query.SubCategory))
-            .WhereIfNotWhiteSpace(query.Segment, p => p.SegmentName != null && p.SegmentName.Contains(query.Segment))
-            .WhereIfNotWhiteSpace(query.ItemClass, p => p.ItemClassName != null && p.ItemClassName.Contains(query.ItemClass))
-            .WhereIfNotWhiteSpace(query.Brand, p => p.BrandName != null && p.BrandName.Contains(query.Brand))
-            .WhereIfNotNull(query.ModifiedSince, p => p.ModifiedOn.HasValue && p.ModifiedOn.Value >= query.ModifiedSince!.Value);
+            .WhereIfNotWhiteSpace(query.ProductDescription, p => p.ProductDescription != null && p.ProductDescription.Contains(query.ProductDescription!))
+            .WhereIfNotWhiteSpace(query.Department, p => p.DepartmentName != null && p.DepartmentName.Contains(query.Department!))
+            .WhereIfNotWhiteSpace(query.Category, p => p.CategoryName != null && p.CategoryName.Contains(query.Category!))
+            .WhereIfNotWhiteSpace(query.SubCategory, p => p.SubCategoryName != null && p.SubCategoryName.Contains(query.SubCategory!))
+            .WhereIfNotWhiteSpace(query.Segment, p => p.SegmentName != null && p.SegmentName.Contains(query.Segment!))
+            .WhereIfNotWhiteSpace(query.ItemClass, p => p.ItemClassName != null && p.ItemClassName.Contains(query.ItemClass!))
+            .WhereIfNotWhiteSpace(query.Brand, p => p.BrandName != null && p.BrandName.Contains(query.Brand!))
+            .WhereIfNotNull(query.ModifiedSince, p => p.ModifiedOn.HasValue && p.ModifiedOn.Value >= query.ModifiedSince!.Value)
+            .WhereIfNotNull(query.CreatedSince, p => p.CreatedOn >= query.CreatedSince!.Value);
     }
 
     /// <summary>
